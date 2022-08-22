@@ -3,4 +3,4 @@
 </p>
 
  # Ivory UI
- A library for easily creating efficient and beautiful graphical user interfaces for C++ applications. 
+ A library for easy creation of efficient and beautiful graphical user interfaces for C++ applications. 
