@@ -1,10 +1,10 @@
-#include "pch.h"
 #include "Elements.h"
 
-// Forward declare needed Ivory class and methods 
+// Forward declaration of Ivory class
+
 class Ivory {
 	public:
-		static void Rerender();
+		static void Rerender(); 
 };
 
 // ELEMENTS - Common methods for every element type

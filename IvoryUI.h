@@ -2,8 +2,8 @@
 #include "Elements.h"
 #include "Page.h"
 #include <tuple>
-#include "SDL_ttf.h"
 #include <SDL_image.h>
+#include <iostream>
 
 class Ivory
 {
@@ -28,12 +28,16 @@ class Ivory
 		static void Render();
 		static void Rerender(); // TODO: Only render new frame texture when rerender bool is true!
 		static SDL_Texture* LoadImage(std::string imagePath);
+		static bool IsRunning();
+		static void Prepare(); 
+		static SDL_Renderer* CreateRenderingContext(std::string title);
 
 	private:
 		// General library data 
 		static SDL_Renderer* targetRenderer;
-		static bool leftMouseButtonPressedState, leftMouseButtonPressedLastState, rerender;
-		static int viewWidth, viewHeight;
+		static bool leftMouseButtonPressedState, leftMouseButtonPressedLastState, rerender,
+			isRunning;
+		static int viewportWidth, viewportHeight;
 		static SDL_Texture* snapshotFrame;
 
 

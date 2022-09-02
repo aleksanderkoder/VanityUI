@@ -1,7 +1,5 @@
 // IvoryUI.cpp : Defines the functions for the static library.
 
-#include "pch.h"
-#include "framework.h"
 #include "IvoryUI.h"
 
 SDL_Renderer* Ivory::targetRenderer = NULL;
@@ -9,21 +7,41 @@ Uint32 Ivory::delta, Ivory::textboxCursorDelta;
 Textbox* Ivory::activeTextbox = NULL;
 char Ivory::lastPressedKey;
 bool Ivory::leftMouseButtonPressedState = false, Ivory::leftMouseButtonPressedLastState = false,
-Ivory::drawTextBoxCursor = true, Ivory::capsLockEnabled = false, Ivory::rerender = false;
-int Ivory::viewWidth = 0, Ivory::viewHeight = 0;
+Ivory::isRunning = false, Ivory::drawTextBoxCursor = true, Ivory::capsLockEnabled = false, Ivory::rerender = false;
+int Ivory::viewportWidth = 0, Ivory::viewportHeight = 0;
 SDL_Texture* Ivory::snapshotFrame = NULL;
 Page* Ivory::currentPage = NULL;
 
 // LIBRARY SETUP METHODS
 
 void Ivory::Setup(int viewWidth, int viewHeight, SDL_Renderer* renderer) {
-	TTF_Init();	// Initializes the SDL font library
-	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_WEBP);	// Initializes the SDL image library
+	// Initializes the SDL2 library
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		char t[] = "Initialization error";
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, SDL_GetError(), NULL);
+		exit(0);
+	}
+
+	// Initializes the SDL font library
+	if (TTF_Init() < 0) {
+		char t[] = "TTF error";
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), NULL);
+		exit(0);
+	}	
+
+	// Initializes the SDL image library
+	if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_WEBP) < 0) {
+		char t[] = "IMG error";
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, IMG_GetError(), NULL);
+		exit(0);
+	}	
+
 	targetRenderer = renderer;
+	isRunning = true; 
 
 	// To be used for creating frame snapshots
-	viewWidth = viewWidth;
-	viewHeight = viewHeight;
+	viewportWidth = viewWidth;
+	viewportHeight = viewHeight;
 
 	delta = SDL_GetTicks(); // Init milliseconds to be used for textbox input 
 	textboxCursorDelta = SDL_GetTicks(); // Init milliseconds to be used for textbox cursor blinking 
@@ -481,7 +499,7 @@ void Ivory::prepareNewSnapshotFrame() {
 	/*SDL_DestroyTexture(snapshotFrame);*/
 
 	// Create texture
-	snapshotFrame = SDL_CreateTexture(targetRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, viewWidth, viewHeight);
+	snapshotFrame = SDL_CreateTexture(targetRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, viewportWidth, viewportHeight);
 	SDL_SetTextureBlendMode(snapshotFrame, SDL_BLENDMODE_BLEND);
 
 	// Give drawing focus to texture
@@ -496,8 +514,8 @@ void Ivory::finalizeNewSnapshotFrame() {
 	/*SDL_SetRenderDrawColor(Mildred::GetRenderer(), 0, 255, 0, 255);
 	SDL_RenderDrawLine(Mildred::GetRenderer(), 20, 20, 100, 100);*/
 	SDL_Rect rect;
-	rect.w = viewWidth;
-	rect.h = viewHeight;
+	rect.w = viewportWidth;
+	rect.h = viewportHeight;
 	rect.x = 0;
 	rect.y = 0;
 
@@ -521,4 +539,57 @@ SDL_Texture* Ivory::LoadImage(std::string imagePath) {
 		exit(0);
 	}
 	return image;
+}
+
+bool Ivory::IsRunning() {
+	return isRunning; 
+}
+
+void Ivory::Prepare() {
+	SDL_SetRenderDrawColor(targetRenderer, 255, 255, 255, 255); 
+	SDL_RenderClear(targetRenderer); 
+
+	SDL_Event e;
+	while (SDL_PollEvent(&e))
+	{
+		switch (e.type)
+		{
+		case SDL_QUIT:
+			std::cout << "Quitting..." << std::endl;
+			isRunning = false; 
+			SDL_Quit(); 
+			break;
+		}
+	}
+}
+
+SDL_Renderer* Ivory::CreateRenderingContext(std::string title) {
+	SDL_Window* window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		viewportWidth, viewportHeight, SDL_WINDOW_SHOWN);
+
+	// Check what graphics backend is used 
+	SDL_RendererInfo info = {};
+
+	// Graphics device index to create renderer using correct graphics API, -1 is default
+	int deviceIndex = -1;
+
+	for (int i = 0; i < SDL_GetNumRenderDrivers(); i++) {
+		SDL_GetRenderDriverInfo(i, &info);
+		if (info.name == std::string("direct3d11")) {
+			deviceIndex = i;
+			break;
+		}
+	}
+
+	std::cout << "Using graphics API: " << info.name << std::endl;
+
+	// Captures mouse to window
+	//SDL_SetRelativeMouseMode(SDL_TRUE);
+
+	// NOTE: Remove SDL_RENDERER_PRESENTVSYNC flag to turn off v-sync
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, deviceIndex, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+	// To enable aplha channel on draw calls
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "BEST");
+	return targetRenderer = renderer; 
 }

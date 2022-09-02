@@ -1,1 +1,1 @@
-C:\Users\neon1\Documents\IvoryUI\x64\Debug\IvoryUI.lib
+C:\Users\neon1\Documents\IvoryUI\x64\Debug\IvoryUI.exe
