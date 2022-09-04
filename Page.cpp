@@ -23,7 +23,11 @@ void Page::AddElement(Textbox* textbox) {
 	this->textboxes->push_back(textbox);
 }
 
-void Page::RemoveElement(Button* button) {	// TODO: Implement these!
+void Page::AddElement(Image* image) {
+	this->images->push_back(image);
+}
+
+void Page::RemoveElement(Button* button) {
 	auto btns = this->buttons;
 	for (int i = 0; i < btns->size(); i++) {
 		Button* curr = (*btns)[i];
@@ -57,6 +61,15 @@ void Page::RemoveElement(Textbox* textbox) {
 	}
 }
 
+void Page::RemoveElement(Image* image) {
+	auto img = this->images;
+	for (int i = 0; i < img->size(); i++) {
+		Image* curr = (*img)[i];
+		if (curr == image)
+			img->erase(img->begin() + i);
+	}
+}
+
 std::vector<Button*>* Page::GetButtons() {
 	return this->buttons;
 }
@@ -71,4 +84,8 @@ std::vector<Checkbox*>* Page::GetCheckboxes() {
 
 std::vector<Textbox*>* Page::GetTextboxes() {
 	return this->textboxes;
+}
+
+std::vector<Image*>* Page::GetImages() {
+	return this->images;
 }

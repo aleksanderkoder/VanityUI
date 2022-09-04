@@ -161,3 +161,20 @@ class Slider : public Elements {
 		SDL_Color hoverColor, thumbColor;
 };
 
+class Image : public Elements {		// TODO: Render these!
+	public: 
+		Image(int x, int y, int width, int height, std::string imagePath); 
+
+		// GET methods 
+		int GetWidth();
+		int GetHeight();
+
+		// SET methods
+		void SetWidth(int width); 
+		void SetHeight(int height); 
+
+	private: 
+		int width, height; 
+		SDL_Texture* image; 
+};
+

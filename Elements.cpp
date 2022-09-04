@@ -4,7 +4,8 @@
 
 class Ivory {
 	public:
-		static void Rerender(); 
+		static void Rerender();
+		static SDL_Texture* LoadImage(std::string imagePath); 
 };
 
 // ELEMENTS - Common methods for every element type
@@ -403,5 +404,33 @@ void Slider::SetHeight(int height) {
 
 void Slider::SetValue(int value) {
 	this->value = value;
+	Ivory::Rerender();
+}
+
+// IMAGE 
+
+Image::Image(int x, int y, int width, int height, std::string imagePath) {
+	this->x = x; 
+	this->y = y; 
+	this->width = width; 
+	this->height = height;
+	this->image = Ivory::LoadImage(imagePath); 
+}
+
+int Image::GetWidth() {
+	return this->width; 
+}
+
+int Image::GetHeight() {
+	return this->height;
+}
+
+void Image::SetWidth(int width) {
+	this->width == width; 
+	Ivory::Rerender();
+}
+
+void Image::SetHeight(int height) {
+	this->height = height;
 	Ivory::Rerender();
 }
