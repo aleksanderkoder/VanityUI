@@ -69,6 +69,10 @@ Button* Ivory::CreateButton(std::string label, int width, int height, int x, int
 	return new Button(label, width, height, x, y, fontSize, fontPath);
 }
 
+Image* Ivory::CreateImage(int x, int y, int width, int height, std::string imagePath) {
+	return new Image(x, y, width, height, imagePath); 
+}
+
 // ELEMENT RENDERING METHODS 
 	// TODO: Make this render elements taken from pages!
 
@@ -315,12 +319,38 @@ void Ivory::RenderLabel(std::string text, int x, int y, SDL_Color color, TTF_Fon
 	SDL_DestroyTexture(message);
 }
 
+void Ivory::RenderImages() {
+	auto imgs = currentPage->GetImages();
+	// Loop through all checkboxes
+	for (int i = 0; i < imgs->size(); i++) {
+		Image* curr = (*imgs)[i];
+
+		if (!curr->GetDisplayState()) continue;
+
+		// Get necessary data from current object
+		int x = curr->GetX();
+		int y = curr->GetY();
+		int width = curr->GetWidth();
+		int height = curr->GetHeight(); 
+
+		// Create checkbox rectangle data
+		SDL_Rect rect;
+		rect.w = width;
+		rect.h = height;
+		rect.x = x;
+		rect.y = y;
+
+		SDL_RenderCopy(targetRenderer, curr->GetImage(), NULL, &rect); 
+	}
+}
+
 void Ivory::Render() {
 	UpdateMouseButtonState();
 	RenderLabels();
 	RenderButtons();
 	RenderTextboxes();
 	RenderCheckboxes();
+	RenderImages(); 
 }
 
 // PAGES 

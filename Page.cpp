@@ -5,6 +5,7 @@ Page::Page() {
 	this->labels = new std::vector<Label*>();
 	this->checkboxes = new std::vector<Checkbox*>();
 	this->textboxes = new std::vector<Textbox*>();
+	this->images = new std::vector<Image*>(); 
 }
 
 void Page::AddElement(Button* button) {

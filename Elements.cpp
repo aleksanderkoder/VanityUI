@@ -10,6 +10,12 @@ class Ivory {
 
 // ELEMENTS - Common methods for every element type
 
+Elements::Elements() {
+	display = true; 
+	x = 0; 
+	y = 0; 
+}; 
+
 int Elements::GetX() {
 	return this->x;
 }
@@ -18,18 +24,9 @@ int Elements::GetY() {
 	return this->y;
 }
 
-SDL_Color Elements::GetColor() {
-	return this->color;
-}
-
 void Elements::SetPosition(int x, int y) {
 	this->x = x;
 	this->y = y;
-	Ivory::Rerender();
-}
-
-void Elements::SetColor(SDL_Color* color) {
-	this->color = *color;
 	Ivory::Rerender();
 }
 
@@ -69,6 +66,10 @@ Button::Button(std::string label, int width, int height, int x, int y, int fontS
 	}
 }
 
+SDL_Color Button::GetColor() {
+	return this->color;
+}
+
 std::string Button::GetLabel() {
 	return this->label;
 }
@@ -91,6 +92,11 @@ int Button::GetFontSize() {
 
 TTF_Font* Button::GetFont() {
 	return this->font;
+}
+
+void Button::SetColor(SDL_Color* color) {
+	this->color = *color;
+	Ivory::Rerender();
 }
 
 void Button::SetFont(std::string fontPath) {
@@ -160,6 +166,10 @@ Textbox::Textbox(std::string placeholder, int width, int height, int x, int y, i
 	}
 }
 
+SDL_Color Textbox::GetColor() {
+	return this->color;
+}
+
 std::string Textbox::GetPlaceholder() {
 	return this->placeholder;
 }
@@ -190,6 +200,11 @@ int Textbox::GetFontSize() {
 
 TTF_Font* Textbox::GetFont() {
 	return this->font;
+}
+
+void Textbox::SetColor(SDL_Color* color) {
+	this->color = *color;
+	Ivory::Rerender();
 }
 
 void Textbox::SetPlaceholder(std::string placeholder) {
@@ -249,6 +264,10 @@ Label::Label(std::string text, int x, int y, SDL_Color color, int fontSize, std:
 	}
 }
 
+SDL_Color Label::GetColor() {
+	return this->color;
+}
+
 std::string Label::GetText() {
 	return this->text;
 }
@@ -259,6 +278,11 @@ int Label::GetFontSize() {
 
 TTF_Font* Label::GetFont() {
 	return this->font;
+}
+
+void Label::SetColor(SDL_Color* color) {
+	this->color = *color;
+	Ivory::Rerender();
 }
 
 void Label::SetText(std::string text) {
@@ -287,6 +311,10 @@ Checkbox::Checkbox(int x, int y, int size, bool defaultState) {
 	this->checkmarkColor = cc;
 }
 
+SDL_Color Checkbox::GetColor() {
+	return this->color;
+}
+
 SDL_Color Checkbox::GetHoverColor() {
 	return this->hoverColor;
 }
@@ -297,6 +325,11 @@ SDL_Color Checkbox::GetCheckmarkColor() {
 
 int Checkbox::GetSize() {
 	return this->size;
+}
+
+void Checkbox::SetColor(SDL_Color* color) {
+	this->color = *color;
+	Ivory::Rerender();
 }
 
 void Checkbox::SetHoverColor(SDL_Color* color) {
@@ -342,7 +375,9 @@ Slider::Slider(int x, int y, int width, int height, int thumbWidth, int thumbHei
 	this->thumbColor = tc;
 }
 
-// TODO: Continue class implementation
+SDL_Color Slider::GetColor() {
+	return this->color;
+}
 
 SDL_Color Slider::GetHoverColor() {
 	return this->hoverColor;
@@ -370,6 +405,11 @@ int Slider::GetHeight() {
 
 int Slider::GetValue() {
 	return this->value;
+}
+
+void Slider::SetColor(SDL_Color* color) {
+	this->color = *color;
+	Ivory::Rerender();
 }
 
 void Slider::SetHoverColor(SDL_Color* hoverColor) {
@@ -414,6 +454,7 @@ Image::Image(int x, int y, int width, int height, std::string imagePath) {
 	this->y = y; 
 	this->width = width; 
 	this->height = height;
+	this->display = true; 
 	this->image = Ivory::LoadImage(imagePath); 
 }
 
@@ -425,8 +466,12 @@ int Image::GetHeight() {
 	return this->height;
 }
 
+SDL_Texture* Image::GetImage() {
+	return this->image; 
+}
+
 void Image::SetWidth(int width) {
-	this->width == width; 
+	this->width = width; 
 	Ivory::Rerender();
 }
 

@@ -17,6 +17,9 @@ int main(int argc, char* argv[])
     p->AddElement(b);
     p->AddElement(l);
 
+    auto img = Ivory::CreateImage(500, 500, 75, 75, "db3991d70eff2556d448c9d911e71a11_400x400.jpeg");
+    p->AddElement(img); 
+
     Ivory::DisplayPage(p);
 
     while (Ivory::IsRunning()) {
