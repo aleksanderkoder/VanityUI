@@ -3,12 +3,12 @@
 #include "SDL_ttf.h"
 #include <string>
 
-class Elements
-{
+class Elements {
 	protected:
 		Elements();
 		int x, y;
 		bool display;
+		Division* parent; 
 
 	public:
 		// GET methods 
@@ -23,6 +23,30 @@ class Elements
 		void Show();
 		void Hide();
 
+};
+
+class Division : public Elements {	// TODO: Implement this! 
+	public: 
+		Division(int x, int y, int width, int height); 
+
+		// GET methods 
+		int GetWidth(); 
+		int GetHeight();
+
+		// SET methods 
+		void SetWidth(int width); 
+		void SetHeight(int height); 
+
+		// Utility methods 
+		void AddChild(Label* label);
+		void AddChild(Button* button);
+		void AddChild(Textbox* textbox);
+		void AddChild(Checkbox* checkbox);
+		void AddChild(Slider* slider);
+		void AddChild(Image* image);
+
+	private:
+		int width, height; 
 };
 
 class Button : public Elements {
@@ -170,7 +194,7 @@ class Slider : public Elements {
 		SDL_Color color, hoverColor, thumbColor;
 };
 
-class Image : public Elements {		// TODO: Render these!
+class Image : public Elements {
 	public: 
 		Image(int x, int y, int width, int height, std::string imagePath); 
 

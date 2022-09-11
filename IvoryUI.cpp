@@ -213,11 +213,11 @@ void Ivory::RenderTextboxes() {
 			RenderLabel(value, lblX, lblY, c, font, fontSize);
 		}
 
-		// If there's an active textbox, toggle textbox cursor every 750 millisecond
+		// If there's an active textbox, toggle textbox cursor every 600 millisecond
 		if (activeTextbox) {
 			Uint32 now = SDL_GetTicks();
 			Uint32 cursorDelta = now - textboxCursorDelta;
-			if (cursorDelta > 750) {
+			if (cursorDelta > 600) {
 				drawTextBoxCursor = !drawTextBoxCursor;
 				textboxCursorDelta = now;
 			}
@@ -429,6 +429,7 @@ void Ivory::CaptureInputText() {
 	Uint32 now = SDL_GetTicks();
 	const Uint8* keys = SDL_GetKeyboardState(&nK);
 	std::string value = activeTextbox->GetValue();
+	int charLimit = activeTextbox->GetCharLimit(); 
 
 	// Enable capital letters if capslock is pressed
 	if (keys[SDL_SCANCODE_CAPSLOCK] && now - delta >= 300) {
@@ -448,7 +449,7 @@ void Ivory::CaptureInputText() {
 	}
 
 	// If character limit has been reached, jump out 
-	if (value.length() >= activeTextbox->GetCharLimit()) return;
+	if (charLimit && value.length() >= charLimit) return;
 
 	for (int i = 0; i < nK; i++) {
 		if (keys[i] && ValidKey(i)) {
