@@ -32,12 +32,14 @@ class Ivory
 		static bool IsRunning();
 		static void Prepare(); 
 		static SDL_Renderer* CreateRenderingContext(std::string title);
+		static void EnableVsync(); 
+		static void DisableVsync(); 
 
 	private:
 		// General library data 
 		static SDL_Renderer* targetRenderer;
 		static bool leftMouseButtonPressedState, leftMouseButtonPressedLastState, rerender,
-			isRunning;
+			isRunning, vsync;
 		static int viewportWidth, viewportHeight;
 		static SDL_Texture* snapshotFrame;
 

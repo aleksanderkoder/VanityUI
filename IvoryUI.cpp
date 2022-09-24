@@ -7,7 +7,8 @@ Uint32 Ivory::delta, Ivory::textboxCursorDelta;
 Textbox* Ivory::activeTextbox = NULL;
 char Ivory::lastPressedKey;
 bool Ivory::leftMouseButtonPressedState = false, Ivory::leftMouseButtonPressedLastState = false,
-Ivory::isRunning = false, Ivory::drawTextBoxCursor = true, Ivory::capsLockEnabled = false, Ivory::rerender = false;
+Ivory::isRunning = false, Ivory::drawTextBoxCursor = true, Ivory::capsLockEnabled = false, Ivory::rerender = false,
+Ivory::vsync = true; 
 int Ivory::viewportWidth = 0, Ivory::viewportHeight = 0;
 SDL_Texture* Ivory::snapshotFrame = NULL;
 Page* Ivory::currentPage = NULL;
@@ -612,9 +613,23 @@ SDL_Renderer* Ivory::CreateRenderingContext(std::string title) {
 	//SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	// NOTE: Remove SDL_RENDERER_PRESENTVSYNC flag to turn off v-sync
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, deviceIndex, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+	SDL_Renderer* renderer = NULL; 
+
+	if (vsync)
+		renderer = SDL_CreateRenderer(window, deviceIndex, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+	else 
+		renderer = SDL_CreateRenderer(window, deviceIndex, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+
 	// To enable aplha channel on draw calls
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "BEST");
 	return targetRenderer = renderer; 
+}
+
+void Ivory::EnableVsync() {
+	vsync = true; 
+}
+
+void Ivory::DisableVsync() {
+	vsync = false; 
 }

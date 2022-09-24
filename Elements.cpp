@@ -14,6 +14,7 @@ Elements::Elements() {
 	display = true; 
 	x = 0; 
 	y = 0; 
+	parent = NULL; 
 }; 
 
 int Elements::GetX() {

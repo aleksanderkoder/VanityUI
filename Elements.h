@@ -7,6 +7,8 @@
 
 class Division; 
 
+// ELEMENT CLASS DEFINITIONS 
+
 class Elements {
 	protected:
 		Elements();

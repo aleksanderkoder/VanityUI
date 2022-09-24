@@ -4,6 +4,7 @@
 int main(int argc, char* argv[])
 {
     Ivory::Setup(1920, 1080);
+    Ivory::DisableVsync(); 
 
     // Create a rendering context via Ivory. Can also pass an existing renderer to the Ivory Setup() method instead. 
     SDL_Renderer* renderer = Ivory::CreateRenderingContext("IVORY UI"); 
