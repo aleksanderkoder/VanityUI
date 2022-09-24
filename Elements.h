@@ -3,6 +3,10 @@
 #include "SDL_ttf.h"
 #include <string>
 
+// Forward declarations 
+
+class Division; 
+
 class Elements {
 	protected:
 		Elements();
@@ -15,38 +19,16 @@ class Elements {
 		int GetX();
 		int GetY();
 		bool GetDisplayState();
+		Division* GetParent(); 
 
 		// SET methods 
 		void SetPosition(int x, int y);
+		void SetParent(Division* parent); 
 
 		// Utility methods
 		void Show();
 		void Hide();
 
-};
-
-class Division : public Elements {	// TODO: Implement this! 
-	public: 
-		Division(int x, int y, int width, int height); 
-
-		// GET methods 
-		int GetWidth(); 
-		int GetHeight();
-
-		// SET methods 
-		void SetWidth(int width); 
-		void SetHeight(int height); 
-
-		// Utility methods 
-		void AddChild(Label* label);
-		void AddChild(Button* button);
-		void AddChild(Textbox* textbox);
-		void AddChild(Checkbox* checkbox);
-		void AddChild(Slider* slider);
-		void AddChild(Image* image);
-
-	private:
-		int width, height; 
 };
 
 class Button : public Elements {
@@ -210,5 +192,29 @@ class Image : public Elements {
 	private: 
 		int width, height; 
 		SDL_Texture* image; 
+};
+
+class Division : public Elements {
+	public:
+		Division(int x, int y, int width, int height);
+
+		// GET methods 
+		int GetWidth();
+		int GetHeight();
+
+		// SET methods 
+		void SetWidth(int width);
+		void SetHeight(int height);
+
+		// Utility methods 
+		void AddChild(Label* label);
+		void AddChild(Button* button);
+		void AddChild(Textbox* textbox);
+		void AddChild(Checkbox* checkbox);
+		void AddChild(Slider* slider);
+		void AddChild(Image* image);
+
+	private:
+		int width, height;
 };
 

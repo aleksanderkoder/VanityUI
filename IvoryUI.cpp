@@ -57,7 +57,7 @@ Label* Ivory::CreateLabel(std::string text, int x, int y, SDL_Color color, int f
 	return new Label(text, x, y, color, fontSize, fontPath);
 }
 
-Textbox* Ivory::CreateTextbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath) {
+Textbox* Ivory::CreateTextbox(std::string placeholder, int x, int y, int width, int height, int fontSize, int limit, std::string fontPath) {
 	return new Textbox(placeholder, width, height, x, y, fontSize, limit, fontPath);
 }
 
@@ -65,7 +65,7 @@ Checkbox* Ivory::CreateCheckbox(int x, int y, int size, bool defaultState) {
 	return new Checkbox(x, y, size, defaultState);
 }
 
-Button* Ivory::CreateButton(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath) {
+Button* Ivory::CreateButton(std::string label, int x, int y, int width, int height, int fontSize, std::string fontPath) {
 	return new Button(label, width, height, x, y, fontSize, fontPath);
 }
 
@@ -327,18 +327,12 @@ void Ivory::RenderImages() {
 
 		if (!curr->GetDisplayState()) continue;
 
-		// Get necessary data from current object
-		int x = curr->GetX();
-		int y = curr->GetY();
-		int width = curr->GetWidth();
-		int height = curr->GetHeight(); 
-
 		// Create checkbox rectangle data
 		SDL_Rect rect;
-		rect.w = width;
-		rect.h = height;
-		rect.x = x;
-		rect.y = y;
+		rect.w = curr->GetWidth();
+		rect.h = curr->GetHeight();
+		rect.x = curr->GetX();
+		rect.y = curr->GetY();
 
 		SDL_RenderCopy(targetRenderer, curr->GetImage(), NULL, &rect); 
 	}

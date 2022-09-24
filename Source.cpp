@@ -10,8 +10,8 @@ int main(int argc, char* argv[])
 
     SDL_Color black = { 0,0,0,255 };
     Label* l = Ivory::CreateLabel("Hello, Ivory!", 150, 150, black, 15, "C:\\Users\\neon1\\Documents\\IvoryUI\\x64\\Debug\\fonts\\OpenSans-Regular.ttf");
-    Button* b = Ivory::CreateButton("Hello, world!", 250, 50, 350, 150, 16);
-    auto tb = Ivory::CreateTextbox("Test charLimit", 250, 50, 650, 150, 16); 
+    Button* b = Ivory::CreateButton("Hello, world!", 350, 150, 250, 50, 16);
+    auto tb = Ivory::CreateTextbox("Test charLimit", 650, 150, 250, 50, 16);
     auto img = Ivory::CreateImage(950, 150, 50, 50, "db3991d70eff2556d448c9d911e71a11_400x400.jpeg");
     auto cb = Ivory::CreateCheckbox(950, 150, 50); 
 
