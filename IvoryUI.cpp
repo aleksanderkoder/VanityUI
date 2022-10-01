@@ -74,6 +74,10 @@ Image* Ivory::CreateImage(int x, int y, int width, int height, std::string image
 	return new Image(x, y, width, height, imagePath); 
 }
 
+Division* Ivory::CreateDivision(int x, int y, int width, int height) {
+	return new Division(x, y, width, height); 
+}
+
 // ELEMENT RENDERING METHODS 
 	// TODO: Make this render elements taken from pages!
 
@@ -85,7 +89,19 @@ void Ivory::RenderLabels() {
 
 		if (!curr->GetDisplayState()) continue;
 
-		RenderLabel(curr->GetText(), curr->GetX(), curr->GetY(), curr->GetColor(), curr->GetFont(), curr->GetFontSize());
+		int x = curr->GetX(); 
+		int y = curr->GetY();
+
+		if (Division* div = curr->GetParent()) {
+			if (div->GetDisplayState()) {
+				x += div->GetX();
+				y += div->GetY();
+			}
+			else
+				continue;
+		}
+
+		RenderLabel(curr->GetText(), x, y, curr->GetColor(), curr->GetFont(), curr->GetFontSize());
 	}
 }
 
@@ -97,11 +113,21 @@ void Ivory::RenderButtons() {
 
 		if (!curr->GetDisplayState()) continue;
 
+		int x;
+		int y;
+
+		if (Division* div = curr->GetParent()) {
+			if (div->GetDisplayState()) {
+				x = curr->GetX() + div->GetX();
+				y = curr->GetY() + div->GetY();
+			}
+			else
+				continue;
+		}
+
 		// Get necessary data from current object
 		int height = curr->GetHeight();
 		int width = curr->GetWidth();
-		int x = curr->GetX();
-		int y = curr->GetY();
 		SDL_Color color = curr->GetColor();
 		SDL_Color hoverColor = curr->GetHoverColor();
 		TTF_Font* font = curr->GetFont();
@@ -153,11 +179,21 @@ void Ivory::RenderTextboxes() {
 
 		if (!curr->GetDisplayState()) continue;
 
+		int x;
+		int y;
+
+		if (Division* div = curr->GetParent()) {
+			if (div->GetDisplayState()) {
+				x = curr->GetX() + div->GetX();
+				y = curr->GetY() + div->GetY();
+			}
+			else
+				continue;
+		}
+
 		// Get necessary data from current object
 		int height = curr->GetHeight();
 		int width = curr->GetWidth();
-		int x = curr->GetX();
-		int y = curr->GetY();
 		SDL_Color color = curr->GetColor();
 		SDL_Color hoverColor = curr->GetHoverColor();
 		TTF_Font* font = curr->GetFont();
@@ -246,10 +282,20 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 
 		if (!curr->GetDisplayState()) continue;
 
-		// Get necessary data from current object
-		int size = curr->GetSize();
 		int x = curr->GetX();
 		int y = curr->GetY();
+
+		if (Division* div = curr->GetParent()) {
+			if (div->GetDisplayState()) {
+				x += div->GetX();
+				y += div->GetY();
+			}
+			else
+				continue;
+		}
+
+		// Get necessary data from current object
+		int size = curr->GetSize();
 		bool checked = curr->IsChecked();
 		SDL_Color color = curr->GetColor();
 		SDL_Color checkmarkColor = curr->GetCheckmarkColor();
@@ -328,12 +374,24 @@ void Ivory::RenderImages() {
 
 		if (!curr->GetDisplayState()) continue;
 
+		int x = curr->GetX();
+		int y = curr->GetY();
+
+		if (Division* div = curr->GetParent()) {
+			if (div->GetDisplayState()) {
+				x += div->GetX();
+				y += div->GetY();
+			}
+			else
+				continue;
+		}
+
 		// Create checkbox rectangle data
 		SDL_Rect rect;
 		rect.w = curr->GetWidth();
 		rect.h = curr->GetHeight();
-		rect.x = curr->GetX();
-		rect.y = curr->GetY();
+		rect.x = x;
+		rect.y = y;
 
 		SDL_RenderCopy(targetRenderer, curr->GetImage(), NULL, &rect); 
 	}

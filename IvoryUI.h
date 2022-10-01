@@ -18,6 +18,7 @@ class Ivory
 		static Textbox* CreateTextbox(std::string placeholder, int x, int y, int width, int height, int fontSize = 12, int limit = NULL, std::string fontPath = "fonts/CascadiaCode.ttf");
 		static Checkbox* CreateCheckbox(int x, int y, int size, bool defaultState = false);
 		static Image* CreateImage(int x, int y, int width, int height, std::string imagePath); 
+		static Division* CreateDivision(int x, int y, int width, int height); 
 
 		// Page related methods 
 		static Page* CreatePage();

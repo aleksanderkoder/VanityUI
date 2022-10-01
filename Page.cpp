@@ -6,6 +6,7 @@ Page::Page() {
 	this->checkboxes = new std::vector<Checkbox*>();
 	this->textboxes = new std::vector<Textbox*>();
 	this->images = new std::vector<Image*>(); 
+	//this->divisions = new std::vector<Division*>();
 }
 
 void Page::AddElement(Button* button) {
@@ -27,6 +28,10 @@ void Page::AddElement(Textbox* textbox) {
 void Page::AddElement(Image* image) {
 	this->images->push_back(image);
 }
+
+//void Page::AddElement(Division* division) {
+//	this->divisions->push_back(division);
+//}
 
 void Page::RemoveElement(Button* button) {
 	auto btns = this->buttons;
@@ -71,6 +76,15 @@ void Page::RemoveElement(Image* image) {
 	}
 }
 
+//void Page::RemoveElement(Division* division) {
+//	auto divs = this->divisions;
+//	for (int i = 0; i < divs->size(); i++) {
+//		Division* curr = (*divs)[i];
+//		if (curr == division)
+//			divs->erase(divs->begin() + i);
+//	}
+//}
+
 std::vector<Button*>* Page::GetButtons() {
 	return this->buttons;
 }
@@ -90,3 +104,7 @@ std::vector<Textbox*>* Page::GetTextboxes() {
 std::vector<Image*>* Page::GetImages() {
 	return this->images;
 }
+
+//std::vector<Division*>* Page::GetDivisions() {
+//	return this->divisions;
+//}

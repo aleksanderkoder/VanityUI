@@ -14,7 +14,6 @@ Elements::Elements() {
 	display = true; 
 	x = 0; 
 	y = 0; 
-	parent = NULL; 
 }; 
 
 int Elements::GetX() {
@@ -31,17 +30,8 @@ void Elements::SetPosition(int x, int y) {
 	Ivory::Rerender();
 }
 
-void Elements::SetParent(Division* parent) {
-	this->parent = parent; 
-	Ivory::Rerender(); 
-}
-
 bool Elements::GetDisplayState() {
 	return this->display;
-}
-
-Division* Elements::GetParent() {
-	return this->parent; 
 }
 
 void Elements::Show() {
@@ -54,61 +44,18 @@ void Elements::Hide() {
 	Ivory::Rerender();
 }
 
-// DIVISION
 
-Division::Division(int x, int y, int width, int height) {
-	this->x = x; 
-	this->y = y; 
-	this->width = width; 
-	this->height = height; 
+Parentable::Parentable() {
+	parent = NULL;
 }
 
-int Division::GetWidth() {
-	return this->width; 
+Division* Parentable::GetParent() {
+	return this->parent;
 }
 
-int Division::GetHeight() {
-	return this->height;
-}
-
-void Division::SetWidth(int width) {
-	this->width = width;
-	Ivory::Rerender(); 
-}
-
-void Division::SetHeight(int height) {
-	this->height = height;
+void Parentable::SetParent(Division* parent) {
+	this->parent = parent;
 	Ivory::Rerender();
-}
-
-void Division::AddChild(Label* label) {
-	label->SetParent(this); 
-	Ivory::Rerender();
-}
-
-void Division::AddChild(Button* button) {
-	button->SetParent(this);
-	Ivory::Rerender();
-}
-
-void Division::AddChild(Textbox* textbox) {
-	textbox->SetParent(this);
-	Ivory::Rerender();
-}
-
-void Division::AddChild(Checkbox* checkbox) {
-	checkbox->SetParent(this);
-	Ivory::Rerender();
-}
-
-void Division::AddChild(Slider* slider) {
-	slider->SetParent(this);
-	Ivory::Rerender();
-}
-
-void Division::AddChild(Image* image) {
-	image->SetParent(this);
-	Ivory::Rerender(); 
 }
 
 // BUTTON
@@ -544,5 +491,62 @@ void Image::SetWidth(int width) {
 
 void Image::SetHeight(int height) {
 	this->height = height;
+	Ivory::Rerender();
+}
+
+// DIVISION
+
+Division::Division(int x, int y, int width, int height) {
+	this->x = x;
+	this->y = y;
+	this->width = width;
+	this->height = height;
+}
+
+int Division::GetWidth() {
+	return this->width;
+}
+
+int Division::GetHeight() {
+	return this->height;
+}
+
+void Division::SetWidth(int width) {
+	this->width = width;
+	Ivory::Rerender();
+}
+
+void Division::SetHeight(int height) {
+	this->height = height;
+	Ivory::Rerender();
+}
+
+void Division::AddChild(Label* label) {
+	label->SetParent(this);
+	Ivory::Rerender();
+}
+
+void Division::AddChild(Button* button) {
+	button->SetParent(this);
+	Ivory::Rerender();
+}
+
+void Division::AddChild(Textbox* textbox) {
+	textbox->SetParent(this);
+	Ivory::Rerender();
+}
+
+void Division::AddChild(Checkbox* checkbox) {
+	checkbox->SetParent(this);
+	Ivory::Rerender();
+}
+
+void Division::AddChild(Slider* slider) {
+	slider->SetParent(this);
+	Ivory::Rerender();
+}
+
+void Division::AddChild(Image* image) {
+	image->SetParent(this);
 	Ivory::Rerender();
 }

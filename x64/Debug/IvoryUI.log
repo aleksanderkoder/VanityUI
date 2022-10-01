@@ -1,2 +1,10 @@
-﻿  Source.cpp
+﻿  Elements.cpp
+  IvoryUI.cpp
+C:\Users\neon1\Documents\IvoryUI\IvoryUI.cpp(335,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\neon1\Documents\IvoryUI\IvoryUI.cpp(336,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\neon1\Documents\IvoryUI\IvoryUI.cpp(337,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\neon1\Documents\IvoryUI\IvoryUI.cpp(338,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Page.cpp
+  Source.cpp
+  Generating Code...
   IvoryUI.vcxproj -> C:\Users\neon1\Documents\IvoryUI\x64\Debug\IvoryUI.exe

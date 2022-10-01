@@ -16,6 +16,13 @@ int main(int argc, char* argv[])
     auto img = Ivory::CreateImage(950, 150, 50, 50, "db3991d70eff2556d448c9d911e71a11_400x400.jpeg");
     auto cb = Ivory::CreateCheckbox(950, 150, 50); 
 
+    auto div = Ivory::CreateDivision(300, 300, 600, 600);
+    div->Hide(); 
+    div->AddChild(b); 
+    div->AddChild(tb); 
+    div->AddChild(img); 
+    div->AddChild(l); 
+
     Page* p = Ivory::CreatePage();
     Page* p2 = Ivory::CreatePage();
 

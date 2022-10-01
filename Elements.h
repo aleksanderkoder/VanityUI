@@ -14,18 +14,15 @@ class Elements {
 		Elements();
 		int x, y;
 		bool display;
-		Division* parent; 
 
 	public:
 		// GET methods 
 		int GetX();
 		int GetY();
 		bool GetDisplayState();
-		Division* GetParent(); 
 
 		// SET methods 
 		void SetPosition(int x, int y);
-		void SetParent(Division* parent); 
 
 		// Utility methods
 		void Show();
@@ -33,7 +30,22 @@ class Elements {
 
 };
 
-class Button : public Elements {
+// A class that enables other classes, that inherit this class, to have a parent division
+class Parentable {
+	protected:
+		Parentable(); 
+		Division* parent; 
+
+	public:
+		// GET methods 
+		Division* GetParent();
+
+		// SET methods
+		void SetParent(Division* parent);
+
+};
+
+class Button : public Elements, public Parentable {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
@@ -67,7 +79,7 @@ class Button : public Elements {
 		bool pressed;
 };
 
-class Textbox : public Elements {
+class Textbox : public Elements, public Parentable {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
@@ -101,7 +113,7 @@ class Textbox : public Elements {
 
 };
 
-class Label : public Elements {
+class Label : public Elements, public Parentable {
 	public:
 		Label(std::string text, int x, int y, SDL_Color color, int fontSize, std::string fontPath);
 
@@ -123,7 +135,7 @@ class Label : public Elements {
 		int fontSize;
 };
 
-class Checkbox : public Elements {
+class Checkbox : public Elements, public Parentable {
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
@@ -149,7 +161,7 @@ class Checkbox : public Elements {
 		SDL_Color color, checkmarkColor, hoverColor;
 };
 
-class Slider : public Elements {
+class Slider : public Elements, public Parentable {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
@@ -178,7 +190,7 @@ class Slider : public Elements {
 		SDL_Color color, hoverColor, thumbColor;
 };
 
-class Image : public Elements {
+class Image : public Elements, public Parentable {
 	public: 
 		Image(int x, int y, int width, int height, std::string imagePath); 
 
@@ -214,7 +226,7 @@ class Division : public Elements {
 		void AddChild(Textbox* textbox);
 		void AddChild(Checkbox* checkbox);
 		void AddChild(Slider* slider);
-		void AddChild(Image* image);
+		void AddChild(Image* image); 
 
 	private:
 		int width, height;
