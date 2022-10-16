@@ -46,7 +46,7 @@ void Elements::Hide() {
 
 
 Parentable::Parentable() {
-	parent = NULL;
+	parent = nullptr;
 }
 
 Division* Parentable::GetParent() {
@@ -75,7 +75,7 @@ Button::Button(std::string label, int width, int height, int x, int y, int fontS
 
 	if (!(this->font = TTF_OpenFont(fontPath.c_str(), fontSize))) {
 		char t[] = "Font error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
 		exit(0);
 	}
 }
@@ -175,7 +175,7 @@ Textbox::Textbox(std::string placeholder, int width, int height, int x, int y, i
 
 	if (!(this->font = TTF_OpenFont(fontPath.c_str(), fontSize))) {
 		char t[] = "Font error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
 		exit(0);
 	}
 }
@@ -273,7 +273,7 @@ Label::Label(std::string text, int x, int y, SDL_Color color, int fontSize, std:
 
 	if (!(this->font = TTF_OpenFont(fontPath.c_str(), fontSize))) {
 		char t[] = "Font error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
 		exit(0);
 	}
 }
@@ -501,6 +501,8 @@ Division::Division(int x, int y, int width, int height) {
 	this->y = y;
 	this->width = width;
 	this->height = height;
+	SDL_Color bColor = { 0, 0, 0, 50 }; 
+	this->backgroundColor = bColor; 
 }
 
 int Division::GetWidth() {
@@ -511,6 +513,10 @@ int Division::GetHeight() {
 	return this->height;
 }
 
+SDL_Color Division::GetBackgroundColor() {
+	return this->backgroundColor;
+}
+
 void Division::SetWidth(int width) {
 	this->width = width;
 	Ivory::Rerender();
@@ -519,6 +525,10 @@ void Division::SetWidth(int width) {
 void Division::SetHeight(int height) {
 	this->height = height;
 	Ivory::Rerender();
+}
+
+void Division::SetBackgroundColor(SDL_Color* color) {
+	this->backgroundColor = *color;
 }
 
 void Division::AddChild(Label* label) {
@@ -548,5 +558,10 @@ void Division::AddChild(Slider* slider) {
 
 void Division::AddChild(Image* image) {
 	image->SetParent(this);
+	Ivory::Rerender();
+}
+
+void Division::AddChild(Division* division) {
+	division->SetParent(this);
 	Ivory::Rerender();
 }

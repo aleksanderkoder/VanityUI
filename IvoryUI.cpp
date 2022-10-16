@@ -2,16 +2,16 @@
 
 #include "IvoryUI.h"
 
-SDL_Renderer* Ivory::targetRenderer = NULL;
+SDL_Renderer* Ivory::targetRenderer = nullptr;
 Uint32 Ivory::delta, Ivory::textboxCursorDelta;
-Textbox* Ivory::activeTextbox = NULL;
+Textbox* Ivory::activeTextbox = nullptr;
 char Ivory::lastPressedKey;
 bool Ivory::leftMouseButtonPressedState = false, Ivory::leftMouseButtonPressedLastState = false,
 Ivory::isRunning = false, Ivory::drawTextBoxCursor = true, Ivory::capsLockEnabled = false, Ivory::rerender = false,
 Ivory::vsync = true; 
 int Ivory::viewportWidth = 0, Ivory::viewportHeight = 0;
-SDL_Texture* Ivory::snapshotFrame = NULL;
-Page* Ivory::currentPage = NULL;
+SDL_Texture* Ivory::snapshotFrame = nullptr;
+Page* Ivory::currentPage = nullptr;
 
 // LIBRARY SETUP METHODS
 
@@ -19,21 +19,21 @@ void Ivory::Setup(int viewWidth, int viewHeight, SDL_Renderer* renderer) {
 	// Initializes the SDL2 library
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		char t[] = "Initialization error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, SDL_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, SDL_GetError(), nullptr);
 		exit(0);
 	}
 
 	// Initializes the SDL font library
 	if (TTF_Init() < 0) {
 		char t[] = "TTF error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
 		exit(0);
 	}	
 
 	// Initializes the SDL image library
 	if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_WEBP) < 0) {
 		char t[] = "IMG error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, IMG_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, IMG_GetError(), nullptr);
 		exit(0);
 	}	
 
@@ -87,19 +87,19 @@ void Ivory::RenderLabels() {
 	for (int i = 0; i < labels->size(); i++) {
 		Label* curr = (*labels)[i];
 
-		if (!curr->GetDisplayState()) continue;
-
 		int x = curr->GetX(); 
 		int y = curr->GetY();
 
-		if (Division* div = curr->GetParent()) {
-			if (div->GetDisplayState()) {
-				x += div->GetX();
-				y += div->GetY();
-			}
-			else
-				continue;
+		Division* parent = curr->GetParent();
+		bool display = curr->GetDisplayState();
+		while (parent) {
+			x += parent->GetX();
+			y += parent->GetY();
+			if (!parent->GetDisplayState()) display = false;
+			parent = parent->GetParent();
 		}
+
+		if (!display) continue;
 
 		RenderLabel(curr->GetText(), x, y, curr->GetColor(), curr->GetFont(), curr->GetFontSize());
 	}
@@ -111,19 +111,19 @@ void Ivory::RenderButtons() {
 	for (int i = 0; i < buttons->size(); i++) {
 		Button* curr = (*buttons)[i];
 
-		if (!curr->GetDisplayState()) continue;
+		int x = curr->GetX();
+		int y = curr->GetY();
 
-		int x;
-		int y;
-
-		if (Division* div = curr->GetParent()) {
-			if (div->GetDisplayState()) {
-				x = curr->GetX() + div->GetX();
-				y = curr->GetY() + div->GetY();
-			}
-			else
-				continue;
+		Division* parent = curr->GetParent();
+		bool display = curr->GetDisplayState();
+		while (parent) {
+			x += parent->GetX();
+			y += parent->GetY();
+			if (!parent->GetDisplayState()) display = false;
+			parent = parent->GetParent();
 		}
+
+		if (!display) continue;
 
 		// Get necessary data from current object
 		int height = curr->GetHeight();
@@ -150,7 +150,7 @@ void Ivory::RenderButtons() {
 		if (mHover && leftMouseButtonPressedState) {
 			curr->SetPressedState(true);
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
-			activeTextbox = NULL;
+			activeTextbox = nullptr;
 		}
 		// If mouse hovers over
 		else if (mHover) {
@@ -177,19 +177,19 @@ void Ivory::RenderTextboxes() {
 	for (int i = 0; i < textboxes->size(); i++) {
 		Textbox* curr = (*textboxes)[i];
 
-		if (!curr->GetDisplayState()) continue;
+		int x = curr->GetX();
+		int y = curr->GetY();
 
-		int x;
-		int y;
-
-		if (Division* div = curr->GetParent()) {
-			if (div->GetDisplayState()) {
-				x = curr->GetX() + div->GetX();
-				y = curr->GetY() + div->GetY();
-			}
-			else
-				continue;
+		Division* parent = curr->GetParent();
+		bool display = curr->GetDisplayState();
+		while (parent) {
+			x += parent->GetX();
+			y += parent->GetY();
+			if (!parent->GetDisplayState()) display = false;
+			parent = parent->GetParent();
 		}
+
+		if (!display) continue;
 
 		// Get necessary data from current object
 		int height = curr->GetHeight();
@@ -280,19 +280,19 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 	for (int i = 0; i < checkboxes->size(); i++) {
 		Checkbox* curr = (*checkboxes)[i];
 
-		if (!curr->GetDisplayState()) continue;
-
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		if (Division* div = curr->GetParent()) {
-			if (div->GetDisplayState()) {
-				x += div->GetX();
-				y += div->GetY();
-			}
-			else
-				continue;
+		Division* parent = curr->GetParent();
+		bool display = curr->GetDisplayState();
+		while (parent) {
+			x += parent->GetX();
+			y += parent->GetY();
+			if (!parent->GetDisplayState()) display = false;
+			parent = parent->GetParent();
 		}
+
+		if (!display) continue;
 
 		// Get necessary data from current object
 		int size = curr->GetSize();
@@ -317,7 +317,7 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 		if (mHover && leftMouseButtonPressedState) {
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
 			curr->SetState(!checked);
-			activeTextbox = NULL;
+			activeTextbox = nullptr;
 		}
 		// If mouse hovers over
 		else if (mHover) {
@@ -359,7 +359,7 @@ void Ivory::RenderLabel(std::string text, int x, int y, SDL_Color color, TTF_Fon
 	message_rect.w = surfaceMessage->w;
 	message_rect.h = surfaceMessage->h;
 
-	SDL_RenderCopy(targetRenderer, message, NULL, &message_rect);
+	SDL_RenderCopy(targetRenderer, message, nullptr, &message_rect);
 
 	// Frees resources 
 	SDL_FreeSurface(surfaceMessage);
@@ -368,37 +368,71 @@ void Ivory::RenderLabel(std::string text, int x, int y, SDL_Color color, TTF_Fon
 
 void Ivory::RenderImages() {
 	auto imgs = currentPage->GetImages();
-	// Loop through all checkboxes
+	// Loop through all images 
 	for (int i = 0; i < imgs->size(); i++) {
 		Image* curr = (*imgs)[i];
-
-		if (!curr->GetDisplayState()) continue;
 
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		if (Division* div = curr->GetParent()) {
-			if (div->GetDisplayState()) {
-				x += div->GetX();
-				y += div->GetY();
-			}
-			else
-				continue;
+		Division* parent = curr->GetParent();
+		bool display = curr->GetDisplayState();
+		while (parent) {
+			x += parent->GetX();
+			y += parent->GetY();
+			if (!parent->GetDisplayState()) display = false;
+			parent = parent->GetParent();
 		}
 
-		// Create checkbox rectangle data
+		if (!display) continue;
+
+		// Create image rectangle data
 		SDL_Rect rect;
 		rect.w = curr->GetWidth();
 		rect.h = curr->GetHeight();
 		rect.x = x;
 		rect.y = y;
 
-		SDL_RenderCopy(targetRenderer, curr->GetImage(), NULL, &rect); 
+		SDL_RenderCopy(targetRenderer, curr->GetImage(), nullptr, &rect); 
+	}
+}
+
+void Ivory::RenderDivisions() {
+	auto divs = currentPage->GetDivisions(); 
+	// Loop through all divisions 
+	for (int i = 0; i < divs->size(); i++) {
+		Division* curr = (*divs)[i];
+
+		int x = curr->GetX();
+		int y = curr->GetY();
+
+		Division* parent = curr->GetParent();
+		bool display = curr->GetDisplayState(); 
+		while (parent) {
+			x += parent->GetX();
+			y += parent->GetY();
+			if (!parent->GetDisplayState()) display = false; 
+			parent = parent->GetParent();
+		}
+
+		if (!display) continue;
+
+		// Create image rectangle data
+		SDL_Rect rect;
+		rect.w = curr->GetWidth();
+		rect.h = curr->GetHeight();
+		rect.x = x;
+		rect.y = y;
+
+		auto color = curr->GetBackgroundColor(); 
+		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
+		SDL_RenderFillRect(targetRenderer, &rect); 
 	}
 }
 
 void Ivory::Render() {
 	UpdateMouseButtonState();
+	RenderDivisions(); 
 	RenderLabels();
 	RenderButtons();
 	RenderTextboxes();
@@ -553,7 +587,7 @@ bool Ivory::OnMouseHover(int x, int y, int width, int height) {
 }
 
 void Ivory::UpdateMouseButtonState() {
-	Uint32 mb = SDL_GetMouseState(NULL, NULL);
+	Uint32 mb = SDL_GetMouseState(nullptr, nullptr);
 	if (mb == SDL_BUTTON(1) && !leftMouseButtonPressedLastState) {
 		leftMouseButtonPressedLastState = true;
 		leftMouseButtonPressedState = true;
@@ -572,7 +606,7 @@ TTF_Font* Ivory::OpenFont(std::string fontUrl, int size) {
 	TTF_Font* font = TTF_OpenFont(fontUrl.c_str(), size);
 	if (!font) {
 		char t[] = "Font error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
 		exit(0);
 	}
 	return font;
@@ -604,10 +638,10 @@ void Ivory::finalizeNewSnapshotFrame() {
 	rect.y = 0;
 
 	// Return drawing focus to screen 
-	SDL_SetRenderTarget(targetRenderer, NULL);
+	SDL_SetRenderTarget(targetRenderer, nullptr);
 	//Mildred::SetRenderDrawColor(255, 255, 255, 255);
 	// Draw texture to screen
-	SDL_RenderCopy(targetRenderer, snapshotFrame, NULL, &rect);
+	SDL_RenderCopy(targetRenderer, snapshotFrame, nullptr, &rect);
 
 }
 
@@ -619,7 +653,7 @@ SDL_Texture* Ivory::LoadImage(std::string imagePath) {
 	SDL_Texture* image = IMG_LoadTexture(targetRenderer, imagePath.c_str());
 	if (!image) {
 		char t[] = "Image error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, IMG_GetError(), NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, IMG_GetError(), nullptr);
 		exit(0);
 	}
 	return image;
@@ -671,7 +705,7 @@ SDL_Renderer* Ivory::CreateRenderingContext(std::string title) {
 	//SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	// NOTE: Remove SDL_RENDERER_PRESENTVSYNC flag to turn off v-sync
-	SDL_Renderer* renderer = NULL; 
+	SDL_Renderer* renderer = nullptr; 
 
 	if (vsync)
 		renderer = SDL_CreateRenderer(window, deviceIndex, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);

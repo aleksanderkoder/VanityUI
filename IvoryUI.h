@@ -9,7 +9,7 @@ class Ivory
 {
 	public:
 		// Library setup methods 
-		static void Setup(int viewWidth, int viewHeight, SDL_Renderer* targetRenderer = NULL);
+		static void Setup(int viewWidth, int viewHeight, SDL_Renderer* targetRenderer = nullptr);
 		static void SetRenderTarget(SDL_Renderer* renderer);
 
 		// Element creation methods 
@@ -68,4 +68,5 @@ class Ivory
 		static void RenderLabels();
 		static void RenderCheckboxes();
 		static void RenderImages(); 
+		static void RenderDivisions();
 };

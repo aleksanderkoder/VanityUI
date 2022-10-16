@@ -30,7 +30,7 @@ class Elements {
 
 };
 
-// A class that enables other classes, that inherit this class, to have a parent division
+// A class that enables other classes (that inherit this class) to have a parent division
 class Parentable {
 	protected:
 		Parentable(); 
@@ -208,17 +208,19 @@ class Image : public Elements, public Parentable {
 		SDL_Texture* image; 
 };
 
-class Division : public Elements {
+class Division : public Elements, public Parentable {
 	public:
 		Division(int x, int y, int width, int height);
 
 		// GET methods 
 		int GetWidth();
 		int GetHeight();
+		SDL_Color GetBackgroundColor();
 
 		// SET methods 
 		void SetWidth(int width);
 		void SetHeight(int height);
+		void SetBackgroundColor(SDL_Color* color); 
 
 		// Utility methods 
 		void AddChild(Label* label);
@@ -227,8 +229,10 @@ class Division : public Elements {
 		void AddChild(Checkbox* checkbox);
 		void AddChild(Slider* slider);
 		void AddChild(Image* image); 
+		void AddChild(Division* division);
 
 	private:
 		int width, height;
+		SDL_Color backgroundColor; 
 };
 
