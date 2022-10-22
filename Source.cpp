@@ -10,11 +10,11 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer = Ivory::CreateRenderingContext("IVORY UI"); 
 
     SDL_Color black = { 0,0,0,255 };
-    Label* l = Ivory::CreateLabel("Hello, Ivory!", 0, 0, black, 15, "C:\\Users\\neon1\\Documents\\IvoryUI\\x64\\Debug\\fonts\\OpenSans-Regular.ttf");
-    Button* b = Ivory::CreateButton("Hello, world!", 250, 0, 250, 50, 16);
-    auto tb = Ivory::CreateTextbox("Test charLimit", 650, 0, 250, 50, 16);
-    auto img = Ivory::CreateImage(950, 0, 50, 50, "db3991d70eff2556d448c9d911e71a11_400x400.jpeg");
-    auto cb = Ivory::CreateCheckbox(950, 0, 50); 
+    Label* l = Ivory::CreateLabel("Hello, Ivory!");
+    Button* b = Ivory::CreateButton("A button", 150);
+    auto tb = Ivory::CreateTextbox("Text char limit", 350);
+    auto img = Ivory::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
+    auto cb = Ivory::CreateCheckbox(550); 
 
     auto div = Ivory::CreateDivision(0, 0, 600, 600);
     auto div2 = Ivory::CreateDivision(100, 100, 200, 200);
@@ -26,6 +26,7 @@ int main(int argc, char* argv[])
     div3->AddChild(tb); 
     div3->AddChild(img); 
     div3->AddChild(l); 
+    div3->AddChild(cb); 
 
     Page* p = Ivory::CreatePage();
     Page* p2 = Ivory::CreatePage();

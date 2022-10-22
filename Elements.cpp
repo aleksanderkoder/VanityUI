@@ -463,7 +463,7 @@ void Slider::SetValue(int value) {
 
 // IMAGE 
 
-Image::Image(int x, int y, int width, int height, std::string imagePath) {
+Image::Image(std::string imagePath, int x, int y, int width, int height) {
 	this->x = x; 
 	this->y = y; 
 	this->width = width; 

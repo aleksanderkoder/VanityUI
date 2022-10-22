@@ -70,8 +70,8 @@ Button* Ivory::CreateButton(std::string label, int x, int y, int width, int heig
 	return new Button(label, width, height, x, y, fontSize, fontPath);
 }
 
-Image* Ivory::CreateImage(int x, int y, int width, int height, std::string imagePath) {
-	return new Image(x, y, width, height, imagePath); 
+Image* Ivory::CreateImage(std::string imagePath, int x, int y, int width, int height) {
+	return new Image(imagePath, x, y, width, height);
 }
 
 Division* Ivory::CreateDivision(int x, int y, int width, int height) {

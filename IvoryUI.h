@@ -13,12 +13,12 @@ class Ivory
 		static void SetRenderTarget(SDL_Renderer* renderer);
 
 		// Element creation methods 
-		static Label* CreateLabel(std::string text, int x, int y, SDL_Color color, int fontSize = 12, std::string fontPath = "fonts/CascadiaCode.ttf");
-		static Button* CreateButton(std::string label, int x, int y, int width, int height, int fontSize = 12, std::string fontPath = "fonts/CascadiaCode.ttf");
-		static Textbox* CreateTextbox(std::string placeholder, int x, int y, int width, int height, int fontSize = 12, int limit = NULL, std::string fontPath = "fonts/CascadiaCode.ttf");
-		static Checkbox* CreateCheckbox(int x, int y, int size, bool defaultState = false);
-		static Image* CreateImage(int x, int y, int width, int height, std::string imagePath); 
-		static Division* CreateDivision(int x, int y, int width, int height); 
+		static Label* CreateLabel(std::string text = "Label", int x = 0, int y = 0, SDL_Color color = { 0, 0, 0, 255}, int fontSize = 12, std::string fontPath = "fonts/CascadiaCode.ttf");
+		static Button* CreateButton(std::string label = "Button", int x = 0, int y = 0, int width = 150, int height = 50, int fontSize = 12, std::string fontPath = "fonts/CascadiaCode.ttf");
+		static Textbox* CreateTextbox(std::string placeholder = "Textbox", int x = 0, int y = 0, int width = 150, int height = 50, int fontSize = 12, int limit = NULL, std::string fontPath = "fonts/CascadiaCode.ttf");
+		static Checkbox* CreateCheckbox(int x = 0, int y = 0, int size = 20, bool defaultState = false);
+		static Image* CreateImage(std::string imagePath, int x = 0, int y = 0, int width = 100, int height = 100);
+		static Division* CreateDivision(int x = 0, int y = 0, int width = 100, int height = 100); 
 
 		// Page related methods 
 		static Page* CreatePage();

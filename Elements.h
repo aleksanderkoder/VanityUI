@@ -192,7 +192,7 @@ class Slider : public Elements, public Parentable {
 
 class Image : public Elements, public Parentable {
 	public: 
-		Image(int x, int y, int width, int height, std::string imagePath); 
+		Image(std::string imagePath, int x, int y, int width, int height);
 
 		// GET methods 
 		int GetWidth();
