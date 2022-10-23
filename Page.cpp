@@ -6,6 +6,7 @@ Page::Page() {
 	this->checkboxes = new std::vector<Checkbox*>();
 	this->textboxes = new std::vector<Textbox*>();
 	this->images = new std::vector<Image*>(); 
+	this->sliders = new std::vector<Slider*>(); 
 	this->divisions = new std::vector<Division*>();
 }
 
@@ -27,6 +28,10 @@ void Page::AddElement(Textbox* textbox) {
 
 void Page::AddElement(Image* image) {
 	this->images->push_back(image);
+}
+
+void Page::AddElement(Slider* slider) {
+	this->sliders->push_back(slider);
 }
 
 void Page::AddElement(Division* division) {
@@ -76,6 +81,15 @@ void Page::RemoveElement(Image* image) {
 	}
 }
 
+void Page::RemoveElement(Slider* slider) {
+	auto sliders = this->sliders;
+	for (int i = 0; i < sliders->size(); i++) {
+		Slider* curr = (*sliders)[i];
+		if (curr == slider)
+			sliders->erase(sliders->begin() + i);
+	}
+}
+
 void Page::RemoveElement(Division* division) {
 	auto divs = this->divisions;
 	for (int i = 0; i < divs->size(); i++) {
@@ -103,6 +117,10 @@ std::vector<Textbox*>* Page::GetTextboxes() {
 
 std::vector<Image*>* Page::GetImages() {
 	return this->images;
+}
+
+std::vector<Slider*>* Page::GetSliders() {
+	return this->sliders;
 }
 
 std::vector<Division*>* Page::GetDivisions() {

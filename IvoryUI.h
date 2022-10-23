@@ -18,6 +18,7 @@ class Ivory
 		static Textbox* CreateTextbox(std::string placeholder = "Textbox", int x = 0, int y = 0, int width = 150, int height = 50, int fontSize = 12, int limit = NULL, std::string fontPath = "fonts/CascadiaCode.ttf");
 		static Checkbox* CreateCheckbox(int x = 0, int y = 0, int size = 20, bool defaultState = false);
 		static Image* CreateImage(std::string imagePath, int x = 0, int y = 0, int width = 100, int height = 100);
+		static Slider* CreateSlider(int x = 0, int y = 0, int width = 120, int height = 20, int thumbWidth = 20, int thumbHeight = 20); 
 		static Division* CreateDivision(int x = 0, int y = 0, int width = 100, int height = 100); 
 
 		// Page related methods 
@@ -68,5 +69,6 @@ class Ivory
 		static void RenderLabels();
 		static void RenderCheckboxes();
 		static void RenderImages(); 
+		static void RenderSliders(); 
 		static void RenderDivisions();
 };

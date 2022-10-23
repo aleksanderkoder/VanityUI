@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
     auto tb = Ivory::CreateTextbox("Text char limit", 350);
     auto img = Ivory::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
     auto cb = Ivory::CreateCheckbox(550); 
+    auto sl = Ivory::CreateSlider(650, 500, 250, 20, 60, 60); 
 
     auto div = Ivory::CreateDivision(0, 0, 600, 600);
     auto div2 = Ivory::CreateDivision(100, 100, 200, 200);
@@ -38,6 +39,7 @@ int main(int argc, char* argv[])
     p->AddElement(div);
     p->AddElement(div2); 
     p->AddElement(div3); 
+    p->AddElement(sl); 
 
     p2->AddElement(b); 
 

@@ -370,6 +370,39 @@ bool Checkbox::IsChecked() {
 	return this->checked;
 }
 
+// IMAGE 
+
+Image::Image(std::string imagePath, int x, int y, int width, int height) {
+	this->x = x; 
+	this->y = y; 
+	this->width = width; 
+	this->height = height;
+	this->display = true; 
+	this->image = Ivory::LoadImage(imagePath); 
+}
+
+int Image::GetWidth() {
+	return this->width; 
+}
+
+int Image::GetHeight() {
+	return this->height;
+}
+
+SDL_Texture* Image::GetImage() {
+	return this->image; 
+}
+
+void Image::SetWidth(int width) {
+	this->width = width; 
+	Ivory::Rerender();
+}
+
+void Image::SetHeight(int height) {
+	this->height = height;
+	Ivory::Rerender();
+}
+
 // SLIDER
 
 Slider::Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight) {
@@ -458,39 +491,6 @@ void Slider::SetHeight(int height) {
 
 void Slider::SetValue(int value) {
 	this->value = value;
-	Ivory::Rerender();
-}
-
-// IMAGE 
-
-Image::Image(std::string imagePath, int x, int y, int width, int height) {
-	this->x = x; 
-	this->y = y; 
-	this->width = width; 
-	this->height = height;
-	this->display = true; 
-	this->image = Ivory::LoadImage(imagePath); 
-}
-
-int Image::GetWidth() {
-	return this->width; 
-}
-
-int Image::GetHeight() {
-	return this->height;
-}
-
-SDL_Texture* Image::GetImage() {
-	return this->image; 
-}
-
-void Image::SetWidth(int width) {
-	this->width = width; 
-	Ivory::Rerender();
-}
-
-void Image::SetHeight(int height) {
-	this->height = height;
 	Ivory::Rerender();
 }
 

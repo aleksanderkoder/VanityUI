@@ -74,12 +74,15 @@ Image* Ivory::CreateImage(std::string imagePath, int x, int y, int width, int he
 	return new Image(imagePath, x, y, width, height);
 }
 
+Slider* Ivory::CreateSlider(int x, int y, int width, int height, int thumbWidth, int thumbHeight) {
+	return new Slider(x, y, width, height, thumbWidth, thumbHeight); 
+}
+
 Division* Ivory::CreateDivision(int x, int y, int width, int height) {
 	return new Division(x, y, width, height); 
 }
 
 // ELEMENT RENDERING METHODS 
-	// TODO: Make this render elements taken from pages!
 
 void Ivory::RenderLabels() {
 	auto labels = currentPage->GetLabels();
@@ -397,6 +400,74 @@ void Ivory::RenderImages() {
 	}
 }
 
+void Ivory::RenderSliders() {
+	auto sliders = currentPage->GetSliders(); 
+
+	for (int i = 0; i < sliders->size(); i++) {
+		Slider* curr = (*sliders)[i];
+
+		int x = curr->GetX();
+		int y = curr->GetY();
+
+		Division* parent = curr->GetParent();
+		bool display = curr->GetDisplayState();
+		while (parent) {
+			x += parent->GetX();
+			y += parent->GetY();
+			if (!parent->GetDisplayState()) display = false;
+			parent = parent->GetParent();
+		}
+
+		if (!display) continue;
+
+		int width = curr->GetWidth(); 
+		int height = curr->GetHeight(); 
+		int thumbHeight = curr->GetThumbHeight(); 
+
+		// Create slider rectangle data
+		SDL_Rect rect;
+		rect.w = width;
+		rect.h = height;
+		rect.x = x;
+		rect.y = y;
+
+		bool baseHover = OnMouseHover(x, y, width, height);
+		//bool thumbHover = onMouseHover()	// TODO: See if mouse also hovers over thumb
+
+		SDL_Color color = curr->GetColor(); 
+
+		SDL_RenderFillRect(targetRenderer, &rect); 
+
+		// If mouse doesn't hover over slider, default idle state
+		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
+
+		color = curr->GetThumbColor(); 
+		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
+
+		// If mouse hovers over slider and activates
+		//if (baseHover && leftMouseButtonPressedState) {
+			// Calculate what the new value should be 
+			int mx; 
+			Uint32 mb = SDL_GetMouseState(&mx, nullptr);
+			rect.w = curr->GetThumbWidth(); 
+			rect.h = thumbHeight;
+			rect.x = mx - rect.w / 2; 
+			rect.y = rect.y + height / 2 - thumbHeight / 2;	// Maybe not right!
+			SDL_RenderFillRect(targetRenderer, &rect);
+			//int value = 
+			/*curr->SetState(!checked);
+			activeTextbox = nullptr;*/
+		//}
+		// If mouse hovers over
+		//else if (baseHover) {
+			/*if (!leftMouseButtonPressedLastState)
+				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
+			else
+				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);*/
+		//}
+	}
+}
+
 void Ivory::RenderDivisions() {
 	auto divs = currentPage->GetDivisions(); 
 	// Loop through all divisions 
@@ -437,6 +508,7 @@ void Ivory::Render() {
 	RenderButtons();
 	RenderTextboxes();
 	RenderCheckboxes();
+	RenderSliders(); 
 	RenderImages(); 
 }
 

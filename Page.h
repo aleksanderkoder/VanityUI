@@ -10,6 +10,7 @@ private:
 	std::vector<Checkbox*>* checkboxes;
 	std::vector<Textbox*>* textboxes;
 	std::vector<Image*>* images; 
+	std::vector<Slider*>* sliders;
 	std::vector<Division*>* divisions; 
 
 public:
@@ -20,6 +21,7 @@ public:
 	void AddElement(Checkbox* checkbox);
 	void AddElement(Textbox* textbox); 
 	void AddElement(Image* image);
+	void AddElement(Slider* slider); 
 	void AddElement(Division* division); 
 
 	void RemoveElement(Button* button);
@@ -27,6 +29,7 @@ public:
 	void RemoveElement(Checkbox* checkbox);
 	void RemoveElement(Textbox* textbox);
 	void RemoveElement(Image* image);
+	void RemoveElement(Slider* slider); 
 	void RemoveElement(Division* division);
 
 	std::vector<Button*>* GetButtons();
@@ -34,6 +37,7 @@ public:
 	std::vector<Checkbox*>* GetCheckboxes();
 	std::vector<Textbox*>* GetTextboxes(); 
 	std::vector<Image*>* GetImages();
+	std::vector<Slider*>* GetSliders(); 
 	std::vector<Division*>* GetDivisions();
 
 };
