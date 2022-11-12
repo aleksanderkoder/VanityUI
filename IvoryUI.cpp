@@ -93,14 +93,7 @@ void Ivory::RenderLabels() {
 		int x = curr->GetX(); 
 		int y = curr->GetY();
 
-		Division* parent = curr->GetParent();
-		bool display = curr->GetDisplayState();
-		while (parent) {
-			x += parent->GetX();
-			y += parent->GetY();
-			if (!parent->GetDisplayState()) display = false;
-			parent = parent->GetParent();
-		}
+		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
 
 		if (!display) continue;
 
@@ -117,14 +110,7 @@ void Ivory::RenderButtons() {
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		Division* parent = curr->GetParent();
-		bool display = curr->GetDisplayState();
-		while (parent) {
-			x += parent->GetX();
-			y += parent->GetY();
-			if (!parent->GetDisplayState()) display = false;
-			parent = parent->GetParent();
-		}
+		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState()); 
 
 		if (!display) continue;
 
@@ -183,14 +169,7 @@ void Ivory::RenderTextboxes() {
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		Division* parent = curr->GetParent();
-		bool display = curr->GetDisplayState();
-		while (parent) {
-			x += parent->GetX();
-			y += parent->GetY();
-			if (!parent->GetDisplayState()) display = false;
-			parent = parent->GetParent();
-		}
+		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
 
 		if (!display) continue;
 
@@ -286,14 +265,7 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		Division* parent = curr->GetParent();
-		bool display = curr->GetDisplayState();
-		while (parent) {
-			x += parent->GetX();
-			y += parent->GetY();
-			if (!parent->GetDisplayState()) display = false;
-			parent = parent->GetParent();
-		}
+		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
 
 		if (!display) continue;
 
@@ -378,14 +350,7 @@ void Ivory::RenderImages() {
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		Division* parent = curr->GetParent();
-		bool display = curr->GetDisplayState();
-		while (parent) {
-			x += parent->GetX();
-			y += parent->GetY();
-			if (!parent->GetDisplayState()) display = false;
-			parent = parent->GetParent();
-		}
+		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
 
 		if (!display) continue;
 
@@ -409,14 +374,7 @@ void Ivory::RenderSliders() {
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		Division* parent = curr->GetParent();
-		bool display = curr->GetDisplayState();
-		while (parent) {
-			x += parent->GetX();
-			y += parent->GetY();
-			if (!parent->GetDisplayState()) display = false;
-			parent = parent->GetParent();
-		}
+		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
 
 		if (!display) continue;
 
@@ -477,14 +435,7 @@ void Ivory::RenderDivisions() {
 		int x = curr->GetX();
 		int y = curr->GetY();
 
-		Division* parent = curr->GetParent();
-		bool display = curr->GetDisplayState(); 
-		while (parent) {
-			x += parent->GetX();
-			y += parent->GetY();
-			if (!parent->GetDisplayState()) display = false; 
-			parent = parent->GetParent();
-		}
+		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
 
 		if (!display) continue;
 
@@ -682,6 +633,18 @@ TTF_Font* Ivory::OpenFont(std::string fontUrl, int size) {
 		exit(0);
 	}
 	return font;
+}
+
+// Handles inherited positioning and display state of element 
+bool Ivory::InheritStateFromParent(Division* parent, int& elementX, int& elementY, bool elementDisplayState) {
+	while (parent) {
+		elementX += parent->GetX();
+		elementY += parent->GetY();
+		if (!parent->GetDisplayState()) elementDisplayState = false;
+		parent = parent->GetParent();
+	}
+
+	return elementDisplayState;
 }
 
 void Ivory::prepareNewSnapshotFrame() {

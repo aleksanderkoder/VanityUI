@@ -45,6 +45,23 @@ class Parentable {
 
 };
 
+// Allows elements which inherit this class to have a border
+class Border {
+	protected: 
+		Border(); 
+		SDL_Color borderColor; 
+		int borderThickness; 
+
+	public: 
+		// GET methods
+		SDL_Color GetBorderColor(); 
+		int GetBorderThickness(); 
+
+		// SET methods 
+		void SetBorderColor(SDL_Color* color); 
+		void SetBorderThickness(int thickness);
+};
+
 class Button : public Elements, public Parentable {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
@@ -235,4 +252,3 @@ class Division : public Elements, public Parentable {
 		int width, height;
 		SDL_Color backgroundColor; 
 };
-

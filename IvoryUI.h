@@ -56,6 +56,7 @@ class Ivory
 		static bool drawTextBoxCursor, capsLockEnabled;
 
 		// Private methods  
+		static bool InheritStateFromParent(Division* parent, int& elementX, int& elementY, bool elementDisplayState);
 		static void prepareNewSnapshotFrame();
 		static void finalizeNewSnapshotFrame();
 		static TTF_Font* OpenFont(std::string fontUrl, int size);
