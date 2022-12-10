@@ -273,8 +273,6 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 		int size = curr->GetSize();
 		bool checked = curr->IsChecked();
 		SDL_Color color = curr->GetColor();
-		SDL_Color checkmarkColor = curr->GetCheckmarkColor();
-		SDL_Color hoverColor = curr->GetHoverColor();
 
 		// Create checkbox rectangle data
 		SDL_Rect rect;
@@ -290,12 +288,14 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 
 		// If mouse hovers over button and activates
 		if (mHover && leftMouseButtonPressedState) {
+			SDL_Color hoverColor = curr->GetHoverColor();
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
 			curr->SetState(!checked);
 			activeTextbox = nullptr;
 		}
 		// If mouse hovers over
 		else if (mHover) {
+			SDL_Color hoverColor = curr->GetHoverColor();
 			if (!leftMouseButtonPressedLastState)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			else
@@ -312,6 +312,7 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 			rect.x = x + size * 0.6f / 2;
 			rect.y = y + size * 0.6f / 2;
 
+			SDL_Color checkmarkColor = curr->GetCheckmarkColor();
 			SDL_SetRenderDrawColor(targetRenderer, checkmarkColor.r, checkmarkColor.g, checkmarkColor.b, checkmarkColor.a);
 			SDL_RenderFillRect(targetRenderer, &rect);
 		}
@@ -383,46 +384,64 @@ void Ivory::RenderSliders() {
 		int thumbHeight = curr->GetThumbHeight(); 
 
 		// Create slider rectangle data
-		SDL_Rect rect;
-		rect.w = width;
-		rect.h = height;
-		rect.x = x;
-		rect.y = y;
+		SDL_Rect sliderRect;
+		sliderRect.w = width;
+		sliderRect.h = height;
+		sliderRect.x = x;
+		sliderRect.y = y;
+
+		// Create slider thumb rectangle data 
+		SDL_Rect thumbRect;
+		thumbRect.w = width;
+		thumbRect.h = height;
+		thumbRect.x = x;
+		thumbRect.y = y;
 
 		bool baseHover = OnMouseHover(x, y, width, height);
 		//bool thumbHover = onMouseHover()	// TODO: See if mouse also hovers over thumb
 
 		SDL_Color color = curr->GetColor(); 
 
-		SDL_RenderFillRect(targetRenderer, &rect); 
-
 		// If mouse doesn't hover over slider, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 
 		color = curr->GetThumbColor(); 
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
+		
+		thumbRect.x = curr->GetThumbPosision();
+		thumbRect.w = curr->GetThumbWidth();
+		thumbRect.h = thumbHeight;
+		thumbRect.y = thumbRect.y + height / 2 - thumbHeight / 2;
 
 		// If mouse hovers over slider and activates
-		//if (baseHover && leftMouseButtonPressedState) {
-			// Calculate what the new value should be 
+		if (baseHover && leftMouseButtonPressedLastState) {
 			int mx; 
 			Uint32 mb = SDL_GetMouseState(&mx, nullptr);
-			rect.w = curr->GetThumbWidth(); 
-			rect.h = thumbHeight;
-			rect.x = mx - rect.w / 2; 
-			rect.y = rect.y + height / 2 - thumbHeight / 2;	// Maybe not right!
-			SDL_RenderFillRect(targetRenderer, &rect);
-			//int value = 
-			/*curr->SetState(!checked);
-			activeTextbox = nullptr;*/
-		//}
-		// If mouse hovers over
-		//else if (baseHover) {
-			/*if (!leftMouseButtonPressedLastState)
+
+			// Recalculate posision of thumb if mouse is within slider bounds
+			if (mx > x && mx < x + width) {
+				thumbRect.x = mx - thumbRect.w / 2;
+				curr->SetThumbPosision(thumbRect.x);
+
+				// Calculate value and set it 
+				float baseline = (float)thumbRect.x + (float)thumbRect.w / 2 - x;
+				curr->SetValue((int)(baseline / width * 100));
+			}
+			activeTextbox = nullptr;
+			SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a - 25); 
+			
+		} else if (baseHover) {	// If mouse hovers over
+			SDL_Color hoverColor = curr->GetHoverColor(); 
+			if (!leftMouseButtonPressedLastState)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			else
-				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);*/
-		//}
+				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
+		}
+
+		SDL_RenderFillRect(targetRenderer, &sliderRect);
+		SDL_RenderFillRect(targetRenderer, &thumbRect);
+		
+		
 	}
 }
 

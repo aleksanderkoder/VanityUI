@@ -414,8 +414,9 @@ Slider::Slider(int x, int y, int width, int height, int thumbWidth, int thumbHei
 	this->thumbHeight = thumbHeight;
 	this->display = true;
 	this->value = 50;
+	this->thumbPosision = x + width / 2 - thumbWidth / 2; 
 	SDL_Color c = { 0, 0, 0, 175 };
-	SDL_Color hc = { 25, 25, 25, 175 };
+	SDL_Color hc = { 25, 25, 25, 100 };
 	SDL_Color tc = { 25, 25, 25, 175 };
 	this->color = c;
 	this->hoverColor = hc;
@@ -452,6 +453,10 @@ int Slider::GetHeight() {
 
 int Slider::GetValue() {
 	return this->value;
+}
+
+int Slider::GetThumbPosision() {
+	return this->thumbPosision; 
 }
 
 void Slider::SetColor(SDL_Color* color) {
@@ -492,6 +497,11 @@ void Slider::SetHeight(int height) {
 void Slider::SetValue(int value) {
 	this->value = value;
 	Ivory::Rerender();
+}
+
+void Slider::SetThumbPosision(int posision) {
+	this->thumbPosision = posision; 
+	Ivory::Rerender(); 
 }
 
 // DIVISION

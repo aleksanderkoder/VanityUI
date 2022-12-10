@@ -191,6 +191,7 @@ class Slider : public Elements, public Parentable {
 		int GetThumbWidth();
 		int GetThumbHeight();
 		int GetValue();
+		int GetThumbPosision(); 
 
 		// SET methods 
 		void SetColor(SDL_Color* color); 
@@ -201,9 +202,10 @@ class Slider : public Elements, public Parentable {
 		void SetThumbWidth(int width);
 		void SetThumbHeight(int height);
 		void SetValue(int value);
+		void SetThumbPosision(int posision); 
 
 	private:
-		int width, height, value, thumbWidth, thumbHeight;
+		int width, height, value, thumbWidth, thumbHeight, thumbPosision;
 		SDL_Color color, hoverColor, thumbColor;
 };
 
