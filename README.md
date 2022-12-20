@@ -5,6 +5,8 @@
  # Ivory UI
  A library for easy creation of efficient and beautiful graphical user interfaces for C++ applications. 
 
+ This serves as the main API which the Ivory Framework uses to draw the graphical interface. 
+
 # Dev notes
 - Set project properties to compile as lib instead of exe when library development is done.
 - Set subsystem in project properties to none. 
