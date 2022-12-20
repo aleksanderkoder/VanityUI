@@ -208,28 +208,45 @@ void Ivory::RenderTextboxes() {
 		// Draw textbox rectangle
 		SDL_RenderFillRect(targetRenderer, &rect);
 
-		std::tuple<int, int> txtDim;
+		int textWidth = 0, textHeight = 0; 
 		int lblX, lblY;
 
 		// If no value, show placeholder
 		if (value.empty()) {
 			SDL_Color c = { 255, 255, 255, 150 };
-			txtDim = GetTextDimensions(placeholder, font);
-			lblX = x + width / 2 - std::get<0>(txtDim) / 2;
-			lblY = y + height / 2 - std::get<1>(txtDim) / 2;
+			
+			TTF_SizeText(font, placeholder.c_str(), &textWidth, &textHeight);
+
+			lblX = x + width / 2 - textWidth / 2;
+			lblY = y + height / 2 - textHeight / 2;
 
 			// Display textbox placeholder text
 			RenderLabel(placeholder, lblX, lblY, c, font, fontSize);
 		}
 		// If textbox has a user entered value, show that value in textbox
 		else {
+			// Reduce shown text if text width greater than textbox width
+			std::string reducedText = value; 
+			TTF_SizeText(font, reducedText.c_str(), &textWidth, &textHeight);
+			if (textWidth > width) {
+				int minx, maxx; 
+				TTF_GlyphMetrics(font, 65, &minx, &maxx, nullptr, nullptr, nullptr); 
+				int widthPerChar = maxx - minx; 
+				int supportedChars = width / widthPerChar; 
+				if (reducedText.length() > supportedChars) {
+					// Shown text need to be truncated to fit 
+					int start = value.length() - supportedChars; 
+					reducedText = value.substr(start, start - value.length()); 
+				}
+			}
+
 			SDL_Color c = { 255, 255, 255 };
-			txtDim = GetTextDimensions(value, font);
-			lblX = x + width / 2 - std::get<0>(txtDim) / 2;
-			lblY = y + height / 2 - std::get<1>(txtDim) / 2;
+			TTF_SizeText(font, reducedText.c_str(), &textWidth, &textHeight);
+			lblX = x + width / 2 - textWidth / 2;
+			lblY = y + height / 2 - textHeight / 2;
 
 			// Display textbox label
-			RenderLabel(value, lblX, lblY, c, font, fontSize);
+			RenderLabel(reducedText, lblX, lblY, c, font, fontSize);
 		}
 
 		// If there's an active textbox, toggle textbox cursor every 600 millisecond
@@ -247,7 +264,7 @@ void Ivory::RenderTextboxes() {
 			rect;
 			rect.w = 2;
 			rect.h = fontSize;
-			rect.x = lblX + std::get<0>(txtDim);
+			rect.x = lblX + textWidth;
 			rect.y = y + height / 2 - fontSize / 2;
 			SDL_SetRenderDrawColor(targetRenderer, 255, 255, 255, 255);
 			SDL_RenderFillRect(targetRenderer, &rect);
@@ -440,8 +457,6 @@ void Ivory::RenderSliders() {
 
 		SDL_RenderFillRect(targetRenderer, &sliderRect);
 		SDL_RenderFillRect(targetRenderer, &thumbRect);
-		
-		
 	}
 }
 

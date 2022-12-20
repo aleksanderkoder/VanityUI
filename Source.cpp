@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
         Ivory::Prepare(); 
 
-        tb->SetValue(std::to_string(sl->GetValue())); 
+        //tb->SetValue(std::to_string(sl->GetValue())); 
 
         if (b->IsPressed()) {
             std::cout << "Button pressed!" << std::endl;
