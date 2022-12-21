@@ -44,6 +44,7 @@ void Elements::Hide() {
 	Ivory::Rerender();
 }
 
+// PARENTABLE 
 
 Parentable::Parentable() {
 	parent = nullptr;
@@ -56,6 +57,33 @@ Division* Parentable::GetParent() {
 void Parentable::SetParent(Division* parent) {
 	this->parent = parent;
 	Ivory::Rerender();
+}
+
+// BORDER 
+
+Border::Border() {
+	BorderThickness bt = { 3, 3, 3, 3};
+	borderThickness = bt; 
+
+	SDL_Color white = { 255, 255, 255, 255 }; 
+	BorderColors bc = { white, white, white, white }; 
+	borderColors = bc; 
+}
+
+BorderThickness Border::GetBorderThickness() {
+	return this->borderThickness; 
+}
+
+BorderColors Border::GetBorderColors() {
+	return this->borderColors; 
+}
+
+void Border::SetBorderThickness(BorderThickness borderThickness) {
+	this->borderThickness = borderThickness; 
+}
+
+void Border::SetBorderColors(BorderColors borderColors) {
+	this->borderColors = borderColors;
 }
 
 // BUTTON

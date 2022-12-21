@@ -9,6 +9,7 @@ class Division;
 
 // ELEMENT CLASS DEFINITIONS 
 
+// The base class which all basic elements inherit 
 class Elements {
 	protected:
 		Elements();
@@ -45,21 +46,36 @@ class Parentable {
 
 };
 
+// Structures used in the Border class 
+struct BorderThickness {
+	int topBorderThickness;
+	int rightBorderThickness;
+	int bottomBorderThickness;
+	int leftBorderThickness;
+}; 
+
+struct BorderColors {
+	SDL_Color topBorderColor;
+	SDL_Color rightBorderColor;
+	SDL_Color bottomBorderColor;
+	SDL_Color leftBorderColor;
+};
+
 // Allows elements which inherit this class to have a border
 class Border {
 	protected: 
-		Border(); 
-		SDL_Color borderColor; 
-		int borderThickness; 
+		Border();  
+		BorderThickness borderThickness;
+		BorderColors borderColors; 
 
 	public: 
 		// GET methods
-		SDL_Color GetBorderColor(); 
-		int GetBorderThickness(); 
+		BorderThickness GetBorderThickness(); 
+		BorderColors GetBorderColors(); 
 
 		// SET methods 
-		void SetBorderColor(SDL_Color* color); 
-		void SetBorderThickness(int thickness);
+		void SetBorderThickness(BorderThickness borderThickness);
+		void SetBorderColors(BorderColors borderColors); 
 };
 
 class Button : public Elements, public Parentable {

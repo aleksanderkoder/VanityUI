@@ -9,7 +9,7 @@ char Ivory::lastPressedKey;
 bool Ivory::leftMouseButtonPressedState = false, Ivory::leftMouseButtonPressedLastState = false,
 Ivory::isRunning = false, Ivory::drawTextBoxCursor = true, Ivory::capsLockEnabled = false, Ivory::rerender = false,
 Ivory::vsync = true; 
-int Ivory::viewportWidth = 0, Ivory::viewportHeight = 0;
+int Ivory::viewportWidth = 0, Ivory::viewportHeight = 0, Ivory::mX = 0, Ivory::mY = 0;
 SDL_Texture* Ivory::snapshotFrame = nullptr;
 Page* Ivory::currentPage = nullptr;
 
@@ -153,10 +153,11 @@ void Ivory::RenderButtons() {
 		SDL_RenderFillRect(targetRenderer, &rect);
 
 		SDL_Color c = { 255, 255, 255 };
-		std::tuple<int, int> mesDim = GetTextDimensions(label, font);
+		int textWidth = 0, textHeight = 0;
+		TTF_SizeText(font, label.c_str(), &textWidth, &textHeight);
 
 		// Display button label
-		RenderLabel(label, x + width / 2 - std::get<0>(mesDim) / 2, y + height / 2 - std::get<1>(mesDim) / 2, c, font, curr->GetFontSize());
+		RenderLabel(label, x + width / 2 - textWidth / 2, y + height / 2 - textHeight / 2, c, font, curr->GetFontSize());
 	}
 }
 
@@ -214,7 +215,6 @@ void Ivory::RenderTextboxes() {
 		// If no value, show placeholder
 		if (value.empty()) {
 			SDL_Color c = { 255, 255, 255, 150 };
-			
 			TTF_SizeText(font, placeholder.c_str(), &textWidth, &textHeight);
 
 			lblX = x + width / 2 - textWidth / 2;
@@ -488,6 +488,7 @@ void Ivory::RenderDivisions() {
 
 void Ivory::Render() {
 	UpdateMouseButtonState();
+	UpdateMousePosision(); 
 	RenderDivisions(); 
 	RenderLabels();
 	RenderButtons();
@@ -550,18 +551,8 @@ void Ivory::DrawCircle(int32_t centreX, int32_t centreY, int32_t radius)
 	}
 }
 
-std::tuple<int, int> Ivory::GetTextDimensions(std::string text, TTF_Font* font) {
-	// Text color
-	SDL_Color color = { 0, 0, 0 };
-
-	// Create surface to render text onto
-	SDL_Surface* surfaceMessage =
-		TTF_RenderText_Blended(font, text.c_str(), color);
-
-	std::tuple<int, int> dim(surfaceMessage->w, surfaceMessage->h);
-
-	SDL_FreeSurface(surfaceMessage);
-	return dim;
+void Ivory::UpdateMousePosision() {
+	SDL_GetMouseState(&mX, &mY);
 }
 
 void Ivory::CaptureInputText() {
@@ -633,9 +624,6 @@ bool Ivory::ValidKey(int key) {
 }
 
 bool Ivory::OnMouseHover(int x, int y, int width, int height) {
-	int mX = 0, mY = 0;
-	SDL_GetMouseState(&mX, &mY);
-
 	// If mouse hovers over button
 	if (mX >= x && mX <= x + width && mY >= y && mY <= y + height) {
 		return true;
@@ -677,7 +665,6 @@ bool Ivory::InheritStateFromParent(Division* parent, int& elementX, int& element
 		if (!parent->GetDisplayState()) elementDisplayState = false;
 		parent = parent->GetParent();
 	}
-
 	return elementDisplayState;
 }
 
@@ -741,11 +728,11 @@ void Ivory::Prepare() {
 	{
 		switch (e.type)
 		{
-		case SDL_QUIT:
-			std::cout << "Quitting..." << std::endl;
-			isRunning = false; 
-			SDL_Quit(); 
-			break;
+			case SDL_QUIT:
+				std::cout << "Quitting..." << std::endl;
+				isRunning = false; 
+				SDL_Quit(); 
+				break;
 		}
 	}
 }

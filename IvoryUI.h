@@ -42,7 +42,7 @@ class Ivory
 		static SDL_Renderer* targetRenderer;
 		static bool leftMouseButtonPressedState, leftMouseButtonPressedLastState, rerender,
 			isRunning, vsync;
-		static int viewportWidth, viewportHeight;
+		static int viewportWidth, viewportHeight, mX, mY;
 		static SDL_Texture* snapshotFrame;
 
 
@@ -56,11 +56,11 @@ class Ivory
 		static bool drawTextBoxCursor, capsLockEnabled;
 
 		// Private methods  
+		static void UpdateMousePosision(); 
 		static bool InheritStateFromParent(Division* parent, int& elementX, int& elementY, bool elementDisplayState);
 		static void prepareNewSnapshotFrame();
 		static void finalizeNewSnapshotFrame();
 		static TTF_Font* OpenFont(std::string fontUrl, int size);
-		static std::tuple<int, int> GetTextDimensions(std::string text, TTF_Font* font);
 		static bool OnMouseHover(int x, int y, int width, int height);
 		static void UpdateMouseButtonState();
 		static bool ValidKey(int key);
