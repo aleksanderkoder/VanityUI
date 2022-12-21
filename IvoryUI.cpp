@@ -152,6 +152,9 @@ void Ivory::RenderButtons() {
 		// Draw button rectangle
 		SDL_RenderFillRect(targetRenderer, &rect);
 
+		// Draw button border 
+		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
+
 		SDL_Color c = { 255, 255, 255 };
 		int textWidth = 0, textHeight = 0;
 		TTF_SizeText(font, label.c_str(), &textWidth, &textHeight);
@@ -483,6 +486,53 @@ void Ivory::RenderDivisions() {
 		auto color = curr->GetBackgroundColor(); 
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
 		SDL_RenderFillRect(targetRenderer, &rect); 
+	}
+}
+
+void Ivory::RenderBorder(int x, int y, int width, int height, BorderThickness borderThickness, BorderColors borderColors) {
+	SDL_Rect border; 
+	border.w = width; 
+
+	// Draw top border if set
+	if (borderThickness.topBorderThickness) {
+		border.x = x; 
+		border.y = y - borderThickness.topBorderThickness; 
+		border.h = borderThickness.topBorderThickness;
+		SDL_Color color = borderColors.topBorderColor; 
+		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
+		SDL_RenderFillRect(targetRenderer, &border);
+	}
+
+	// Draw bottom border if set
+	if (borderThickness.bottomBorderThickness) {
+		border.x = x;
+		border.y = y + height;
+		border.h = borderThickness.bottomBorderThickness;
+		SDL_Color color = borderColors.bottomBorderColor;
+		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
+		SDL_RenderFillRect(targetRenderer, &border);
+	}
+
+	// Draw right border if set
+	if (borderThickness.rightBorderThickness) {
+		border.x = x + width;
+		border.y = y - borderThickness.topBorderThickness;
+		border.w = borderThickness.rightBorderThickness;
+		border.h = height + borderThickness.topBorderThickness + borderThickness.bottomBorderThickness;
+		SDL_Color color = borderColors.rightBorderColor;
+		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
+		SDL_RenderFillRect(targetRenderer, &border);
+	}
+
+	// Draw left border if set
+	if (borderThickness.leftBorderThickness) {
+		border.x = x - borderThickness.leftBorderThickness;
+		border.y = y - borderThickness.topBorderThickness;
+		border.w = borderThickness.leftBorderThickness;
+		border.h = height + borderThickness.topBorderThickness + borderThickness.bottomBorderThickness;
+		SDL_Color color = borderColors.leftBorderColor;
+		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
+		SDL_RenderFillRect(targetRenderer, &border);
 	}
 }
 

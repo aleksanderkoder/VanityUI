@@ -62,9 +62,11 @@ void Parentable::SetParent(Division* parent) {
 // BORDER 
 
 Border::Border() {
-	BorderThickness bt = { 3, 3, 3, 3};
+	// Thickness 
+	BorderThickness bt = { 2, 2, 2, 2};	// Thickness for top, right, bottom and left border
 	borderThickness = bt; 
 
+	// Colors 
 	SDL_Color white = { 255, 255, 255, 255 }; 
 	BorderColors bc = { white, white, white, white }; 
 	borderColors = bc; 

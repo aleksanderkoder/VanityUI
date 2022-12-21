@@ -72,4 +72,5 @@ class Ivory
 		static void RenderImages(); 
 		static void RenderSliders(); 
 		static void RenderDivisions();
+		static void RenderBorder(int x, int y, int width, int height, BorderThickness borderThickness, BorderColors borderColors); 
 };

@@ -78,7 +78,7 @@ class Border {
 		void SetBorderColors(BorderColors borderColors); 
 };
 
-class Button : public Elements, public Parentable {
+class Button : public Elements, public Parentable, public Border {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
