@@ -212,6 +212,9 @@ void Ivory::RenderTextboxes() {
 		// Draw textbox rectangle
 		SDL_RenderFillRect(targetRenderer, &rect);
 
+		// Draw textbox border 
+		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
+
 		int textWidth = 0, textHeight = 0; 
 		int lblX, lblY;
 
@@ -325,6 +328,9 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 		// Draw checkbox rectangle
 		SDL_RenderFillRect(targetRenderer, &rect);
 
+		// Draw checkbox border 
+		RenderBorder(x, y, size, size, curr->GetBorderThickness(), curr->GetBorderColors());
+
 		// Draw checkmark if checked 
 		if (checked) {
 			rect.w = size - size * 0.6f;
@@ -383,6 +389,9 @@ void Ivory::RenderImages() {
 		rect.y = y;
 
 		SDL_RenderCopy(targetRenderer, curr->GetImage(), nullptr, &rect); 
+
+		// Draw image border 
+		RenderBorder(x, y, curr->GetWidth(), curr->GetHeight(), curr->GetBorderThickness(), curr->GetBorderColors());
 	}
 }
 
@@ -422,10 +431,13 @@ void Ivory::RenderSliders() {
 
 		SDL_Color color = curr->GetColor(); 
 
+		// Draw slider border
+		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
+
 		// If mouse doesn't hover over slider, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 
-		color = curr->GetThumbColor(); 
+		color = curr->GetThumbColor();
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		
 		thumbRect.x = curr->GetThumbPosision();
@@ -486,6 +498,9 @@ void Ivory::RenderDivisions() {
 		auto color = curr->GetBackgroundColor(); 
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
 		SDL_RenderFillRect(targetRenderer, &rect); 
+
+		// Draw division border 
+		RenderBorder(x, y, curr->GetWidth(), curr->GetHeight(), curr->GetBorderThickness(), curr->GetBorderColors());
 	}
 }
 

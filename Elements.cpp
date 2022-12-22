@@ -409,6 +409,10 @@ Image::Image(std::string imagePath, int x, int y, int width, int height) {
 	this->height = height;
 	this->display = true; 
 	this->image = Ivory::LoadImage(imagePath); 
+
+	// Set border thickness to 0 to disable 
+	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
+	borderThickness = bt;
 }
 
 int Image::GetWidth() {
@@ -451,6 +455,10 @@ Slider::Slider(int x, int y, int width, int height, int thumbWidth, int thumbHei
 	this->color = c;
 	this->hoverColor = hc;
 	this->thumbColor = tc;
+
+	// Set border thickness to 0 to disable 
+	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
+	borderThickness = bt;
 }
 
 SDL_Color Slider::GetColor() {
@@ -543,6 +551,10 @@ Division::Division(int x, int y, int width, int height) {
 	this->height = height;
 	SDL_Color bColor = { 0, 0, 0, 50 }; 
 	this->backgroundColor = bColor; 
+
+	// Set border thickness to 0 to disable 
+	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
+	borderThickness = bt;
 }
 
 int Division::GetWidth() {

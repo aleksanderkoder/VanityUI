@@ -112,7 +112,7 @@ class Button : public Elements, public Parentable, public Border {
 		bool pressed;
 };
 
-class Textbox : public Elements, public Parentable {
+class Textbox : public Elements, public Parentable, public Border {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
@@ -146,7 +146,7 @@ class Textbox : public Elements, public Parentable {
 
 };
 
-class Label : public Elements, public Parentable {
+class Label : public Elements, public Parentable, public Border {
 	public:
 		Label(std::string text, int x, int y, SDL_Color color, int fontSize, std::string fontPath);
 
@@ -168,7 +168,7 @@ class Label : public Elements, public Parentable {
 		int fontSize;
 };
 
-class Checkbox : public Elements, public Parentable {
+class Checkbox : public Elements, public Parentable, public Border {
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
@@ -194,7 +194,7 @@ class Checkbox : public Elements, public Parentable {
 		SDL_Color color, checkmarkColor, hoverColor;
 };
 
-class Slider : public Elements, public Parentable {
+class Slider : public Elements, public Parentable, public Border {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
@@ -225,7 +225,7 @@ class Slider : public Elements, public Parentable {
 		SDL_Color color, hoverColor, thumbColor;
 };
 
-class Image : public Elements, public Parentable {
+class Image : public Elements, public Parentable, public Border {
 	public: 
 		Image(std::string imagePath, int x, int y, int width, int height);
 
@@ -243,7 +243,7 @@ class Image : public Elements, public Parentable {
 		SDL_Texture* image; 
 };
 
-class Division : public Elements, public Parentable {
+class Division : public Elements, public Parentable, public Border {
 	public:
 		Division(int x, int y, int width, int height);
 
