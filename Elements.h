@@ -72,10 +72,26 @@ class Border {
 		// GET methods
 		BorderThickness GetBorderThickness(); 
 		BorderColors GetBorderColors(); 
+		int GetBorderThicknessLeft(); 
+		int GetBorderThicknessTop();
+		int GetBorderThicknessRight();
+		int GetBorderThicknessBottom();
+		SDL_Color GetBorderColorLeft(); 
+		SDL_Color GetBorderColorTop();
+		SDL_Color GetBorderColorRight();
+		SDL_Color GetBorderColorBottom();
 
 		// SET methods 
 		void SetBorderThickness(BorderThickness borderThickness);
 		void SetBorderColors(BorderColors borderColors); 
+		void SetBorderThicknessLeft(int thickness);
+		void SetBorderThicknessTop(int thickness);
+		void SetBorderThicknessRight(int thickness);
+		void SetBorderThicknessBottom(int thickness);
+		void SetBorderColorLeft(SDL_Color color);
+		void SetBorderColorTop(SDL_Color color);
+		void SetBorderColorRight(SDL_Color color);
+		void SetBorderColorBottom(SDL_Color color);
 };
 
 class Button : public Elements, public Parentable, public Border {

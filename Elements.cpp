@@ -80,6 +80,38 @@ BorderColors Border::GetBorderColors() {
 	return this->borderColors; 
 }
 
+int Border::GetBorderThicknessLeft() {
+	return this->borderThickness.leftBorderThickness; 
+}
+
+int Border::GetBorderThicknessTop() {
+	return this->borderThickness.topBorderThickness;
+}
+
+int Border::GetBorderThicknessRight() {
+	return this->borderThickness.rightBorderThickness;
+}
+
+int Border::GetBorderThicknessBottom() {
+	return this->borderThickness.bottomBorderThickness;
+}
+
+SDL_Color Border::GetBorderColorLeft() {
+	return this->borderColors.leftBorderColor; 
+}
+
+SDL_Color Border::GetBorderColorTop() {
+	return this->borderColors.topBorderColor;
+}
+
+SDL_Color Border::GetBorderColorRight() {
+	return this->borderColors.rightBorderColor;
+}
+
+SDL_Color Border::GetBorderColorBottom() {
+	return this->borderColors.bottomBorderColor;
+}
+
 void Border::SetBorderThickness(BorderThickness borderThickness) {
 	this->borderThickness = borderThickness; 
 }
@@ -87,6 +119,40 @@ void Border::SetBorderThickness(BorderThickness borderThickness) {
 void Border::SetBorderColors(BorderColors borderColors) {
 	this->borderColors = borderColors;
 }
+
+void Border::SetBorderThicknessLeft(int thickness) {
+	this->borderThickness.leftBorderThickness = thickness; 
+}
+
+void Border::SetBorderThicknessTop(int thickness) {
+	this->borderThickness.topBorderThickness = thickness;
+}
+
+void Border::SetBorderThicknessRight(int thickness) {
+	this->borderThickness.rightBorderThickness = thickness;
+}
+
+void Border::SetBorderThicknessBottom(int thickness) {
+	this->borderThickness.bottomBorderThickness = thickness;
+}
+
+void Border::SetBorderColorLeft(SDL_Color color) {
+	this->borderColors.leftBorderColor = color;
+}
+
+void Border::SetBorderColorTop(SDL_Color color) {
+	this->borderColors.topBorderColor = color;
+}
+
+void Border::SetBorderColorRight(SDL_Color color) {
+	this->borderColors.rightBorderColor = color;
+}
+
+void Border::SetBorderColorBottom(SDL_Color color) {
+	this->borderColors.bottomBorderColor = color;
+}
+
+
 
 // BUTTON
 
