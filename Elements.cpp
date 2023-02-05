@@ -59,6 +59,33 @@ void Parentable::SetParent(Division* parent) {
 	Ivory::Rerender();
 }
 
+// DIMENSIONS 
+Dimensions::Dimensions() {
+	width = 0; 
+	height = 0; 
+}
+
+int Dimensions::GetWidth() {
+	return this->width; 
+}
+
+int Dimensions::GetHeight() {
+	return this->height;
+}
+
+void Dimensions::SetWidth(int width) {
+	this->width = width;
+}
+
+void Dimensions::SetHeight(int height) {
+	this->height = height;
+}
+
+void Dimensions::SetDimensions(int width, int height) {
+	this->width = width;
+	this->height = height; 
+}
+
 // BORDER 
 
 Border::Border() {
@@ -188,14 +215,6 @@ SDL_Color Button::GetHoverColor() {
 	return this->hoverColor;
 }
 
-int Button::GetWidth() {
-	return this->width;
-}
-
-int Button::GetHeight() {
-	return this->height;
-}
-
 int Button::GetFontSize() {
 	return this->fontSize;
 }
@@ -221,22 +240,6 @@ void Button::SetLabel(std::string label) {
 
 void Button::SetHoverColor(SDL_Color* color) {
 	this->hoverColor = *color;
-	Ivory::Rerender();
-}
-
-void Button::SetWidth(int width) {
-	this->width = width;
-	Ivory::Rerender();
-}
-
-void Button::SetHeight(int height) {
-	this->height = height;
-	Ivory::Rerender();
-}
-
-void Button::SetDimensions(int width, int height) {
-	this->width = width;
-	this->height = height;
 	Ivory::Rerender();
 }
 
@@ -288,14 +291,6 @@ std::string Textbox::GetValue() {
 	return this->value;
 }
 
-int Textbox::GetWidth() {
-	return this->width;
-}
-
-int Textbox::GetHeight() {
-	return this->height;
-}
-
 SDL_Color Textbox::GetHoverColor() {
 	return this->hoverColor;
 }
@@ -324,22 +319,6 @@ void Textbox::SetPlaceholder(std::string placeholder) {
 
 void Textbox::SetValue(std::string value) {
 	this->value = value;
-	Ivory::Rerender();
-}
-
-void Textbox::SetWidth(int width) {
-	this->width = width;
-	Ivory::Rerender();
-}
-
-void Textbox::SetHeight(int height) {
-	this->height = height;
-	Ivory::Rerender();
-}
-
-void Textbox::SetDimensions(int width, int height) {
-	this->width = width;
-	this->height = height;
 	Ivory::Rerender();
 }
 
@@ -481,26 +460,8 @@ Image::Image(std::string imagePath, int x, int y, int width, int height) {
 	borderThickness = bt;
 }
 
-int Image::GetWidth() {
-	return this->width; 
-}
-
-int Image::GetHeight() {
-	return this->height;
-}
-
 SDL_Texture* Image::GetImage() {
 	return this->image; 
-}
-
-void Image::SetWidth(int width) {
-	this->width = width; 
-	Ivory::Rerender();
-}
-
-void Image::SetHeight(int height) {
-	this->height = height;
-	Ivory::Rerender();
 }
 
 // SLIDER
@@ -547,14 +508,6 @@ int Slider::GetThumbHeight() {
 	return this->thumbHeight;
 }
 
-int Slider::GetWidth() {
-	return this->width;
-}
-
-int Slider::GetHeight() {
-	return this->height;
-}
-
 int Slider::GetValue() {
 	return this->value;
 }
@@ -588,16 +541,6 @@ void Slider::SetThumbHeight(int height) {
 	Ivory::Rerender();
 }
 
-void Slider::SetWidth(int width) {
-	this->width = width;
-	Ivory::Rerender();
-}
-
-void Slider::SetHeight(int height) {
-	this->height = height;
-	Ivory::Rerender();
-}
-
 void Slider::SetValue(int value) {
 	this->value = value;
 	Ivory::Rerender();
@@ -623,26 +566,8 @@ Division::Division(int x, int y, int width, int height) {
 	borderThickness = bt;
 }
 
-int Division::GetWidth() {
-	return this->width;
-}
-
-int Division::GetHeight() {
-	return this->height;
-}
-
 SDL_Color Division::GetBackgroundColor() {
 	return this->backgroundColor;
-}
-
-void Division::SetWidth(int width) {
-	this->width = width;
-	Ivory::Rerender();
-}
-
-void Division::SetHeight(int height) {
-	this->height = height;
-	Ivory::Rerender();
 }
 
 void Division::SetBackgroundColor(SDL_Color* color) {

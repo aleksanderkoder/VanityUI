@@ -46,6 +46,22 @@ class Parentable {
 
 };
 
+class Dimensions {
+	protected:
+		Dimensions();
+		int width, height; 
+
+	public: 
+		// GET methods 
+		int GetWidth(); 
+		int GetHeight();
+
+		// SET methods 
+		void SetWidth(int width); 
+		void SetHeight(int height); 
+		void SetDimensions(int width, int height);
+};
+
 // Structures used in the Border class 
 struct BorderThickness {
 	int topBorderThickness;
@@ -94,7 +110,7 @@ class Border {
 		void SetBorderColorBottom(SDL_Color color);
 };
 
-class Button : public Elements, public Parentable, public Border {
+class Button : public Elements, public Parentable, public Border, public Dimensions {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
@@ -102,8 +118,6 @@ class Button : public Elements, public Parentable, public Border {
 		SDL_Color GetColor();
 		std::string GetLabel();
 		SDL_Color GetHoverColor();
-		int GetWidth();
-		int GetHeight();
 		int GetFontSize();
 		TTF_Font* GetFont();
 
@@ -111,9 +125,6 @@ class Button : public Elements, public Parentable, public Border {
 		void SetLabel(std::string label);
 		void SetColor(SDL_Color* color);
 		void SetHoverColor(SDL_Color* color);
-		void SetWidth(int width);
-		void SetHeight(int height);
-		void SetDimensions(int width, int height);
 		void SetFont(std::string fontPath);
 
 		// Utility methods
@@ -124,11 +135,11 @@ class Button : public Elements, public Parentable, public Border {
 		std::string label;
 		TTF_Font* font;
 		SDL_Color color, hoverColor;	// TODO: Add these: labelColor, labelHoverColor
-		int width, height, fontSize;
+		int fontSize;
 		bool pressed;
 };
 
-class Textbox : public Elements, public Parentable, public Border {
+class Textbox : public Elements, public Parentable, public Border, public Dimensions {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
@@ -136,8 +147,6 @@ class Textbox : public Elements, public Parentable, public Border {
 		SDL_Color GetColor();
 		std::string GetPlaceholder();
 		std::string GetValue();
-		int GetWidth();
-		int GetHeight();
 		int GetCharLimit();
 		SDL_Color GetHoverColor();
 		int GetFontSize();
@@ -147,9 +156,6 @@ class Textbox : public Elements, public Parentable, public Border {
 		void SetColor(SDL_Color* color);
 		void SetPlaceholder(std::string placeholder);
 		void SetValue(std::string value);
-		void SetWidth(int width);
-		void SetHeight(int height);
-		void SetDimensions(int width, int height);
 		void SetCharLimit(int limit);
 		void SetHoverColor(SDL_Color* color);
 		void SetFont(std::string fontPath);
@@ -157,7 +163,7 @@ class Textbox : public Elements, public Parentable, public Border {
 	private:
 		std::string placeholder, value;
 		TTF_Font* font;
-		int width, height, charLimit, fontSize;
+		int charLimit, fontSize;
 		SDL_Color color, hoverColor; // TODO: Add these: labelColor, labelHoverColor and methods for these
 
 };
@@ -210,7 +216,7 @@ class Checkbox : public Elements, public Parentable, public Border {
 		SDL_Color color, checkmarkColor, hoverColor;
 };
 
-class Slider : public Elements, public Parentable, public Border {
+class Slider : public Elements, public Parentable, public Border, public Dimensions {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
@@ -218,8 +224,6 @@ class Slider : public Elements, public Parentable, public Border {
 		SDL_Color GetColor(); 
 		SDL_Color GetHoverColor();
 		SDL_Color GetThumbColor();
-		int GetWidth();
-		int GetHeight();
 		int GetThumbWidth();
 		int GetThumbHeight();
 		int GetValue();
@@ -229,48 +233,37 @@ class Slider : public Elements, public Parentable, public Border {
 		void SetColor(SDL_Color* color); 
 		void SetHoverColor(SDL_Color* color);
 		void SetThumbColor(SDL_Color* color);
-		void SetWidth(int width);
-		void SetHeight(int height);
 		void SetThumbWidth(int width);
 		void SetThumbHeight(int height);
 		void SetValue(int value);
 		void SetThumbPosision(int posision); 
 
 	private:
-		int width, height, value, thumbWidth, thumbHeight, thumbPosision;
+		int value, thumbWidth, thumbHeight, thumbPosision;
 		SDL_Color color, hoverColor, thumbColor;
 };
 
-class Image : public Elements, public Parentable, public Border {
+class Image : public Elements, public Parentable, public Border, public Dimensions {
 	public: 
 		Image(std::string imagePath, int x, int y, int width, int height);
 
 		// GET methods 
-		int GetWidth();
-		int GetHeight();
 		SDL_Texture* GetImage(); 
 
 		// SET methods
-		void SetWidth(int width); 
-		void SetHeight(int height); 
 
 	private: 
-		int width, height; 
 		SDL_Texture* image; 
 };
 
-class Division : public Elements, public Parentable, public Border {
+class Division : public Elements, public Parentable, public Border, public Dimensions {
 	public:
 		Division(int x, int y, int width, int height);
 
 		// GET methods 
-		int GetWidth();
-		int GetHeight();
 		SDL_Color GetBackgroundColor();
 
 		// SET methods 
-		void SetWidth(int width);
-		void SetHeight(int height);
 		void SetBackgroundColor(SDL_Color* color); 
 
 		// Utility methods 
@@ -283,6 +276,5 @@ class Division : public Elements, public Parentable, public Border {
 		void AddChild(Division* division);
 
 	private:
-		int width, height;
 		SDL_Color backgroundColor; 
 };
