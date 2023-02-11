@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
     SDL_Color black = { 0,0,0,255 };
     Label* l = Ivory::CreateLabel("Hello, Ivory!");
-    Button* b = Ivory::CreateButton("A button", 150);
+    Button* b = Ivory::CreateButton("A button");
     auto tb = Ivory::CreateTextbox("Text char limit", 350);
     auto img = Ivory::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
     auto cb = Ivory::CreateCheckbox(550); 
@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
     div2->AddChild(div3); 
     
     div3->AddChild(b); 
+    b->SetDimensions("50%", "100%"); 
     div3->AddChild(tb); 
     div3->AddChild(img); 
     div3->AddChild(l); 

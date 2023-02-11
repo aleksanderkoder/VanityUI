@@ -6,6 +6,8 @@ class Ivory {
 	public:
 		static void Rerender();
 		static SDL_Texture* LoadImage(std::string imagePath); 
+		static int GetViewportWidth();
+		static int GetViewportHeight(); 
 };
 
 // ELEMENTS - Common methods for every element type
@@ -47,7 +49,7 @@ void Elements::Hide() {
 // PARENTABLE 
 
 Parentable::Parentable() {
-	parent = nullptr;
+	parent = nullptr; 
 }
 
 Division* Parentable::GetParent() {
@@ -63,6 +65,8 @@ void Parentable::SetParent(Division* parent) {
 Dimensions::Dimensions() {
 	width = 0; 
 	height = 0; 
+	parentWidth = NULL;
+	parentHeight = NULL;
 }
 
 int Dimensions::GetWidth() {
@@ -73,6 +77,14 @@ int Dimensions::GetHeight() {
 	return this->height;
 }
 
+int Dimensions::GetParentWidth() {
+	return this->parentWidth;
+}
+
+int Dimensions::GetParentHeight() {
+	return this->parentHeight;
+}
+
 void Dimensions::SetWidth(int width) {
 	this->width = width;
 }
@@ -81,9 +93,53 @@ void Dimensions::SetHeight(int height) {
 	this->height = height;
 }
 
+void Dimensions::SetParentWidth(int width) {
+	this->parentWidth = width;
+}
+
+void Dimensions::SetParentHeight(int height) {
+	this->parentHeight = height;
+}
+
 void Dimensions::SetDimensions(int width, int height) {
 	this->width = width;
 	this->height = height; 
+}
+
+void Dimensions::SetWidth(std::string percentage) {
+	for (int i = 0; i < percentage.length(); i++) {
+		std::string value(1, percentage[i]); 
+		if (value == "%") {
+			int perc = std::stoi(percentage); 
+			int pWidth = this->GetParentWidth(); 
+			if (pWidth) {
+				this->width = pWidth / 100 * perc;
+			} else {
+				this->width = Ivory::GetViewportWidth() / 100 * perc;
+			}
+		}
+	}
+}
+
+void Dimensions::SetHeight(std::string percentage) {
+	for (int i = 0; i < percentage.length(); i++) {
+		std::string value(1, percentage[i]);
+		if (value == "%") {
+			int perc = std::stoi(percentage);
+			int pHeight = this->GetParentHeight(); 
+			if (pHeight) {
+				this->height = pHeight / 100 * perc;
+			}
+			else {
+				this->height = Ivory::GetViewportHeight() / 100 * perc;
+			}
+		}
+	}
+}
+
+void Dimensions::SetDimensions(std::string percentageWidth, std::string percentageHeight) {
+	this->SetWidth(percentageWidth); 
+	this->SetHeight(percentageHeight); 
 }
 
 Color::Color() {
@@ -515,6 +571,8 @@ void Division::AddChild(Label* label) {
 
 void Division::AddChild(Button* button) {
 	button->SetParent(this);
+	button->SetParentWidth(this->GetWidth());
+	button->SetParentHeight(this->GetWidth());
 	Ivory::Rerender();
 }
 

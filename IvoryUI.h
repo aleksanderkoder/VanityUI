@@ -36,6 +36,8 @@ class Ivory
 		static SDL_Renderer* CreateRenderingContext(std::string title);
 		static void EnableVsync(); 
 		static void DisableVsync(); 
+		static int GetViewportWidth(); 
+		static int GetViewportHeight(); 
 
 	private:
 		// General library data 

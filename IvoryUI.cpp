@@ -655,8 +655,7 @@ void Ivory::CaptureInputText() {
 		if (keys[i] && ValidKey(i)) {
 			if (keys[SDL_SCANCODE_LSHIFT] || capsLockEnabled) {
 				key = toupper(SDL_GetKeyFromScancode(SDL_Scancode(i)));
-			}
-			else {
+			} else {
 				key = SDL_GetKeyFromScancode(SDL_Scancode(i));
 			}
 			// Reset textbox cursor on key input
@@ -845,4 +844,12 @@ void Ivory::EnableVsync() {
 
 void Ivory::DisableVsync() {
 	vsync = false; 
+}
+
+int Ivory::GetViewportWidth() {
+	return viewportWidth; 
+}
+
+int Ivory::GetViewportHeight() {
+	return viewportHeight; 
 }

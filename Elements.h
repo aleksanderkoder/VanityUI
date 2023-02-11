@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "SDL_ttf.h"
 #include <string>
+#include <iostream>
 
 // Forward declarations 
 
@@ -39,7 +40,7 @@ class Parentable {
 
 	public:
 		// GET methods 
-		Division* GetParent();
+		Division* GetParent(); 
 
 		// SET methods
 		void SetParent(Division* parent);
@@ -51,16 +52,27 @@ class Dimensions {
 	protected:
 		Dimensions();
 		int width, height; 
+		int parentWidth, parentHeight;
 
 	public: 
 		// GET methods 
 		int GetWidth(); 
 		int GetHeight();
 
+		int GetParentWidth();
+		int GetParentHeight();
+
 		// SET methods 
 		void SetWidth(int width); 
 		void SetHeight(int height); 
+		void SetParentWidth(int width); 
+		void SetParentHeight(int height); 
 		void SetDimensions(int width, int height);
+			
+		// Percentage  
+		void SetWidth(std::string percentage);
+		void SetHeight(std::string percentage);
+		void SetDimensions(std::string percentageWidth, std::string percentageHeight);
 };
 
 class Color {
