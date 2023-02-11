@@ -495,7 +495,7 @@ void Ivory::RenderDivisions() {
 		rect.x = x;
 		rect.y = y;
 
-		auto color = curr->GetBackgroundColor(); 
+		auto color = curr->GetColor(); 
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
 		SDL_RenderFillRect(targetRenderer, &rect); 
 

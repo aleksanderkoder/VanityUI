@@ -46,6 +46,7 @@ class Parentable {
 
 };
 
+// A class container everything related to generic dimension data, such as width and height 
 class Dimensions {
 	protected:
 		Dimensions();
@@ -60,6 +61,21 @@ class Dimensions {
 		void SetWidth(int width); 
 		void SetHeight(int height); 
 		void SetDimensions(int width, int height);
+};
+
+class Color {
+	protected: 
+		Color(); 
+		SDL_Color color, hoverColor; 
+
+	public: 
+		// GET methods
+		SDL_Color GetColor(); 
+		SDL_Color GetHoverColor(); 
+
+		// SET methods 
+		void SetColor(SDL_Color color); 
+		void SetHoverColor(SDL_Color color);
 };
 
 // Structures used in the Border class 
@@ -110,21 +126,17 @@ class Border {
 		void SetBorderColorBottom(SDL_Color color);
 };
 
-class Button : public Elements, public Parentable, public Border, public Dimensions {
+class Button : public Elements, public Parentable, public Border, public Dimensions, public Color {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
 		// GET methods 
-		SDL_Color GetColor();
 		std::string GetLabel();
-		SDL_Color GetHoverColor();
 		int GetFontSize();
 		TTF_Font* GetFont();
 
 		// SET methods 
 		void SetLabel(std::string label);
-		void SetColor(SDL_Color* color);
-		void SetHoverColor(SDL_Color* color);
 		void SetFont(std::string fontPath);
 
 		// Utility methods
@@ -134,75 +146,65 @@ class Button : public Elements, public Parentable, public Border, public Dimensi
 	private:
 		std::string label;
 		TTF_Font* font;
-		SDL_Color color, hoverColor;	// TODO: Add these: labelColor, labelHoverColor
+		// TODO: Add these: labelColor, labelHoverColor
 		int fontSize;
 		bool pressed;
 };
 
-class Textbox : public Elements, public Parentable, public Border, public Dimensions {
+class Textbox : public Elements, public Parentable, public Border, public Dimensions, public Color {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
 		// GET methods 
-		SDL_Color GetColor();
 		std::string GetPlaceholder();
 		std::string GetValue();
 		int GetCharLimit();
-		SDL_Color GetHoverColor();
 		int GetFontSize();
 		TTF_Font* GetFont();
 
 		// SET methods 
-		void SetColor(SDL_Color* color);
 		void SetPlaceholder(std::string placeholder);
 		void SetValue(std::string value);
 		void SetCharLimit(int limit);
-		void SetHoverColor(SDL_Color* color);
 		void SetFont(std::string fontPath);
 
 	private:
 		std::string placeholder, value;
 		TTF_Font* font;
 		int charLimit, fontSize;
-		SDL_Color color, hoverColor; // TODO: Add these: labelColor, labelHoverColor and methods for these
+		// TODO: Add these: labelColor, labelHoverColor and methods for these
 
 };
 
-class Label : public Elements, public Parentable, public Border {
+class Label : public Elements, public Parentable, public Border, public Color {
 	public:
 		Label(std::string text, int x, int y, SDL_Color color, int fontSize, std::string fontPath);
 
 		// GET methods 
-		SDL_Color GetColor();
 		std::string GetText();
 		int GetFontSize();
 		TTF_Font* GetFont();
 
 		// SET methods 
-		void SetColor(SDL_Color* color);
 		void SetText(std::string text);
 		void SetFont(std::string fontPath);
 
 	private:
-		SDL_Color color; 
 		std::string text;
 		TTF_Font* font;
 		int fontSize;
+		// TODO: Implement use of hoverColor when mouse hovers over label
 };
 
-class Checkbox : public Elements, public Parentable, public Border {
+class Checkbox : public Elements, public Parentable, public Border, public Color {
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
 		// GET methods  
-		SDL_Color GetColor();
-		SDL_Color GetHoverColor();
 		SDL_Color GetCheckmarkColor();
 		int GetSize();
 
 		// SET methods 
-		void SetColor(SDL_Color* color);
-		void SetHoverColor(SDL_Color* color);
 		void SetCheckmarkColor(SDL_Color* color);
 		void SetState(bool state);
 		void SetSize(int size);
@@ -213,16 +215,14 @@ class Checkbox : public Elements, public Parentable, public Border {
 	private:
 		int size;
 		bool checked;
-		SDL_Color color, checkmarkColor, hoverColor;
+		SDL_Color checkmarkColor; 
 };
 
-class Slider : public Elements, public Parentable, public Border, public Dimensions {
+class Slider : public Elements, public Parentable, public Border, public Dimensions, public Color {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
 		// GET methods  
-		SDL_Color GetColor(); 
-		SDL_Color GetHoverColor();
 		SDL_Color GetThumbColor();
 		int GetThumbWidth();
 		int GetThumbHeight();
@@ -230,8 +230,6 @@ class Slider : public Elements, public Parentable, public Border, public Dimensi
 		int GetThumbPosision(); 
 
 		// SET methods 
-		void SetColor(SDL_Color* color); 
-		void SetHoverColor(SDL_Color* color);
 		void SetThumbColor(SDL_Color* color);
 		void SetThumbWidth(int width);
 		void SetThumbHeight(int height);
@@ -240,7 +238,7 @@ class Slider : public Elements, public Parentable, public Border, public Dimensi
 
 	private:
 		int value, thumbWidth, thumbHeight, thumbPosision;
-		SDL_Color color, hoverColor, thumbColor;
+		SDL_Color thumbColor;
 };
 
 class Image : public Elements, public Parentable, public Border, public Dimensions {
@@ -256,15 +254,9 @@ class Image : public Elements, public Parentable, public Border, public Dimensio
 		SDL_Texture* image; 
 };
 
-class Division : public Elements, public Parentable, public Border, public Dimensions {
+class Division : public Elements, public Parentable, public Border, public Dimensions, public Color {
 	public:
 		Division(int x, int y, int width, int height);
-
-		// GET methods 
-		SDL_Color GetBackgroundColor();
-
-		// SET methods 
-		void SetBackgroundColor(SDL_Color* color); 
 
 		// Utility methods 
 		void AddChild(Label* label);
@@ -275,6 +267,5 @@ class Division : public Elements, public Parentable, public Border, public Dimen
 		void AddChild(Image* image); 
 		void AddChild(Division* division);
 
-	private:
-		SDL_Color backgroundColor; 
+		// TODO: Add use of hoverColor when mouse hovers over div!
 };

@@ -86,6 +86,29 @@ void Dimensions::SetDimensions(int width, int height) {
 	this->height = height; 
 }
 
+Color::Color() {
+	SDL_Color white = { 255, 255, 255, 255 }; 
+	SDL_Color fadedWhite = { 255, 255, 255, 180 };
+	color = white; 
+	hoverColor = fadedWhite; 
+}
+
+SDL_Color Color::GetColor() {
+	return this->color; 
+}
+
+SDL_Color Color::GetHoverColor() {
+	return this->hoverColor; 
+}
+
+void Color::SetColor(SDL_Color color) {
+	this->color = color; 
+}
+
+void Color::SetHoverColor(SDL_Color color) {
+	this->hoverColor = color; 
+}
+
 // BORDER 
 
 Border::Border() {
@@ -203,16 +226,8 @@ Button::Button(std::string label, int width, int height, int x, int y, int fontS
 	}
 }
 
-SDL_Color Button::GetColor() {
-	return this->color;
-}
-
 std::string Button::GetLabel() {
 	return this->label;
-}
-
-SDL_Color Button::GetHoverColor() {
-	return this->hoverColor;
 }
 
 int Button::GetFontSize() {
@@ -223,11 +238,6 @@ TTF_Font* Button::GetFont() {
 	return this->font;
 }
 
-void Button::SetColor(SDL_Color* color) {
-	this->color = *color;
-	Ivory::Rerender();
-}
-
 void Button::SetFont(std::string fontPath) {
 	this->font = TTF_OpenFont(fontPath.c_str(), this->fontSize);
 	Ivory::Rerender();
@@ -235,11 +245,6 @@ void Button::SetFont(std::string fontPath) {
 
 void Button::SetLabel(std::string label) {
 	this->label = label;
-	Ivory::Rerender();
-}
-
-void Button::SetHoverColor(SDL_Color* color) {
-	this->hoverColor = *color;
 	Ivory::Rerender();
 }
 
@@ -279,20 +284,12 @@ Textbox::Textbox(std::string placeholder, int width, int height, int x, int y, i
 	}
 }
 
-SDL_Color Textbox::GetColor() {
-	return this->color;
-}
-
 std::string Textbox::GetPlaceholder() {
 	return this->placeholder;
 }
 
 std::string Textbox::GetValue() {
 	return this->value;
-}
-
-SDL_Color Textbox::GetHoverColor() {
-	return this->hoverColor;
 }
 
 int Textbox::GetCharLimit() {
@@ -307,11 +304,6 @@ TTF_Font* Textbox::GetFont() {
 	return this->font;
 }
 
-void Textbox::SetColor(SDL_Color* color) {
-	this->color = *color;
-	Ivory::Rerender();
-}
-
 void Textbox::SetPlaceholder(std::string placeholder) {
 	this->placeholder = placeholder;
 	Ivory::Rerender();
@@ -324,11 +316,6 @@ void Textbox::SetValue(std::string value) {
 
 void Textbox::SetFont(std::string fontPath) {
 	this->font = TTF_OpenFont(fontPath.c_str(), this->fontSize);
-	Ivory::Rerender();
-}
-
-void Textbox::SetHoverColor(SDL_Color* color) {
-	this->hoverColor = *color;
 	Ivory::Rerender();
 }
 
@@ -353,10 +340,6 @@ Label::Label(std::string text, int x, int y, SDL_Color color, int fontSize, std:
 	}
 }
 
-SDL_Color Label::GetColor() {
-	return this->color;
-}
-
 std::string Label::GetText() {
 	return this->text;
 }
@@ -367,11 +350,6 @@ int Label::GetFontSize() {
 
 TTF_Font* Label::GetFont() {
 	return this->font;
-}
-
-void Label::SetColor(SDL_Color* color) {
-	this->color = *color;
-	Ivory::Rerender();
 }
 
 void Label::SetText(std::string text) {
@@ -400,30 +378,12 @@ Checkbox::Checkbox(int x, int y, int size, bool defaultState) {
 	this->checkmarkColor = cc;
 }
 
-SDL_Color Checkbox::GetColor() {
-	return this->color;
-}
-
-SDL_Color Checkbox::GetHoverColor() {
-	return this->hoverColor;
-}
-
 SDL_Color Checkbox::GetCheckmarkColor() {
 	return this->checkmarkColor;
 }
 
 int Checkbox::GetSize() {
 	return this->size;
-}
-
-void Checkbox::SetColor(SDL_Color* color) {
-	this->color = *color;
-	Ivory::Rerender();
-}
-
-void Checkbox::SetHoverColor(SDL_Color* color) {
-	this->hoverColor = *color;
-	Ivory::Rerender();
 }
 
 void Checkbox::SetCheckmarkColor(SDL_Color* color) {
@@ -488,14 +448,6 @@ Slider::Slider(int x, int y, int width, int height, int thumbWidth, int thumbHei
 	borderThickness = bt;
 }
 
-SDL_Color Slider::GetColor() {
-	return this->color;
-}
-
-SDL_Color Slider::GetHoverColor() {
-	return this->hoverColor;
-}
-
 SDL_Color Slider::GetThumbColor() {
 	return this->thumbColor;
 }
@@ -514,16 +466,6 @@ int Slider::GetValue() {
 
 int Slider::GetThumbPosision() {
 	return this->thumbPosision; 
-}
-
-void Slider::SetColor(SDL_Color* color) {
-	this->color = *color;
-	Ivory::Rerender();
-}
-
-void Slider::SetHoverColor(SDL_Color* hoverColor) {
-	this->hoverColor = *hoverColor;
-	Ivory::Rerender();
 }
 
 void Slider::SetThumbColor(SDL_Color* color) {
@@ -558,20 +500,12 @@ Division::Division(int x, int y, int width, int height) {
 	this->y = y;
 	this->width = width;
 	this->height = height;
-	SDL_Color bColor = { 0, 0, 0, 50 }; 
-	this->backgroundColor = bColor; 
+	SDL_Color color = { 0, 0, 0, 50 }; 
+	this->color = color; 
 
 	// Set border thickness to 0 to disable 
 	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
 	borderThickness = bt;
-}
-
-SDL_Color Division::GetBackgroundColor() {
-	return this->backgroundColor;
-}
-
-void Division::SetBackgroundColor(SDL_Color* color) {
-	this->backgroundColor = *color;
 }
 
 void Division::AddChild(Label* label) {
