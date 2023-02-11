@@ -149,6 +149,8 @@ class Button : public Elements, public Parentable, public Border, public Dimensi
 
 		// SET methods 
 		void SetLabel(std::string label);
+		void SetLabel(int label); 
+		void SetLabel(double label); 
 		void SetFont(std::string fontPath);
 
 		// Utility methods
@@ -176,6 +178,8 @@ class Textbox : public Elements, public Parentable, public Border, public Dimens
 
 		// SET methods 
 		void SetPlaceholder(std::string placeholder);
+		void SetPlaceholder(int placeholder);
+		void SetPlaceholder(double placeholder);
 		void SetValue(std::string value);
 		void SetCharLimit(int limit);
 		void SetFont(std::string fontPath);
@@ -199,6 +203,8 @@ class Label : public Elements, public Parentable, public Border, public Color {
 
 		// SET methods 
 		void SetText(std::string text);
+		void SetText(int text);
+		void SetText(double text);
 		void SetFont(std::string fontPath);
 
 	private:

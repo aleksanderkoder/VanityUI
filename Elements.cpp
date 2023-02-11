@@ -304,6 +304,16 @@ void Button::SetLabel(std::string label) {
 	Ivory::Rerender();
 }
 
+void Button::SetLabel(int label) {
+	this->label = std::to_string(label);
+	Ivory::Rerender();
+}
+
+void Button::SetLabel(double label) {
+	this->label = std::to_string(label);
+	Ivory::Rerender();
+}
+
 bool Button::IsPressed() {
 	if (this->pressed) {
 		this->pressed = false;
@@ -365,6 +375,16 @@ void Textbox::SetPlaceholder(std::string placeholder) {
 	Ivory::Rerender();
 }
 
+void Textbox::SetPlaceholder(int placeholder) {
+	this->placeholder = std::to_string(placeholder);
+	Ivory::Rerender();
+}
+
+void Textbox::SetPlaceholder(double placeholder) {
+	this->placeholder = std::to_string(placeholder);
+	Ivory::Rerender();
+}
+
 void Textbox::SetValue(std::string value) {
 	this->value = value;
 	Ivory::Rerender();
@@ -410,6 +430,16 @@ TTF_Font* Label::GetFont() {
 
 void Label::SetText(std::string text) {
 	this->text = text;
+	Ivory::Rerender();
+}
+
+void Label::SetText(int text) {
+	this->text = std::to_string(text);
+	Ivory::Rerender();
+}
+
+void Label::SetText(double text) {
+	this->text = std::to_string(text);
 	Ivory::Rerender();
 }
 
