@@ -155,12 +155,11 @@ void Ivory::RenderButtons() {
 		// Draw button border 
 		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
 
-		SDL_Color c = { 255, 255, 255 };
 		int textWidth = 0, textHeight = 0;
 		TTF_SizeText(font, label.c_str(), &textWidth, &textHeight);
 
 		// Display button label
-		RenderLabel(label, x + width / 2 - textWidth / 2, y + height / 2 - textHeight / 2, c, font, curr->GetFontSize());
+		RenderLabel(label, x + width / 2 - textWidth / 2, y + height / 2 - textHeight / 2, curr->GetFontColor(), font, curr->GetFontSize());
 	}
 }
 
@@ -181,6 +180,7 @@ void Ivory::RenderTextboxes() {
 		int height = curr->GetHeight();
 		int width = curr->GetWidth();
 		SDL_Color color = curr->GetColor();
+		SDL_Color fontColor = curr->GetFontColor(); 
 		SDL_Color hoverColor = curr->GetHoverColor();
 		TTF_Font* font = curr->GetFont();
 		int fontSize = curr->GetFontSize();
@@ -220,14 +220,14 @@ void Ivory::RenderTextboxes() {
 
 		// If no value, show placeholder
 		if (value.empty()) {
-			SDL_Color c = { 255, 255, 255, 150 };
 			TTF_SizeText(font, placeholder.c_str(), &textWidth, &textHeight);
 
 			lblX = x + width / 2 - textWidth / 2;
 			lblY = y + height / 2 - textHeight / 2;
 
 			// Display textbox placeholder text
-			RenderLabel(placeholder, lblX, lblY, c, font, fontSize);
+			SDL_Color placeholderColor = { fontColor.a = 175 };
+			RenderLabel(placeholder, lblX, lblY, placeholderColor, font, fontSize);
 		}
 		// If textbox has a user entered value, show that value in textbox
 		else {
@@ -246,13 +246,12 @@ void Ivory::RenderTextboxes() {
 				}
 			}
 
-			SDL_Color c = { 255, 255, 255 };
 			TTF_SizeText(font, reducedText.c_str(), &textWidth, &textHeight);
 			lblX = x + width / 2 - textWidth / 2;
 			lblY = y + height / 2 - textHeight / 2;
 
 			// Display textbox label
-			RenderLabel(reducedText, lblX, lblY, c, font, fontSize);
+			RenderLabel(reducedText, lblX, lblY, fontColor, font, fontSize);
 		}
 
 		// If there's an active textbox, toggle textbox cursor every 600 millisecond

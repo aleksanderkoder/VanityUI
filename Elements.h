@@ -138,20 +138,38 @@ class Border {
 		void SetBorderColorBottom(SDL_Color color);
 };
 
-class Button : public Elements, public Parentable, public Border, public Dimensions, public Color {
+// Class for containing everything related to font data 
+class Font {
+	protected: 
+		Font(); 
+		TTF_Font* font; 
+		SDL_Color fontColor; 
+		int fontSize; 
+
+	public: 
+		//GET methods 
+		TTF_Font* GetFont(); 
+		int GetFontSize(); 
+		SDL_Color GetFontColor(); 
+
+		// SET methods 
+		void SetFont(std::string path); 
+		void SetFontSize(int size); 
+		void SetFontColor(SDL_Color* color); 
+
+};
+
+class Button : public Elements, public Parentable, public Border, public Dimensions, public Color, public Font {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
 		// GET methods 
 		std::string GetLabel();
-		int GetFontSize();
-		TTF_Font* GetFont();
 
 		// SET methods 
 		void SetLabel(std::string label);
 		void SetLabel(int label); 
 		void SetLabel(double label); 
-		void SetFont(std::string fontPath);
 
 		// Utility methods
 		void SetPressedState(bool state);
@@ -159,13 +177,11 @@ class Button : public Elements, public Parentable, public Border, public Dimensi
 
 	private:
 		std::string label;
-		TTF_Font* font;
 		// TODO: Add these: labelColor, labelHoverColor
-		int fontSize;
 		bool pressed;
 };
 
-class Textbox : public Elements, public Parentable, public Border, public Dimensions, public Color {
+class Textbox : public Elements, public Parentable, public Border, public Dimensions, public Color, public Font {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
@@ -173,8 +189,6 @@ class Textbox : public Elements, public Parentable, public Border, public Dimens
 		std::string GetPlaceholder();
 		std::string GetValue();
 		int GetCharLimit();
-		int GetFontSize();
-		TTF_Font* GetFont();
 
 		// SET methods 
 		void SetPlaceholder(std::string placeholder);
@@ -182,35 +196,28 @@ class Textbox : public Elements, public Parentable, public Border, public Dimens
 		void SetPlaceholder(double placeholder);
 		void SetValue(std::string value);
 		void SetCharLimit(int limit);
-		void SetFont(std::string fontPath);
 
 	private:
 		std::string placeholder, value;
-		TTF_Font* font;
-		int charLimit, fontSize;
+		int charLimit;
 		// TODO: Add these: labelColor, labelHoverColor and methods for these
 
 };
 
-class Label : public Elements, public Parentable, public Border, public Color {
+class Label : public Elements, public Parentable, public Border, public Color, public Font {
 	public:
 		Label(std::string text, int x, int y, SDL_Color color, int fontSize, std::string fontPath);
 
 		// GET methods 
 		std::string GetText();
-		int GetFontSize();
-		TTF_Font* GetFont();
 
 		// SET methods 
 		void SetText(std::string text);
 		void SetText(int text);
 		void SetText(double text);
-		void SetFont(std::string fontPath);
 
 	private:
 		std::string text;
-		TTF_Font* font;
-		int fontSize;
 		// TODO: Implement use of hoverColor when mouse hovers over label
 };
 

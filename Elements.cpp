@@ -258,7 +258,41 @@ void Border::SetBorderColorBottom(SDL_Color color) {
 	this->borderColors.bottomBorderColor = color;
 }
 
+// FONT 
 
+Font::Font() {
+	font = nullptr;
+	fontColor = SDL_Color{ 255, 0, 0, 255 }; 
+	fontSize = 15; 
+}
+
+TTF_Font* Font::GetFont() {
+	return this->font; 
+}
+
+int Font::GetFontSize() {
+	return this->fontSize; 
+}
+
+SDL_Color Font::GetFontColor() {
+	return this->fontColor; 
+}
+
+void Font::SetFont(std::string path) {
+	if (!(this->font = TTF_OpenFont(path.c_str(), this->fontSize))) {
+		char t[] = "Font error";
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
+		exit(0);
+	}
+}
+
+void Font::SetFontSize(int size) {
+	this->fontSize = size; 
+}
+
+void Font::SetFontColor(SDL_Color* color) {
+	this->fontColor = *color;
+}
 
 // BUTTON
 
@@ -275,28 +309,11 @@ Button::Button(std::string label, int width, int height, int x, int y, int fontS
 	this->color = c;
 	this->hoverColor = hc;
 
-	if (!(this->font = TTF_OpenFont(fontPath.c_str(), fontSize))) {
-		char t[] = "Font error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
-		exit(0);
-	}
+	this->SetFont(fontPath); 
 }
 
 std::string Button::GetLabel() {
 	return this->label;
-}
-
-int Button::GetFontSize() {
-	return this->fontSize;
-}
-
-TTF_Font* Button::GetFont() {
-	return this->font;
-}
-
-void Button::SetFont(std::string fontPath) {
-	this->font = TTF_OpenFont(fontPath.c_str(), this->fontSize);
-	Ivory::Rerender();
 }
 
 void Button::SetLabel(std::string label) {
@@ -343,11 +360,7 @@ Textbox::Textbox(std::string placeholder, int width, int height, int x, int y, i
 	this->charLimit = limit;
 	this->hoverColor = hc;
 
-	if (!(this->font = TTF_OpenFont(fontPath.c_str(), fontSize))) {
-		char t[] = "Font error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
-		exit(0);
-	}
+	this->SetFont(fontPath);
 }
 
 std::string Textbox::GetPlaceholder() {
@@ -360,14 +373,6 @@ std::string Textbox::GetValue() {
 
 int Textbox::GetCharLimit() {
 	return this->charLimit;
-}
-
-int Textbox::GetFontSize() {
-	return this->fontSize;
-}
-
-TTF_Font* Textbox::GetFont() {
-	return this->font;
 }
 
 void Textbox::SetPlaceholder(std::string placeholder) {
@@ -390,11 +395,6 @@ void Textbox::SetValue(std::string value) {
 	Ivory::Rerender();
 }
 
-void Textbox::SetFont(std::string fontPath) {
-	this->font = TTF_OpenFont(fontPath.c_str(), this->fontSize);
-	Ivory::Rerender();
-}
-
 void Textbox::SetCharLimit(int limit) {
 	this->charLimit = limit;
 }
@@ -409,23 +409,11 @@ Label::Label(std::string text, int x, int y, SDL_Color color, int fontSize, std:
 	this->display = true;
 	this->fontSize = fontSize;
 
-	if (!(this->font = TTF_OpenFont(fontPath.c_str(), fontSize))) {
-		char t[] = "Font error";
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, t, TTF_GetError(), nullptr);
-		exit(0);
-	}
+	this->SetFont(fontPath); 
 }
 
 std::string Label::GetText() {
 	return this->text;
-}
-
-int Label::GetFontSize() {
-	return this->fontSize;
-}
-
-TTF_Font* Label::GetFont() {
-	return this->font;
 }
 
 void Label::SetText(std::string text) {
@@ -440,11 +428,6 @@ void Label::SetText(int text) {
 
 void Label::SetText(double text) {
 	this->text = std::to_string(text);
-	Ivory::Rerender();
-}
-
-void Label::SetFont(std::string fontPath) {
-	this->font = TTF_OpenFont(fontPath.c_str(), this->fontSize);
 	Ivory::Rerender();
 }
 
