@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
     SDL_Color black = { 0,0,0,255 };
     Label* l = Ivory::CreateLabel("Hello, Ivory!");
-    Button* b = Ivory::CreateButton("A button");
+    Button* b = Ivory::CreateButton("Page 2");
     auto tb = Ivory::CreateTextbox("Text char limit", 350);
     auto img = Ivory::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
     auto cb = Ivory::CreateCheckbox(550); 
@@ -24,27 +24,22 @@ int main(int argc, char* argv[])
     div2->AddChild(div3); 
     
     div3->AddChild(b); 
-    b->SetDimensions("50%", "100%"); 
     div3->AddChild(tb); 
     div3->AddChild(img); 
     div3->AddChild(l); 
-    div3->AddChild(cb); 
+    div3->AddChild(cb);
+
+    auto btn = Ivory::CreateButton("Back to page 1");
+
+    b->SetDimensions("50%", "100%"); 
 
     Page* p = Ivory::CreatePage();
     Page* p2 = Ivory::CreatePage();
 
-    p->AddElement(b);
-    p->AddElement(l);
-    p->AddElement(tb); 
-    p->AddElement(cb); 
     p->AddElement(div);
-    p->AddElement(div2); 
-    p->AddElement(div3); 
     p->AddElement(sl); 
 
-    p2->AddElement(b); 
-
-    p->AddElement(img); 
+    p2->AddElement(btn); 
 
     Ivory::DisplayPage(p);
  
@@ -58,6 +53,9 @@ int main(int argc, char* argv[])
             std::cout << "Button pressed!" << std::endl;
             Ivory::DisplayPage(p2); 
         }
+
+        if (btn->IsPressed())
+            Ivory::DisplayPage(p); 
 
         Ivory::Render();
         SDL_RenderPresent(renderer);

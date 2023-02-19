@@ -4,40 +4,40 @@
 
 class Page
 {
-private:
-	std::vector<Button*>* buttons;
-	std::vector<Label*>* labels;
-	std::vector<Checkbox*>* checkboxes;
-	std::vector<Textbox*>* textboxes;
-	std::vector<Image*>* images; 
-	std::vector<Slider*>* sliders;
-	std::vector<Division*>* divisions; 
+	private:
+		std::vector<Button*>* buttons;
+		std::vector<Label*>* labels;
+		std::vector<Checkbox*>* checkboxes;
+		std::vector<Textbox*>* textboxes;
+		std::vector<Image*>* images; 
+		std::vector<Slider*>* sliders;
+		std::vector<Division*>* divisions; 
 
-public:
-	Page();
+	public:
+		Page();
 
-	void AddElement(Button* button);
-	void AddElement(Label* label);
-	void AddElement(Checkbox* checkbox);
-	void AddElement(Textbox* textbox); 
-	void AddElement(Image* image);
-	void AddElement(Slider* slider); 
-	void AddElement(Division* division); 
+		void AddElement(Button* button);
+		void AddElement(Label* label);
+		void AddElement(Checkbox* checkbox);
+		void AddElement(Textbox* textbox); 
+		void AddElement(Image* image);
+		void AddElement(Slider* slider); 
+		void AddElement(Division* division); 
 
-	void RemoveElement(Button* button);
-	void RemoveElement(Label* label);
-	void RemoveElement(Checkbox* checkbox);
-	void RemoveElement(Textbox* textbox);
-	void RemoveElement(Image* image);
-	void RemoveElement(Slider* slider); 
-	void RemoveElement(Division* division);
+		void RemoveElement(Button* button);
+		void RemoveElement(Label* label);
+		void RemoveElement(Checkbox* checkbox);
+		void RemoveElement(Textbox* textbox);
+		void RemoveElement(Image* image);
+		void RemoveElement(Slider* slider); 
+		void RemoveElement(Division* division);
 
-	std::vector<Button*>* GetButtons();
-	std::vector<Label*>* GetLabels();
-	std::vector<Checkbox*>* GetCheckboxes();
-	std::vector<Textbox*>* GetTextboxes(); 
-	std::vector<Image*>* GetImages();
-	std::vector<Slider*>* GetSliders(); 
-	std::vector<Division*>* GetDivisions();
+		std::vector<Button*>* GetButtons();
+		std::vector<Label*>* GetLabels();
+		std::vector<Checkbox*>* GetCheckboxes();
+		std::vector<Textbox*>* GetTextboxes(); 
+		std::vector<Image*>* GetImages();
+		std::vector<Slider*>* GetSliders(); 
+		std::vector<Division*>* GetDivisions();
 
 };

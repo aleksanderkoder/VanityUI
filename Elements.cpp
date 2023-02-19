@@ -65,8 +65,6 @@ void Parentable::SetParent(Division* parent) {
 Dimensions::Dimensions() {
 	width = 0; 
 	height = 0; 
-	parentWidth = NULL;
-	parentHeight = NULL;
 }
 
 int Dimensions::GetWidth() {
@@ -77,28 +75,12 @@ int Dimensions::GetHeight() {
 	return this->height;
 }
 
-int Dimensions::GetParentWidth() {
-	return this->parentWidth;
-}
-
-int Dimensions::GetParentHeight() {
-	return this->parentHeight;
-}
-
 void Dimensions::SetWidth(int width) {
 	this->width = width;
 }
 
 void Dimensions::SetHeight(int height) {
 	this->height = height;
-}
-
-void Dimensions::SetParentWidth(int width) {
-	this->parentWidth = width;
-}
-
-void Dimensions::SetParentHeight(int height) {
-	this->parentHeight = height;
 }
 
 void Dimensions::SetDimensions(int width, int height) {
@@ -111,7 +93,7 @@ void Dimensions::SetWidth(std::string percentage) {
 		std::string value(1, percentage[i]); 
 		if (value == "%") {
 			int perc = std::stoi(percentage); 
-			int pWidth = this->GetParentWidth(); 
+			int pWidth = this->GetParent()->GetWidth();
 			if (pWidth) {
 				this->width = pWidth / 100 * perc;
 			} else {
@@ -126,7 +108,7 @@ void Dimensions::SetHeight(std::string percentage) {
 		std::string value(1, percentage[i]);
 		if (value == "%") {
 			int perc = std::stoi(percentage);
-			int pHeight = this->GetParentHeight(); 
+			int pHeight = this->GetParent()->GetHeight();
 			if (pHeight) {
 				this->height = pHeight / 100 * perc;
 			}
@@ -409,7 +391,9 @@ Label::Label(std::string text, int x, int y, SDL_Color color, int fontSize, std:
 	this->display = true;
 	this->fontSize = fontSize;
 
-	this->SetFont(fontPath); 
+	this->SetFont(fontPath);
+
+	this->ComputeDimensions(); 
 }
 
 std::string Label::GetText() {
@@ -418,17 +402,28 @@ std::string Label::GetText() {
 
 void Label::SetText(std::string text) {
 	this->text = text;
+	this->ComputeDimensions(); 
 	Ivory::Rerender();
 }
 
 void Label::SetText(int text) {
 	this->text = std::to_string(text);
+	this->ComputeDimensions();
 	Ivory::Rerender();
 }
 
 void Label::SetText(double text) {
 	this->text = std::to_string(text);
+	this->ComputeDimensions();
 	Ivory::Rerender();
+}
+
+void Label::ComputeDimensions() {
+	// Compute label width and height 
+	int minx, maxx, miny, maxy;
+	TTF_GlyphMetrics(this->font, 65, &minx, &maxx, &miny, &maxy, nullptr);
+	this->width = (maxx - minx) * this->text.length();
+	this->height = (maxy - miny) * this->text.length();
 }
 
 // CHECKBOX
@@ -575,41 +570,82 @@ Division::Division(int x, int y, int width, int height) {
 	// Set border thickness to 0 to disable 
 	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
 	borderThickness = bt;
+
+	this->buttons = new std::vector<Button*>();
+	this->labels = new std::vector<Label*>();
+	this->checkboxes = new std::vector<Checkbox*>();
+	this->textboxes = new std::vector<Textbox*>();
+	this->images = new std::vector<Image*>();
+	this->sliders = new std::vector<Slider*>();
+	this->divisions = new std::vector<Division*>();
 }
 
 void Division::AddChild(Label* label) {
 	label->SetParent(this);
+	this->labels->push_back(label); 
 	Ivory::Rerender();
 }
 
 void Division::AddChild(Button* button) {
 	button->SetParent(this);
-	button->SetParentWidth(this->GetWidth());
-	button->SetParentHeight(this->GetWidth());
+	this->buttons->push_back(button); 
 	Ivory::Rerender();
 }
 
 void Division::AddChild(Textbox* textbox) {
 	textbox->SetParent(this);
+	this->textboxes->push_back(textbox);
 	Ivory::Rerender();
 }
 
 void Division::AddChild(Checkbox* checkbox) {
 	checkbox->SetParent(this);
+	this->checkboxes->push_back(checkbox);
 	Ivory::Rerender();
 }
 
 void Division::AddChild(Slider* slider) {
 	slider->SetParent(this);
+	this->sliders->push_back(slider);
 	Ivory::Rerender();
 }
 
 void Division::AddChild(Image* image) {
 	image->SetParent(this);
+	this->images->push_back(image);
 	Ivory::Rerender();
 }
 
 void Division::AddChild(Division* division) {
 	division->SetParent(this);
+	this->divisions->push_back(division);
 	Ivory::Rerender();
+}
+
+std::vector<Button*>* Division::GetButtons() {
+	return this->buttons;
+}
+
+std::vector<Label*>* Division::GetLabels() {
+	return this->labels;
+}
+
+std::vector<Checkbox*>* Division::GetCheckboxes() {
+	return this->checkboxes;
+}
+
+std::vector<Textbox*>* Division::GetTextboxes() {
+	return this->textboxes;
+}
+
+std::vector<Image*>* Division::GetImages() {
+	return this->images;
+}
+
+std::vector<Slider*>* Division::GetSliders() {
+	return this->sliders;
+}
+
+std::vector<Division*>* Division::GetDivisions() {
+	return this->divisions;
 }

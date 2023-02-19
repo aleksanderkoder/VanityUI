@@ -36,6 +36,36 @@ void Page::AddElement(Slider* slider) {
 
 void Page::AddElement(Division* division) {
 	this->divisions->push_back(division);
+
+	// Add all elements to page contained within the divison
+	auto buttons = division->GetButtons(); 
+	for (int i = 0; i < buttons->size(); i++) {
+		this->AddElement((*buttons)[i]);
+	}
+	auto textboxes = division->GetTextboxes();
+	for (int i = 0; i < textboxes->size(); i++) {
+		this->AddElement((*textboxes)[i]);
+	}
+	auto labels = division->GetLabels();
+	for (int i = 0; i < labels->size(); i++) {
+		this->AddElement((*labels)[i]);
+	}
+	auto checkboxes = division->GetCheckboxes();
+	for (int i = 0; i < checkboxes->size(); i++) {
+		this->AddElement((*checkboxes)[i]);
+	}
+	auto sliders = division->GetSliders();
+	for (int i = 0; i < sliders->size(); i++) {
+		this->AddElement((*sliders)[i]);
+	}
+	auto images = division->GetImages();
+	for (int i = 0; i < images->size(); i++) {
+		this->AddElement((*images)[i]);
+	}
+	auto divisions = division->GetDivisions();
+	for (int i = 0; i < divisions->size(); i++) {
+		this->AddElement((*divisions)[i]);
+	}
 }
 
 void Page::RemoveElement(Button* button) {

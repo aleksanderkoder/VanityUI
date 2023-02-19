@@ -3,6 +3,7 @@
 #include "SDL_ttf.h"
 #include <string>
 #include <iostream>
+#include <vector>
 
 // Forward declarations 
 
@@ -48,25 +49,19 @@ class Parentable {
 };
 
 // A class container everything related to generic dimension data, such as width and height 
-class Dimensions {
+class Dimensions : public Parentable {
 	protected:
 		Dimensions();
 		int width, height; 
-		int parentWidth, parentHeight;
 
 	public: 
 		// GET methods 
 		int GetWidth(); 
 		int GetHeight();
 
-		int GetParentWidth();
-		int GetParentHeight();
-
 		// SET methods 
 		void SetWidth(int width); 
 		void SetHeight(int height); 
-		void SetParentWidth(int width); 
-		void SetParentHeight(int height); 
 		void SetDimensions(int width, int height);
 			
 		// Percentage  
@@ -159,7 +154,7 @@ class Font {
 
 };
 
-class Button : public Elements, public Parentable, public Border, public Dimensions, public Color, public Font {
+class Button : public Elements, public Border, public Dimensions, public Color, public Font {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
@@ -181,7 +176,7 @@ class Button : public Elements, public Parentable, public Border, public Dimensi
 		bool pressed;
 };
 
-class Textbox : public Elements, public Parentable, public Border, public Dimensions, public Color, public Font {
+class Textbox : public Elements, public Border, public Dimensions, public Color, public Font {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
@@ -204,7 +199,7 @@ class Textbox : public Elements, public Parentable, public Border, public Dimens
 
 };
 
-class Label : public Elements, public Parentable, public Border, public Color, public Font {
+class Label : public Elements, public Dimensions, public Border, public Color, public Font {
 	public:
 		Label(std::string text, int x, int y, SDL_Color color, int fontSize, std::string fontPath);
 
@@ -218,10 +213,13 @@ class Label : public Elements, public Parentable, public Border, public Color, p
 
 	private:
 		std::string text;
+
+		// Utility methods
+		void ComputeDimensions(); 
 		// TODO: Implement use of hoverColor when mouse hovers over label
 };
 
-class Checkbox : public Elements, public Parentable, public Border, public Color {
+class Checkbox : public Elements, public Dimensions, public Border, public Color {
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
@@ -243,7 +241,7 @@ class Checkbox : public Elements, public Parentable, public Border, public Color
 		SDL_Color checkmarkColor; 
 };
 
-class Slider : public Elements, public Parentable, public Border, public Dimensions, public Color {
+class Slider : public Elements, public Border, public Dimensions, public Color {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
@@ -266,7 +264,7 @@ class Slider : public Elements, public Parentable, public Border, public Dimensi
 		SDL_Color thumbColor;
 };
 
-class Image : public Elements, public Parentable, public Border, public Dimensions {
+class Image : public Elements, public Border, public Dimensions {
 	public: 
 		Image(std::string imagePath, int x, int y, int width, int height);
 
@@ -279,7 +277,7 @@ class Image : public Elements, public Parentable, public Border, public Dimensio
 		SDL_Texture* image; 
 };
 
-class Division : public Elements, public Parentable, public Border, public Dimensions, public Color {
+class Division : public Elements, public Border, public Dimensions, public Color {
 	public:
 		Division(int x, int y, int width, int height);
 
@@ -291,6 +289,23 @@ class Division : public Elements, public Parentable, public Border, public Dimen
 		void AddChild(Slider* slider);
 		void AddChild(Image* image); 
 		void AddChild(Division* division);
+
+		std::vector<Button*>* GetButtons();
+		std::vector<Label*>* GetLabels();
+		std::vector<Checkbox*>* GetCheckboxes();
+		std::vector<Textbox*>* GetTextboxes();
+		std::vector<Image*>* GetImages();
+		std::vector<Slider*>* GetSliders();
+		std::vector<Division*>* GetDivisions();
+	
+	private:
+		std::vector<Button*>* buttons;
+		std::vector<Label*>* labels;
+		std::vector<Checkbox*>* checkboxes;
+		std::vector<Textbox*>* textboxes;
+		std::vector<Image*>* images;
+		std::vector<Slider*>* sliders;
+		std::vector<Division*>* divisions;
 
 		// TODO: Add use of hoverColor when mouse hovers over div!
 };
