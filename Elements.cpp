@@ -244,7 +244,7 @@ void Border::SetBorderColorBottom(SDL_Color color) {
 
 Font::Font() {
 	font = nullptr;
-	fontColor = SDL_Color{ 255, 0, 0, 255 }; 
+	fontColor = SDL_Color{ 255, 255, 255, 255 }; 
 	fontSize = 15; 
 }
 
@@ -274,6 +274,33 @@ void Font::SetFontSize(int size) {
 
 void Font::SetFontColor(SDL_Color* color) {
 	this->fontColor = *color;
+}
+
+// BACKGROUND IMAGE
+
+BackgroundImage::BackgroundImage() {
+	image = nullptr; 
+	displayBackgroundImage = true;
+}
+
+SDL_Texture* BackgroundImage::GetBackgroundImage() {
+	return this->image; 
+}
+
+bool BackgroundImage::GetBackgroundImageDisplayState() {
+	return this->displayBackgroundImage;
+}
+
+void BackgroundImage::SetBackgroundImage(std::string imagePath) {
+	this->image = Ivory::LoadImage(imagePath); 
+}
+
+void BackgroundImage::ShowBackgroundImage() {
+	this->displayBackgroundImage = true;
+}
+
+void BackgroundImage::HideBackgroundImage() {
+	this->displayBackgroundImage = false;
 }
 
 // BUTTON

@@ -8,6 +8,7 @@
 // Forward declarations 
 
 class Division; 
+class Image; 
 
 // ELEMENT CLASS DEFINITIONS 
 
@@ -154,7 +155,28 @@ class Font {
 
 };
 
-class Button : public Elements, public Border, public Dimensions, public Color, public Font {
+class BackgroundImage {
+	protected:
+			BackgroundImage();
+			SDL_Texture* image; 
+			bool displayBackgroundImage;
+	
+	public: 			
+		// GET methods 
+		SDL_Texture* GetBackgroundImage();
+		bool GetBackgroundImageDisplayState();
+
+		// SET methods
+		void SetBackgroundImage(std::string imagePath); 
+
+		// Utility methods 
+		void ShowBackgroundImage(); 
+		void HideBackgroundImage(); 
+
+		
+};
+
+class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
@@ -176,7 +198,7 @@ class Button : public Elements, public Border, public Dimensions, public Color, 
 		bool pressed;
 };
 
-class Textbox : public Elements, public Border, public Dimensions, public Color, public Font {
+class Textbox : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
@@ -219,7 +241,7 @@ class Label : public Elements, public Dimensions, public Border, public Color, p
 		// TODO: Implement use of hoverColor when mouse hovers over label
 };
 
-class Checkbox : public Elements, public Dimensions, public Border, public Color {
+class Checkbox : public Elements, public Dimensions, public Border, public Color, public BackgroundImage {
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
@@ -241,7 +263,7 @@ class Checkbox : public Elements, public Dimensions, public Border, public Color
 		SDL_Color checkmarkColor; 
 };
 
-class Slider : public Elements, public Border, public Dimensions, public Color {
+class Slider : public Elements, public Border, public Dimensions, public Color, public BackgroundImage {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
@@ -277,7 +299,7 @@ class Image : public Elements, public Border, public Dimensions {
 		SDL_Texture* image; 
 };
 
-class Division : public Elements, public Border, public Dimensions, public Color {
+class Division : public Elements, public Border, public Dimensions, public Color, public BackgroundImage {
 	public:
 		Division(int x, int y, int width, int height);
 

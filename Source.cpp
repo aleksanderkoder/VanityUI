@@ -4,7 +4,7 @@
 int main(int argc, char* argv[])
 {
     Ivory::Setup(1920, 1080);
-    Ivory::DisableVsync(); 
+    //Ivory::DisableVsync(); 
 
     // Create a rendering context via Ivory. Can also pass an existing renderer to the Ivory Setup() method instead. 
     SDL_Renderer* renderer = Ivory::CreateRenderingContext("IVORY UI"); 
@@ -16,6 +16,8 @@ int main(int argc, char* argv[])
     auto img = Ivory::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
     auto cb = Ivory::CreateCheckbox(550); 
     auto sl = Ivory::CreateSlider(650, 500, 250, 20, 60, 60); 
+
+    tb->SetBackgroundImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg"); 
 
     auto div = Ivory::CreateDivision(0, 0, 600, 600);
     auto div2 = Ivory::CreateDivision(100, 100, 200, 200);
@@ -32,7 +34,6 @@ int main(int argc, char* argv[])
     auto btn = Ivory::CreateButton("Back to page 1");
 
     b->SetDimensions("50%", "100%"); 
-
     Page* p = Ivory::CreatePage();
     Page* p2 = Ivory::CreatePage();
 

@@ -122,6 +122,10 @@ void Ivory::RenderButtons() {
 		TTF_Font* font = curr->GetFont();
 		std::string label = curr->GetLabel();
 
+		// Render background image
+		if (curr->GetBackgroundImageDisplayState())
+			Ivory::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y); 
+
 		// Create button rectangle data
 		SDL_Rect rect;
 		rect.w = width;
@@ -187,6 +191,10 @@ void Ivory::RenderTextboxes() {
 		std::string value = curr->GetValue();
 		std::string placeholder = curr->GetPlaceholder();
 
+		// Render background image
+		if (curr->GetBackgroundImageDisplayState())
+			Ivory::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y);
+
 		// Create textbox rectangle data
 		SDL_Rect rect;
 		rect.w = width;
@@ -226,7 +234,8 @@ void Ivory::RenderTextboxes() {
 			lblY = y + height / 2 - textHeight / 2;
 
 			// Display textbox placeholder text
-			SDL_Color placeholderColor = { fontColor.a = 175 };
+			SDL_Color placeholderColor = fontColor; 
+			placeholderColor.a = 175;
 			RenderLabel(placeholder, lblX, lblY, placeholderColor, font, fontSize);
 		}
 		// If textbox has a user entered value, show that value in textbox
@@ -295,6 +304,10 @@ void Ivory::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if select
 		int size = curr->GetSize();
 		bool checked = curr->IsChecked();
 		SDL_Color color = curr->GetColor();
+
+		// Render background image
+		if (curr->GetBackgroundImageDisplayState())
+			Ivory::RenderBackgroundImage(curr->GetBackgroundImage(), size, size, x, y);
 
 		// Create checkbox rectangle data
 		SDL_Rect rect;
@@ -411,6 +424,10 @@ void Ivory::RenderSliders() {
 		int height = curr->GetHeight(); 
 		int thumbHeight = curr->GetThumbHeight(); 
 
+		// Render background image
+		if (curr->GetBackgroundImageDisplayState())
+			Ivory::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y);
+
 		// Create slider rectangle data
 		SDL_Rect sliderRect;
 		sliderRect.w = width;
@@ -487,10 +504,17 @@ void Ivory::RenderDivisions() {
 
 		if (!display) continue;
 
+		int width = curr->GetWidth(); 
+		int height = curr->GetHeight(); 
+
+		// Render background image
+		if (curr->GetBackgroundImageDisplayState())
+			Ivory::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y);
+
 		// Create image rectangle data
 		SDL_Rect rect;
-		rect.w = curr->GetWidth();
-		rect.h = curr->GetHeight();
+		rect.w = width;
+		rect.h = height;
 		rect.x = x;
 		rect.y = y;
 
@@ -729,6 +753,17 @@ bool Ivory::InheritStateFromParent(Division* parent, int& elementX, int& element
 		parent = parent->GetParent();
 	}
 	return elementDisplayState;
+}
+
+void Ivory::RenderBackgroundImage(SDL_Texture* image, int width, int height, int x, int y) {
+		// Create image rectangle data
+		SDL_Rect rect;
+		rect.w = width;
+		rect.h = height; 
+		rect.x = x;
+		rect.y = y;
+
+		SDL_RenderCopy(targetRenderer, image, nullptr, &rect);
 }
 
 void Ivory::prepareNewSnapshotFrame() {

@@ -60,6 +60,7 @@ class Ivory
 		// Private methods  
 		static void UpdateMousePosision(); 
 		static bool InheritStateFromParent(Division* parent, int& elementX, int& elementY, bool elementDisplayState);
+		static void RenderBackgroundImage(SDL_Texture* image, int width, int height, int x, int y);
 		static void prepareNewSnapshotFrame();
 		static void finalizeNewSnapshotFrame();
 		static TTF_Font* OpenFont(std::string fontUrl, int size);
