@@ -176,6 +176,30 @@ class BackgroundImage {
 		
 };
 
+class Animation {
+	protected: 
+		Animation(); 
+		bool animationActive;	// Controls whether animation should be ran, or not
+		int transitionTargetX;	// Goal coordinates for where animated element should end up at animation end
+		int transitionTargetY;
+		int animationTimespanMs;	// Amount of milliseconds the animation should take 
+		Uint32 animationStartTimestamp;	// Timestamp in milliseconds for when animation first started 
+		std::string animationStyle;	// Name of easing function used to animate element  
+		bool animationRebound; 	// If true, reposition animated element back to original position on animation end 
+
+	public: 
+		// GET methods
+		bool GetAnimationState();	// Returns true if animation is currently running, false if not 
+
+		// SET methods
+		void SetAnimation(int x, int y, std::string style, int timespan, bool rebound = false); // Main function for registering animation
+		void SetAnimationRebound(bool value);	// Sets if animated element should "rebound" or not
+		void SetTransitionTarget(int x, int y);	// Sets position coordinates of where element should end up at animation end
+
+		// Utility methods 
+		void Animate();	// Executes animation
+};
+
 class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);

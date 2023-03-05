@@ -303,6 +303,45 @@ void BackgroundImage::HideBackgroundImage() {
 	this->displayBackgroundImage = false;
 }
 
+// ANIMATION
+
+Animation::Animation() {
+	animationActive = false; 
+	transitionTargetX = NULL; 
+	transitionTargetY = NULL; 
+	animationTimespanMs = 1000; 
+	animationStartTimestamp = NULL; 
+	animationStyle = "linear"; 
+	animationRebound = false; 
+}
+
+bool Animation::GetAnimationState() {
+	return this->animationActive; 
+}
+
+void Animation::SetAnimation(int x, int y, std::string style, int timespan, bool rebound = false) {
+	this->transitionTargetX = x; 
+	this->transitionTargetY = y; 
+	this->animationStyle = style; 
+	this->animationTimespanMs = timespan; 
+	this->animationRebound = rebound; 
+}
+
+void Animation::SetAnimationRebound(bool value) {
+	this->animationRebound = value; 
+}
+
+void Animation::SetTransitionTarget(int x, int y) {
+	this->transitionTargetX = x; 
+	this->transitionTargetY = y; 
+}
+
+void Animation::Animate() {
+	this->animationActive = true; 
+	this->animationStartTimestamp = SDL_GetTicks(); 
+}	// TODO: IMPLEMENT THE ANIMATION RENDERING!
+
+
 // BUTTON
 
 Button::Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath) {
