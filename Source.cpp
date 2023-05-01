@@ -22,10 +22,13 @@ int main(int argc, char* argv[])
     auto div = Ivory::CreateDivision(0, 0, 600, 600);
     auto div2 = Ivory::CreateDivision(100, 100, 200, 200);
     auto div3 = Ivory::CreateDivision(100, 100, 200, 200);
+    auto div4 = Ivory::CreateDivision(500, 0, 200, 200);
+    div4->SetColor({ 250,0,0,255 }); 
     div->AddChild(div2); 
     div2->AddChild(div3); 
     
     div3->AddChild(b); 
+    div3->AddChild(div4); 
     div3->AddChild(tb); 
     div3->AddChild(img); 
     div3->AddChild(l); 
@@ -33,7 +36,9 @@ int main(int argc, char* argv[])
 
     auto btn = Ivory::CreateButton("Back to page 1");
 
-    b->SetDimensions("50%", "100%"); 
+    b->SetDimensions("50%", "100%");
+    b->Animate(); 
+    b->SetAnimation(500, NULL, "linear", 3000); 
     Page* p = Ivory::CreatePage();
     Page* p2 = Ivory::CreatePage();
 

@@ -9,6 +9,7 @@
 
 class Division; 
 class Image; 
+class Button; 
 
 // ELEMENT CLASS DEFINITIONS 
 
@@ -195,12 +196,14 @@ class Animation {
 		void SetAnimation(int x, int y, std::string style, int timespan, bool rebound = false); // Main function for registering animation
 		void SetAnimationRebound(bool value);	// Sets if animated element should "rebound" or not
 		void SetTransitionTarget(int x, int y);	// Sets position coordinates of where element should end up at animation end
+		void SetAnimationState(bool state); 
+		void CalculateNextAnimationStep(int& x, int& y, Button& element); 
 
 		// Utility methods 
 		void Animate();	// Executes animation
 };
 
-class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage {
+class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 

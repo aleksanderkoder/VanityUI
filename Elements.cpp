@@ -10,6 +10,8 @@ class Ivory {
 		static int GetViewportHeight(); 
 };
 
+class Button; 
+
 // ELEMENTS - Common methods for every element type
 
 Elements::Elements() {
@@ -319,7 +321,7 @@ bool Animation::GetAnimationState() {
 	return this->animationActive; 
 }
 
-void Animation::SetAnimation(int x, int y, std::string style, int timespan, bool rebound = false) {
+void Animation::SetAnimation(int x, int y, std::string style, int timespan, bool rebound) {
 	this->transitionTargetX = x; 
 	this->transitionTargetY = y; 
 	this->animationStyle = style; 
@@ -336,10 +338,60 @@ void Animation::SetTransitionTarget(int x, int y) {
 	this->transitionTargetY = y; 
 }
 
+void Animation::SetAnimationState(bool state) {
+	this->animationActive = state; 
+}
+
+void Animation::CalculateNextAnimationStep(int& x, int& y, Button& element) {
+	Uint32 elapsedMs = SDL_GetTicks() - this->animationStartTimestamp; 
+
+	// Calculates how many steps should be taken from element's origin point based on elapsed time
+	float animationStep = (float)elapsedMs / 16.66;
+
+	float stepX = 0, stepY = 0;
+
+	int relativeTransitionTargetX = 0; 
+	int relativeTransitionTargetY = this->transitionTargetY + element.GetParent()->GetY();
+
+	if (this->transitionTargetX) {
+		relativeTransitionTargetX = this->transitionTargetX + element.GetParent()->GetX();
+		if (relativeTransitionTargetX > x) {
+			float posXDiff = relativeTransitionTargetX - x + element.GetWidth();
+			stepX = posXDiff / ((float)this->animationTimespanMs / 16.66);
+		}
+		else {
+			float posXDiff = x + element.GetWidth() - relativeTransitionTargetX;
+			stepX = posXDiff / ((float)this->animationTimespanMs / 16.66);
+		}
+	}
+
+	if (this->transitionTargetY) {
+		if (this->transitionTargetY > y) {
+			float posYDiff = relativeTransitionTargetY - y + element.GetWidth();
+			stepY = posYDiff / ((float)this->animationTimespanMs / 16.66);
+		}
+		else {
+			float posYDiff = y - relativeTransitionTargetY + element.GetWidth();
+			stepY = posYDiff / ((float)this->animationTimespanMs / 16.66);
+		}
+	}
+	
+	// Calculate new position 
+	x = x + stepX * animationStep; 
+	y = y + stepY * animationStep; 
+
+	// Check if animation has reached its end goal 
+	if (elapsedMs >= this->animationTimespanMs) {
+		this->animationActive = false;
+		if (!this->animationRebound)
+			element.SetPosition(this->transitionTargetX, this->transitionTargetY); 
+	}
+}
+
 void Animation::Animate() {
 	this->animationActive = true; 
 	this->animationStartTimestamp = SDL_GetTicks(); 
-}	// TODO: IMPLEMENT THE ANIMATION RENDERING!
+}
 
 
 // BUTTON

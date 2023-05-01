@@ -122,6 +122,11 @@ void Ivory::RenderButtons() {
 		TTF_Font* font = curr->GetFont();
 		std::string label = curr->GetLabel();
 
+		if (curr->GetAnimationState()) {
+			// If element is currently being animated 
+			curr->CalculateNextAnimationStep(x, y, *curr); 
+		}
+
 		// Render background image
 		if (curr->GetBackgroundImageDisplayState())
 			Ivory::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y); 
