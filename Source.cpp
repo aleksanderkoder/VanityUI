@@ -10,12 +10,12 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer = Ivory::CreateRenderingContext("IVORY UI"); 
 
     SDL_Color black = { 0,0,0,255 };
-    Label* l = Ivory::CreateLabel("Hello, Ivory!");
+    Label* l = Ivory::CreateLabel("Div 3");
     Button* b = Ivory::CreateButton("Page 2");
     auto tb = Ivory::CreateTextbox("Text char limit", 350);
     auto img = Ivory::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
     auto cb = Ivory::CreateCheckbox(550); 
-    auto sl = Ivory::CreateSlider(650, 500, 250, 20, 60, 60); 
+    auto sl = Ivory::CreateSlider(650, 500); 
 
     tb->SetBackgroundImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg"); 
 
@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     div4->SetColor({ 250,0,0,255 }); 
     div->AddChild(div2); 
     div2->AddChild(div3); 
-    
+
     div3->AddChild(b); 
     div3->AddChild(div4); 
     div3->AddChild(tb); 
@@ -37,8 +37,10 @@ int main(int argc, char* argv[])
     auto btn = Ivory::CreateButton("Back to page 1");
 
     b->SetDimensions("50%", "100%");
+
+    b->SetAnimation(-100, 300, "linear", 3000); 
     b->Animate(); 
-    b->SetAnimation(500, NULL, "linear", 3000); 
+
     Page* p = Ivory::CreatePage();
     Page* p2 = Ivory::CreatePage();
 

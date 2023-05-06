@@ -348,34 +348,21 @@ void Animation::CalculateNextAnimationStep(int& x, int& y, Button& element) {
 	// Calculates how many steps should be taken from element's origin point based on elapsed time
 	float animationStep = (float)elapsedMs / 16.66;
 
-	float stepX = 0, stepY = 0;
+	// Calculate the actual coordinate to transelate towards relative to element's position 
+	float posXDiff = x + this->transitionTargetX - x;
+	float posYDiff = y + this->transitionTargetY - y;
 
-	int relativeTransitionTargetX = 0; 
-	int relativeTransitionTargetY = this->transitionTargetY + element.GetParent()->GetY();
+	float stepX = 0, stepY = 0; 
 
-	if (this->transitionTargetX) {
-		relativeTransitionTargetX = this->transitionTargetX + element.GetParent()->GetX();
-		if (relativeTransitionTargetX > x) {
-			float posXDiff = relativeTransitionTargetX - x + element.GetWidth();
-			stepX = posXDiff / ((float)this->animationTimespanMs / 16.66);
-		}
-		else {
-			float posXDiff = x + element.GetWidth() - relativeTransitionTargetX;
-			stepX = posXDiff / ((float)this->animationTimespanMs / 16.66);
-		}
+	// Calculate next step on X and Y axis based on specified animation style/algorithm
+	if (this->animationStyle == "linear") {
+		stepX = posXDiff / ((float)this->animationTimespanMs / 16.66);	
+		stepY = posYDiff / ((float)this->animationTimespanMs / 16.66);
+	}
+	else if (this->animationStyle == "easing") {
+		// TODO: Implement more animation styles/algorithms 
 	}
 
-	if (this->transitionTargetY) {
-		if (this->transitionTargetY > y) {
-			float posYDiff = relativeTransitionTargetY - y + element.GetWidth();
-			stepY = posYDiff / ((float)this->animationTimespanMs / 16.66);
-		}
-		else {
-			float posYDiff = y - relativeTransitionTargetY + element.GetWidth();
-			stepY = posYDiff / ((float)this->animationTimespanMs / 16.66);
-		}
-	}
-	
 	// Calculate new position 
 	x = x + stepX * animationStep; 
 	y = y + stepY * animationStep; 
