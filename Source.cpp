@@ -27,6 +27,10 @@ int main(int argc, char* argv[])
     div->AddChild(div2); 
     div2->AddChild(div3); 
 
+    auto btnGiveFocus = Ivory::CreateButton("Give focus to textbox");
+    btnGiveFocus->SetWidth(200); 
+
+    div3->AddChild(btnGiveFocus); 
     div3->AddChild(b); 
     div3->AddChild(div4); 
     div3->AddChild(tb); 
@@ -63,10 +67,14 @@ int main(int argc, char* argv[])
         }
 
         if (btn->IsPressed())
-            Ivory::DisplayPage(p); 
+            Ivory::DisplayPage(p);
+
+        if (btnGiveFocus->IsPressed()) {
+            tb->Focus(); 
+        }
 
         Ivory::Render();
-        SDL_RenderPresent(renderer);
+        //SDL_RenderPresent(renderer);
 
     }
 

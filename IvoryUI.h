@@ -38,6 +38,7 @@ class Ivory
 		static void DisableVsync(); 
 		static int GetViewportWidth(); 
 		static int GetViewportHeight(); 
+		static void SetActiveTextbox(Textbox* textbox);
 
 	private:
 		// General library data 

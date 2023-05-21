@@ -241,6 +241,9 @@ class Textbox : public Elements, public Border, public Dimensions, public Color,
 		void SetValue(std::string value);
 		void SetCharLimit(int limit);
 
+		// Utility methods 
+		void Focus(); 
+
 	private:
 		std::string placeholder, value;
 		int charLimit;

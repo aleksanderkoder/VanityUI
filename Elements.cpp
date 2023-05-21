@@ -8,6 +8,7 @@ class Ivory {
 		static SDL_Texture* LoadImage(std::string imagePath); 
 		static int GetViewportWidth();
 		static int GetViewportHeight(); 
+		static void SetActiveTextbox(Textbox* textbox);
 };
 
 class Button; 
@@ -484,6 +485,10 @@ void Textbox::SetValue(std::string value) {
 
 void Textbox::SetCharLimit(int limit) {
 	this->charLimit = limit;
+}
+
+void Textbox::Focus() {
+	Ivory::SetActiveTextbox(this); 
 }
 
 // LABEL

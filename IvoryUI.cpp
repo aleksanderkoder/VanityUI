@@ -277,6 +277,8 @@ void Ivory::RenderTextboxes() {
 				textboxCursorDelta = now;
 			}
 		}
+
+		//std::cout << activeTextbox << std::endl; 
 		// If active textbox is the current textbox and timing is right, draw cursor on textbox
 		if (activeTextbox == curr && drawTextBoxCursor)
 		{
@@ -589,6 +591,7 @@ void Ivory::Render() {
 	RenderCheckboxes();
 	RenderSliders(); 
 	RenderImages(); 
+	SDL_RenderPresent(targetRenderer); 
 }
 
 // PAGES 
@@ -771,6 +774,8 @@ void Ivory::RenderBackgroundImage(SDL_Texture* image, int width, int height, int
 		SDL_RenderCopy(targetRenderer, image, nullptr, &rect);
 }
 
+
+// TODO: Finish or remove the two following methods
 void Ivory::prepareNewSnapshotFrame() {
 	// Destroy old snapshot frame
 	/*SDL_DestroyTexture(snapshotFrame);*/
@@ -838,6 +843,10 @@ void Ivory::Prepare() {
 				break;
 		}
 	}
+}
+
+void Ivory::SetActiveTextbox(Textbox* textbox) {
+	activeTextbox = textbox; 
 }
 
 SDL_Renderer* Ivory::CreateRenderingContext(std::string title) {
