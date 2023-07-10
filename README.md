@@ -2,7 +2,7 @@
    <img src="https://github.com/aleksanderkoder/VanityUI/assets/49065176/7f6818df-c6bf-4802-bbcd-6e06cf8647f0">
 </p>
 
- # Ivory UI
+ # Vanity UI
  A library for easy creation of efficient and beautiful graphical user interfaces for C++ applications. 
 
 
