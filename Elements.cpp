@@ -2,7 +2,7 @@
 
 // Forward declarations
 
-class Ivory {
+class Vanity {
 	public:
 		static void Rerender();
 		static SDL_Texture* LoadImage(std::string imagePath); 
@@ -32,7 +32,7 @@ int Elements::GetY() {
 void Elements::SetPosition(int x, int y) {
 	this->x = x;
 	this->y = y;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 bool Elements::GetDisplayState() {
@@ -41,12 +41,12 @@ bool Elements::GetDisplayState() {
 
 void Elements::Show() {
 	this->display = true;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Elements::Hide() {
 	this->display = false;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 // PARENTABLE 
@@ -61,7 +61,7 @@ Division* Parentable::GetParent() {
 
 void Parentable::SetParent(Division* parent) {
 	this->parent = parent;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 // DIMENSIONS 
@@ -100,7 +100,7 @@ void Dimensions::SetWidth(std::string percentage) {
 			if (pWidth) {
 				this->width = pWidth / 100 * perc;
 			} else {
-				this->width = Ivory::GetViewportWidth() / 100 * perc;
+				this->width = Vanity::GetViewportWidth() / 100 * perc;
 			}
 		}
 	}
@@ -116,7 +116,7 @@ void Dimensions::SetHeight(std::string percentage) {
 				this->height = pHeight / 100 * perc;
 			}
 			else {
-				this->height = Ivory::GetViewportHeight() / 100 * perc;
+				this->height = Vanity::GetViewportHeight() / 100 * perc;
 			}
 		}
 	}
@@ -295,7 +295,7 @@ bool BackgroundImage::GetBackgroundImageDisplayState() {
 }
 
 void BackgroundImage::SetBackgroundImage(std::string imagePath) {
-	this->image = Ivory::LoadImage(imagePath); 
+	this->image = Vanity::LoadImage(imagePath); 
 }
 
 void BackgroundImage::ShowBackgroundImage() {
@@ -406,17 +406,17 @@ std::string Button::GetLabel() {
 
 void Button::SetLabel(std::string label) {
 	this->label = label;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Button::SetLabel(int label) {
 	this->label = std::to_string(label);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Button::SetLabel(double label) {
 	this->label = std::to_string(label);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 bool Button::IsPressed() {
@@ -429,7 +429,7 @@ bool Button::IsPressed() {
 
 void Button::SetPressedState(bool state) {
 	this->pressed = state;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 // TEXTBOX
@@ -465,22 +465,22 @@ int Textbox::GetCharLimit() {
 
 void Textbox::SetPlaceholder(std::string placeholder) {
 	this->placeholder = placeholder;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Textbox::SetPlaceholder(int placeholder) {
 	this->placeholder = std::to_string(placeholder);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Textbox::SetPlaceholder(double placeholder) {
 	this->placeholder = std::to_string(placeholder);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Textbox::SetValue(std::string value) {
 	this->value = value;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Textbox::SetCharLimit(int limit) {
@@ -488,7 +488,7 @@ void Textbox::SetCharLimit(int limit) {
 }
 
 void Textbox::Focus() {
-	Ivory::SetActiveTextbox(this); 
+	Vanity::SetActiveTextbox(this); 
 }
 
 // LABEL
@@ -513,19 +513,19 @@ std::string Label::GetText() {
 void Label::SetText(std::string text) {
 	this->text = text;
 	this->ComputeDimensions(); 
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Label::SetText(int text) {
 	this->text = std::to_string(text);
 	this->ComputeDimensions();
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Label::SetText(double text) {
 	this->text = std::to_string(text);
 	this->ComputeDimensions();
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Label::ComputeDimensions() {
@@ -562,17 +562,17 @@ int Checkbox::GetSize() {
 
 void Checkbox::SetCheckmarkColor(SDL_Color* color) {
 	this->checkmarkColor = *color;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Checkbox::SetSize(int size) {
 	this->size = size;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Checkbox::SetState(bool state) {
 	this->checked = state;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 bool Checkbox::IsChecked() {
@@ -587,7 +587,7 @@ Image::Image(std::string imagePath, int x, int y, int width, int height) {
 	this->width = width; 
 	this->height = height;
 	this->display = true; 
-	this->image = Ivory::LoadImage(imagePath); 
+	this->image = Vanity::LoadImage(imagePath); 
 
 	// Set border thickness to 0 to disable 
 	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
@@ -644,27 +644,27 @@ int Slider::GetThumbPosision() {
 
 void Slider::SetThumbColor(SDL_Color* color) {
 	this->thumbColor = *color;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Slider::SetThumbWidth(int width) {
 	this->thumbWidth = width;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Slider::SetThumbHeight(int height) {
 	this->thumbHeight = thumbHeight;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Slider::SetValue(int value) {
 	this->value = value;
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Slider::SetThumbPosision(int posision) {
 	this->thumbPosision = posision; 
-	Ivory::Rerender(); 
+	Vanity::Rerender(); 
 }
 
 // DIVISION
@@ -693,43 +693,43 @@ Division::Division(int x, int y, int width, int height) {
 void Division::AddChild(Label* label) {
 	label->SetParent(this);
 	this->labels->push_back(label); 
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Division::AddChild(Button* button) {
 	button->SetParent(this);
 	this->buttons->push_back(button); 
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Division::AddChild(Textbox* textbox) {
 	textbox->SetParent(this);
 	this->textboxes->push_back(textbox);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Division::AddChild(Checkbox* checkbox) {
 	checkbox->SetParent(this);
 	this->checkboxes->push_back(checkbox);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Division::AddChild(Slider* slider) {
 	slider->SetParent(this);
 	this->sliders->push_back(slider);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Division::AddChild(Image* image) {
 	image->SetParent(this);
 	this->images->push_back(image);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 void Division::AddChild(Division* division) {
 	division->SetParent(this);
 	this->divisions->push_back(division);
-	Ivory::Rerender();
+	Vanity::Rerender();
 }
 
 std::vector<Button*>* Division::GetButtons() {
