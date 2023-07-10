@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/49065176/185808557-cc4c17e7-d560-4a7f-9955-a1eb163319fd.png">
+   <img src="![vanity_ui](https://github.com/aleksanderkoder/VanityUI/assets/49065176/7f6818df-c6bf-4802-bbcd-6e06cf8647f0)">
 </p>
 
  # Ivory UI
