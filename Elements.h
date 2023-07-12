@@ -334,13 +334,13 @@ class Division : public Elements, public Border, public Dimensions, public Color
 		Division(int x, int y, int width, int height);
 
 		// Utility methods 
-		void AddChild(Label* label);
-		void AddChild(Button* button);
-		void AddChild(Textbox* textbox);
-		void AddChild(Checkbox* checkbox);
-		void AddChild(Slider* slider);
-		void AddChild(Image* image); 
-		void AddChild(Division* division);
+		Division* AddChild(Label* label);
+		Division* AddChild(Button* button);
+		Division* AddChild(Textbox* textbox);
+		Division* AddChild(Checkbox* checkbox);
+		Division* AddChild(Slider* slider);
+		Division* AddChild(Image* image);
+		Division* AddChild(Division* division);
 
 		std::vector<Button*>* GetButtons();
 		std::vector<Label*>* GetLabels();

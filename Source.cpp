@@ -12,6 +12,7 @@ int main(int argc, char* argv[])
     SDL_Color black = { 0,0,0,255 };
     Label* l = Vanity::CreateLabel("Div 3");
     Button* b = Vanity::CreateButton("Page 2");
+
     auto tb = Vanity::CreateTextbox("Text char limit", 350);
     auto img = Vanity::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
     auto cb = Vanity::CreateCheckbox(550); 
@@ -23,20 +24,21 @@ int main(int argc, char* argv[])
     auto div2 = Vanity::CreateDivision(100, 100, 200, 200);
     auto div3 = Vanity::CreateDivision(100, 100, 200, 200);
     auto div4 = Vanity::CreateDivision(500, 0, 200, 200);
-    div4->SetColor({ 250,0,0,255 }); 
     div->AddChild(div2); 
     div2->AddChild(div3); 
+    div4->SetColor({ 250,0,0,255 }); 
 
     auto btnGiveFocus = Vanity::CreateButton("Give focus to textbox");
     btnGiveFocus->SetWidth(200); 
 
-    div3->AddChild(btnGiveFocus); 
-    div3->AddChild(b); 
-    div3->AddChild(div4); 
-    div3->AddChild(tb); 
-    div3->AddChild(img); 
-    div3->AddChild(l); 
-    div3->AddChild(cb);
+    div3->AddChild(btnGiveFocus)->AddChild(b)->AddChild(div4)->AddChild(tb)->AddChild(img)->AddChild(l)->AddChild(cb);
+
+    auto autoLayoutBtn1 = Vanity::CreateButton("button 1");
+    auto autoLayoutBtn2 = Vanity::CreateButton("button 2");
+
+    auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
+
+    div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2); 
 
     auto btn = Vanity::CreateButton("Back to page 1");
 
@@ -48,8 +50,7 @@ int main(int argc, char* argv[])
     Page* p = Vanity::CreatePage();
     Page* p2 = Vanity::CreatePage();
 
-    p->AddElement(div);
-    p->AddElement(sl); 
+    p->AddElement(div)->AddElement(sl); 
 
     p2->AddElement(btn); 
 

@@ -690,46 +690,53 @@ Division::Division(int x, int y, int width, int height) {
 	this->divisions = new std::vector<Division*>();
 }
 
-void Division::AddChild(Label* label) {
+Division* Division::AddChild(Label* label) {
 	label->SetParent(this);
 	this->labels->push_back(label); 
 	Vanity::Rerender();
+	return this;
 }
 
-void Division::AddChild(Button* button) {
+Division* Division::AddChild(Button* button) {
 	button->SetParent(this);
 	this->buttons->push_back(button); 
 	Vanity::Rerender();
+	return this;
 }
 
-void Division::AddChild(Textbox* textbox) {
+Division* Division::AddChild(Textbox* textbox) {
 	textbox->SetParent(this);
 	this->textboxes->push_back(textbox);
 	Vanity::Rerender();
+	return this;
 }
 
-void Division::AddChild(Checkbox* checkbox) {
+Division* Division::AddChild(Checkbox* checkbox) {
 	checkbox->SetParent(this);
 	this->checkboxes->push_back(checkbox);
 	Vanity::Rerender();
+	return this;
 }
 
-void Division::AddChild(Slider* slider) {
+Division* Division::AddChild(Slider* slider) {
 	slider->SetParent(this);
 	this->sliders->push_back(slider);
 	Vanity::Rerender();
+	return this;
 }
 
-void Division::AddChild(Image* image) {
+Division* Division::AddChild(Image* image) {
 	image->SetParent(this);
 	this->images->push_back(image);
 	Vanity::Rerender();
+	return this; 
 }
 
-void Division::AddChild(Division* division) {
+Division* Division::AddChild(Division* division) {
 	division->SetParent(this);
 	this->divisions->push_back(division);
 	Vanity::Rerender();
+	return this;
 }
 
 std::vector<Button*>* Division::GetButtons() {

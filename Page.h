@@ -16,21 +16,21 @@ class Page
 	public:
 		Page();
 
-		void AddElement(Button* button);
-		void AddElement(Label* label);
-		void AddElement(Checkbox* checkbox);
-		void AddElement(Textbox* textbox); 
-		void AddElement(Image* image);
-		void AddElement(Slider* slider); 
-		void AddElement(Division* division); 
+		Page* AddElement(Button* button);
+		Page* AddElement(Label* label);
+		Page* AddElement(Checkbox* checkbox);
+		Page* AddElement(Textbox* textbox);
+		Page* AddElement(Image* image);
+		Page* AddElement(Slider* slider);
+		Page* AddElement(Division* division);
 
-		void RemoveElement(Button* button);
-		void RemoveElement(Label* label);
-		void RemoveElement(Checkbox* checkbox);
-		void RemoveElement(Textbox* textbox);
-		void RemoveElement(Image* image);
-		void RemoveElement(Slider* slider); 
-		void RemoveElement(Division* division);
+		Page* RemoveElement(Button* button);
+		Page* RemoveElement(Label* label);
+		Page* RemoveElement(Checkbox* checkbox);
+		Page* RemoveElement(Textbox* textbox);
+		Page* RemoveElement(Image* image);
+		Page* RemoveElement(Slider* slider);
+		Page* RemoveElement(Division* division);
 
 		std::vector<Button*>* GetButtons();
 		std::vector<Label*>* GetLabels();
