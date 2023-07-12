@@ -14,8 +14,8 @@ class Vanity
 
 		// Element creation methods 
 		static Label* CreateLabel(std::string text = "Label", int x = 0, int y = 0, SDL_Color color = { 0, 0, 0, 255}, int fontSize = 15, std::string fontPath = "fonts/CascadiaCode.ttf");
-		static Button* CreateButton(std::string label = "Button", int x = NULL, int y = NULL, int width = 150, int height = 50, int fontSize = 15, std::string fontPath = "fonts/CascadiaCode.ttf");
-		static Textbox* CreateTextbox(std::string placeholder = "Textbox", int x = 0, int y = 0, int width = 150, int height = 50, int fontSize = 15, int limit = NULL, std::string fontPath = "fonts/CascadiaCode.ttf");
+		static Button* CreateButton(std::string label = "Button", int x = 0, int y = 0, int width = 0, int height = 0, int fontSize = 15, std::string fontPath = "fonts/CascadiaCode.ttf");
+		static Textbox* CreateTextbox(std::string placeholder = "Textbox", int x = 0, int y = 0, int width = 0, int height = 0, int fontSize = 15, int limit = NULL, std::string fontPath = "fonts/CascadiaCode.ttf");
 		static Checkbox* CreateCheckbox(int x = 0, int y = 0, int size = 20, bool defaultState = false);
 		static Image* CreateImage(std::string imagePath, int x = 0, int y = 0, int width = 100, int height = 100);
 		static Slider* CreateSlider(int x = 0, int y = 0, int width = 120, int height = 20, int thumbWidth = 20, int thumbHeight = 20); 

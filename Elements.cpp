@@ -207,10 +207,6 @@ void Border::SetBorderThickness(BorderThickness borderThickness) {
 	this->borderThickness = borderThickness; 
 }
 
-void Border::SetBorderColors(BorderColors borderColors) {
-	this->borderColors = borderColors;
-}
-
 void Border::SetBorderThicknessLeft(int thickness) {
 	this->borderThickness.leftBorderThickness = thickness; 
 }
@@ -225,6 +221,10 @@ void Border::SetBorderThicknessRight(int thickness) {
 
 void Border::SetBorderThicknessBottom(int thickness) {
 	this->borderThickness.bottomBorderThickness = thickness;
+}
+
+void Border::SetBorderColors(BorderColors borderColors) {
+	this->borderColors = borderColors;
 }
 
 void Border::SetBorderColorLeft(SDL_Color color) {
@@ -381,6 +381,27 @@ void Animation::Animate() {
 	this->animationStartTimestamp = SDL_GetTicks(); 
 }
 
+// LAYOUT
+
+Layout::Layout() {
+	Padding p = { 10, 15, 10, 15 };	// Thickness for top, right, bottom and left border
+	this->padding = p;
+
+	Margin m = { 10, 15, 10, 15 };
+	this->margin = m; 
+
+	// TODO: Implement rendering for buttons where padding is respected and implement remaining methods for Layout class!
+
+	/*this->padding.paddingTop = 10; 
+	this->padding.paddingRight = 15;
+	this->padding.paddingBottom = 10;
+	this->padding.paddingLeft = 15;
+
+	this->margin.marginTop = 10;
+	this->margin.marginRight = 15;
+	this->margin.marginBottom = 10;
+	this->margin.marginLeft = 15;*/
+}
 
 // BUTTON
 
@@ -503,7 +524,7 @@ Label::Label(std::string text, int x, int y, SDL_Color color, int fontSize, std:
 
 	this->SetFont(fontPath);
 
-	this->ComputeDimensions(); 
+	ComputeDimensionsOfText(this->font, this->text.length(), this->width, this->height);
 }
 
 std::string Label::GetText() {
@@ -512,28 +533,20 @@ std::string Label::GetText() {
 
 void Label::SetText(std::string text) {
 	this->text = text;
-	this->ComputeDimensions(); 
+	ComputeDimensionsOfText(this->font, this->text.length(), this->width, this->height);
 	Vanity::Rerender();
 }
 
 void Label::SetText(int text) {
 	this->text = std::to_string(text);
-	this->ComputeDimensions();
+	ComputeDimensionsOfText(this->font, this->text.length(), this->width, this->height);
 	Vanity::Rerender();
 }
 
 void Label::SetText(double text) {
 	this->text = std::to_string(text);
-	this->ComputeDimensions();
+	ComputeDimensionsOfText(this->font, this->text.length(), this->width, this->height);
 	Vanity::Rerender();
-}
-
-void Label::ComputeDimensions() {
-	// Compute label width and height 
-	int minx, maxx, miny, maxy;
-	TTF_GlyphMetrics(this->font, 65, &minx, &maxx, &miny, &maxy, nullptr);
-	this->width = (maxx - minx) * this->text.length();
-	this->height = (maxy - miny) * this->text.length();
 }
 
 // CHECKBOX

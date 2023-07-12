@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Vanity">
       <UniqueIdentifier>{c8e8e087-e463-428e-9b73-b9e84421b55f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{d9638f6f-177e-4ae8-8b6c-1807a81288ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -45,6 +48,9 @@
     <ClInclude Include="VanityUI.h">
       <Filter>Header Files\Vanity</Filter>
     </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -58,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="VanityUI.cpp">
       <Filter>Source Files\Vanity</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

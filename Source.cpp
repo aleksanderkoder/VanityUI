@@ -33,8 +33,8 @@ int main(int argc, char* argv[])
 
     div3->AddChild(btnGiveFocus)->AddChild(b)->AddChild(div4)->AddChild(tb)->AddChild(img)->AddChild(l)->AddChild(cb);
 
-    auto autoLayoutBtn1 = Vanity::CreateButton("button 1");
-    auto autoLayoutBtn2 = Vanity::CreateButton("button 2");
+    auto autoLayoutBtn1 = Vanity::CreateButton("button");
+    auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 100);
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
 
@@ -50,7 +50,9 @@ int main(int argc, char* argv[])
     Page* p = Vanity::CreatePage();
     Page* p2 = Vanity::CreatePage();
 
-    p->AddElement(div)->AddElement(sl); 
+    //p->AddElement(div)->AddElement(sl);
+
+    p->AddElement(div5ForAutoLayout); 
 
     p2->AddElement(btn); 
 

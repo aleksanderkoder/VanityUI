@@ -160,11 +160,13 @@
   <ItemGroup>
     <ClInclude Include="Elements.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Utility.h" />
     <ClInclude Include="VanityUI.h" />
     <ClInclude Include="Page.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Elements.cpp" />
+    <ClCompile Include="Utility.cpp" />
     <ClCompile Include="VanityUI.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="Source.cpp" />

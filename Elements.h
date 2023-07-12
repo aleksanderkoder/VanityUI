@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "Utility.h"
 
 // Forward declarations 
 
@@ -201,6 +202,37 @@ class Animation {
 
 		// Utility methods 
 		void Animate();	// Executes animation
+};
+
+struct Padding {
+	int paddingTop;
+	int paddingRight;
+	int paddingBottom;
+	int paddingLeft;
+};
+
+struct Margin {
+	int marginTop;
+	int marginRight;
+	int marginBottom;
+	int marginLeft;
+};
+
+class Layout {
+	protected: 
+		Layout(); 
+		Padding padding; 
+		Margin margin; 
+		
+
+	public:
+		// GET methods
+		void GetPadding(); 
+		void GetMargin(); 
+
+		// SET methods
+		void SetPadding(int value); 
+		void SetMargin(int value); 
 };
 
 class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation {

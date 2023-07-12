@@ -58,16 +58,30 @@ Label* Vanity::CreateLabel(std::string text, int x, int y, SDL_Color color, int 
 	return new Label(text, x, y, color, fontSize, fontPath);
 }
 
+Button* Vanity::CreateButton(std::string label, int x, int y, int width, int height, int fontSize, std::string fontPath) {
+	auto btn = new Button(label, width, height, x, y, fontSize, fontPath);
+	if (!width && !height) {
+		int widthRef = 0;
+		int heightRef = 0;
+		ComputeDimensionsOfText(btn->GetFont(), label.length(), widthRef, heightRef);
+		btn->SetDimensions(widthRef, heightRef);
+	}
+	return btn;
+}
+
 Textbox* Vanity::CreateTextbox(std::string placeholder, int x, int y, int width, int height, int fontSize, int limit, std::string fontPath) {
-	return new Textbox(placeholder, width, height, x, y, fontSize, limit, fontPath);
+	auto textbox = new Textbox(placeholder, width, height, x, y, fontSize, limit, fontPath);
+	if (!width && !height) {
+		int widthRef = 0;
+		int heightRef = 0;
+		ComputeDimensionsOfText(textbox->GetFont(), placeholder.length(), widthRef, heightRef);
+		textbox->SetDimensions(widthRef, heightRef);
+	}
+	return textbox;
 }
 
 Checkbox* Vanity::CreateCheckbox(int x, int y, int size, bool defaultState) {
 	return new Checkbox(x, y, size, defaultState);
-}
-
-Button* Vanity::CreateButton(std::string label, int x, int y, int width, int height, int fontSize, std::string fontPath) {
-	return new Button(label, width, height, x, y, fontSize, fontPath);
 }
 
 Image* Vanity::CreateImage(std::string imagePath, int x, int y, int width, int height) {
@@ -109,6 +123,8 @@ void Vanity::RenderButtons() {
 
 		int x = curr->GetX();
 		int y = curr->GetY();
+
+		//std::cout << "X: " << x << ", Y: " << y << std::endl; 
 
 		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState()); 
 
