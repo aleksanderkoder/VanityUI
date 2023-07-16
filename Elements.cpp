@@ -390,6 +390,8 @@ Layout::Layout() {
 	Margin m = { 10, 15, 10, 15 };
 	this->margin = m; 
 
+	this->automaticLayout = false; 
+
 	// TODO: Implement rendering for buttons where padding is respected and implement remaining methods for Layout class!
 }
 
@@ -473,6 +475,13 @@ void Layout::SetMarginLeft(int value) {
 	this->margin.marginLeft = value;
 }
 
+bool Layout::GetAutomaticLayout() {
+	return this->automaticLayout; 
+}
+
+void Layout::SetAutomaticLayout(bool value) {
+	this->automaticLayout = value; 
+}
 // BUTTON
 
 Button::Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath) {

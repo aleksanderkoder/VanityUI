@@ -66,6 +66,11 @@ Button* Vanity::CreateButton(std::string label, int x, int y, int width, int hei
 		ComputeDimensionsOfText(btn->GetFont(), label.length(), widthRef, heightRef);
 		btn->SetDimensions(widthRef, heightRef);
 	}
+
+	// Determines if button should be flagged for automatic layout or not based on if x and y is set or not
+	if (!x && !y)
+		btn->SetAutomaticLayout(true); 
+
 	return btn;
 }
 
@@ -151,8 +156,15 @@ void Vanity::RenderButtons() {
 		SDL_Rect rect;
 		rect.w = width;
 		rect.h = height;
-		rect.x = x;
-		rect.y = y;
+
+		if (!curr->GetAutomaticLayout()) {
+			rect.x = x;
+			rect.y = y;
+		}
+		else {
+			// Calculate x and y coordinate of button based on other buttons before it
+
+		}
 
 		bool mHover = OnMouseHover(x, y, width, height);
 

@@ -223,7 +223,7 @@ class Layout {
 		Layout(); 
 		Padding padding; 
 		Margin margin; 
-		
+		bool automaticLayout; 
 
 	public:
 		// GET methods
@@ -237,6 +237,7 @@ class Layout {
 		int GetMarginRight();
 		int GetMarginBottom();
 		int GetMarginLeft();
+		bool GetAutomaticLayout(); 
 
 		// SET methods
 		void SetPadding(Padding values); 
@@ -249,9 +250,10 @@ class Layout {
 		void SetMarginRight(int value);
 		void SetMarginBottom(int value);
 		void SetMarginLeft(int value);
+		void SetAutomaticLayout(bool value); 
 };
 
-class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation {
+class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation, public Layout {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 

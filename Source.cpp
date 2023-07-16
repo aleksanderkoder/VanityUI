@@ -33,12 +33,13 @@ int main(int argc, char* argv[])
 
     div3->AddChild(btnGiveFocus)->AddChild(b)->AddChild(div4)->AddChild(tb)->AddChild(img)->AddChild(l)->AddChild(cb);
 
-    auto autoLayoutBtn1 = Vanity::CreateButton("button");
-    auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 100);
+    auto autoLayoutBtn1 = Vanity::CreateButton("absolute layout", 100, 300);
+    auto autoLayoutBtn3 = Vanity::CreateButton("auto layout");
+    auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 100, 100);
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
 
-    div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2); 
+    div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)->AddChild(autoLayoutBtn3);
 
     auto btn = Vanity::CreateButton("Back to page 1");
 
