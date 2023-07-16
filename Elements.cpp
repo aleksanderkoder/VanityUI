@@ -391,16 +391,6 @@ Layout::Layout() {
 	this->margin = m; 
 
 	// TODO: Implement rendering for buttons where padding is respected and implement remaining methods for Layout class!
-
-	/*this->padding.paddingTop = 10; 
-	this->padding.paddingRight = 15;
-	this->padding.paddingBottom = 10;
-	this->padding.paddingLeft = 15;
-
-	this->margin.marginTop = 10;
-	this->margin.marginRight = 15;
-	this->margin.marginBottom = 10;
-	this->margin.marginLeft = 15;*/
 }
 
 Padding Layout::GetPadding() {
