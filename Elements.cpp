@@ -403,6 +403,86 @@ Layout::Layout() {
 	this->margin.marginLeft = 15;*/
 }
 
+Padding Layout::GetPadding() {
+	return this->padding; 
+}
+
+int Layout::GetPaddingTop() {
+	return this->padding.paddingTop; 
+}
+
+int Layout::GetPaddingRight() {
+	return this->padding.paddingRight;
+}
+
+int Layout::GetPaddingBottom() {
+	return this->padding.paddingBottom;
+}
+
+int Layout::GetPaddingLeft() {
+	return this->padding.paddingLeft;
+}
+
+Margin Layout::GetMargin() {
+	return this->margin;
+}
+
+int Layout::GetMarginTop() {
+	return this->margin.marginTop;
+}
+
+int Layout::GetMarginRight() {
+	return this->margin.marginRight;
+}
+
+int Layout::GetMarginBottom() {
+	return this->margin.marginBottom;
+}
+
+int Layout::GetMarginLeft() {
+	return this->margin.marginLeft;
+}
+
+void Layout::SetPadding(Padding value) {
+	this->padding = value;
+}
+
+void Layout::SetPaddingTop(int value) {
+	this->padding.paddingTop = value;
+}
+
+void Layout::SetPaddingRight(int value) {
+	this->padding.paddingRight = value;
+}
+
+void Layout::SetPaddingBottom(int value) {
+	this->padding.paddingBottom = value;
+}
+
+void Layout::SetPaddingLeft(int value) {
+	this->padding.paddingLeft = value; 
+}
+
+void Layout::SetMargin(Margin value) {
+	this->margin = value;
+}
+
+void Layout::SetMarginTop(int value) {
+	this->margin.marginTop = value; 
+}
+
+void Layout::SetMarginRight(int value) {
+	this->margin.marginRight = value;
+}
+
+void Layout::SetMarginBottom(int value) {
+	this->margin.marginBottom = value;
+}
+
+void Layout::SetMarginLeft(int value) {
+	this->margin.marginLeft = value;
+}
+
 // BUTTON
 
 Button::Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath) {

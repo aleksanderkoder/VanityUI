@@ -227,12 +227,12 @@ class Layout {
 
 	public:
 		// GET methods
-		void GetPadding(); 
-		void GetMargin(); 
+		Padding GetPadding(); 
+		Margin GetMargin(); 
 
 		// SET methods
-		void SetPadding(int value); 
-		void SetMargin(int value); 
+		void SetPadding(Padding values); 
+		void SetMargin(Margin values); 
 };
 
 class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation {
