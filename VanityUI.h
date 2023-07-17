@@ -45,9 +45,8 @@ class Vanity
 		static SDL_Renderer* targetRenderer;
 		static bool leftMouseButtonPressedState, leftMouseButtonPressedLastState, rerender,
 			isRunning, vsync;
-		static int viewportWidth, viewportHeight, mX, mY;
+		static int viewportWidth, viewportHeight, mX, mY; 
 		static SDL_Texture* snapshotFrame;
-
 
 		// PAGES - Related data 
 		static Page* currentPage;

@@ -66,11 +66,6 @@ Button* Vanity::CreateButton(std::string label, int x, int y, int width, int hei
 		ComputeDimensionsOfText(btn->GetFont(), label.length(), widthRef, heightRef);
 		btn->SetDimensions(widthRef, heightRef);
 	}
-
-	// Determines if button should be flagged for automatic layout or not based on if x and y is set or not
-	if (!x && !y)
-		btn->SetAutomaticLayout(true); 
-
 	return btn;
 }
 
@@ -122,6 +117,7 @@ void Vanity::RenderLabels() {
 
 void Vanity::RenderButtons() {
 	auto buttons = currentPage->GetButtons();
+
 	// Loop through all buttons
 	for (int i = 0; i < buttons->size(); i++) {
 		Button* curr = (*buttons)[i];
@@ -129,9 +125,11 @@ void Vanity::RenderButtons() {
 		int x = curr->GetX();
 		int y = curr->GetY();
 
+		Division* parentDiv = curr->GetParent(); 
+
 		//std::cout << "X: " << x << ", Y: " << y << std::endl; 
 
-		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState()); 
+		bool display = InheritStateFromParent(parentDiv, x, y, curr->GetDisplayState());
 
 		if (!display) continue;
 
@@ -156,15 +154,8 @@ void Vanity::RenderButtons() {
 		SDL_Rect rect;
 		rect.w = width;
 		rect.h = height;
-
-		if (!curr->GetAutomaticLayout()) {
-			rect.x = x;
-			rect.y = y;
-		}
-		else {
-			// Calculate x and y coordinate of button based on other buttons before it
-
-		}
+		rect.x = x;
+		rect.y = y;
 
 		bool mHover = OnMouseHover(x, y, width, height);
 

@@ -18,7 +18,8 @@ class Button;
 class Elements {
 	protected:
 		Elements();
-		int x, y;
+		int x; 
+		int y; 
 		bool display;
 
 	public:
@@ -211,19 +212,10 @@ struct Padding {
 	int paddingLeft;
 };
 
-struct Margin {
-	int marginTop;
-	int marginRight;
-	int marginBottom;
-	int marginLeft;
-};
-
-class Layout {
+class ElementPadding {
 	protected: 
-		Layout(); 
+		ElementPadding();
 		Padding padding; 
-		Margin margin; 
-		bool automaticLayout; 
 
 	public:
 		// GET methods
@@ -232,28 +224,17 @@ class Layout {
 		int GetPaddingRight();
 		int GetPaddingBottom();
 		int GetPaddingLeft();
-		Margin GetMargin();
-		int GetMarginTop();
-		int GetMarginRight();
-		int GetMarginBottom();
-		int GetMarginLeft();
-		bool GetAutomaticLayout(); 
 
 		// SET methods
 		void SetPadding(Padding values); 
 		void SetPaddingTop(int value); 
 		void SetPaddingRight(int value);
 		void SetPaddingBottom(int value);
-		void SetPaddingLeft(int value);
-		void SetMargin(Margin values); 
-		void SetMarginTop(int value);
-		void SetMarginRight(int value);
-		void SetMarginBottom(int value);
-		void SetMarginLeft(int value);
-		void SetAutomaticLayout(bool value); 
+		void SetPaddingLeft(int value); 
 };
 
-class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation, public Layout {
+class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation, public ElementPadding
+{
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
@@ -383,15 +364,8 @@ class Division : public Elements, public Border, public Dimensions, public Color
 	public:
 		Division(int x, int y, int width, int height);
 
-		// Utility methods 
-		Division* AddChild(Label* label);
-		Division* AddChild(Button* button);
-		Division* AddChild(Textbox* textbox);
-		Division* AddChild(Checkbox* checkbox);
-		Division* AddChild(Slider* slider);
-		Division* AddChild(Image* image);
-		Division* AddChild(Division* division);
-
+		// Get methods
+		
 		std::vector<Button*>* GetButtons();
 		std::vector<Label*>* GetLabels();
 		std::vector<Checkbox*>* GetCheckboxes();
@@ -400,6 +374,15 @@ class Division : public Elements, public Border, public Dimensions, public Color
 		std::vector<Slider*>* GetSliders();
 		std::vector<Division*>* GetDivisions();
 	
+		// Utility
+		Division* AddChild(Label* label);
+		Division* AddChild(Button* button);
+		Division* AddChild(Textbox* textbox);
+		Division* AddChild(Checkbox* checkbox);
+		Division* AddChild(Slider* slider);
+		Division* AddChild(Image* image);
+		Division* AddChild(Division* division);
+
 	private:
 		std::vector<Button*>* buttons;
 		std::vector<Label*>* labels;

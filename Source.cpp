@@ -35,11 +35,14 @@ int main(int argc, char* argv[])
 
     auto autoLayoutBtn1 = Vanity::CreateButton("absolute layout", 100, 300);
     auto autoLayoutBtn3 = Vanity::CreateButton("auto layout");
+    auto autoLayoutBtn4 = Vanity::CreateButton("auto layout 2");
     auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 100, 100);
+
+    //autoLayoutBtn3->SetWidth(2300);
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
 
-    div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)->AddChild(autoLayoutBtn3);
+    div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)->AddChild(autoLayoutBtn4);
 
     auto btn = Vanity::CreateButton("Back to page 1");
 
@@ -53,7 +56,10 @@ int main(int argc, char* argv[])
 
     //p->AddElement(div)->AddElement(sl);
 
-    p->AddElement(div5ForAutoLayout); 
+    p->AddElement(div5ForAutoLayout);
+
+    p->AddElement(autoLayoutBtn3); 
+
 
     p2->AddElement(btn); 
 

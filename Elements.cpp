@@ -383,105 +383,51 @@ void Animation::Animate() {
 
 // LAYOUT
 
-Layout::Layout() {
+ElementPadding::ElementPadding() {
 	Padding p = { 10, 15, 10, 15 };	// Thickness for top, right, bottom and left border
 	this->padding = p;
-
-	Margin m = { 10, 15, 10, 15 };
-	this->margin = m; 
-
-	this->automaticLayout = false; 
-
-	// TODO: Implement rendering for buttons where padding is respected and implement remaining methods for Layout class!
 }
 
-Padding Layout::GetPadding() {
+Padding ElementPadding::GetPadding() {
 	return this->padding; 
 }
 
-int Layout::GetPaddingTop() {
+int ElementPadding::GetPaddingTop() {
 	return this->padding.paddingTop; 
 }
 
-int Layout::GetPaddingRight() {
+int ElementPadding::GetPaddingRight() {
 	return this->padding.paddingRight;
 }
 
-int Layout::GetPaddingBottom() {
+int ElementPadding::GetPaddingBottom() {
 	return this->padding.paddingBottom;
 }
 
-int Layout::GetPaddingLeft() {
+int ElementPadding::GetPaddingLeft() {
 	return this->padding.paddingLeft;
 }
 
-Margin Layout::GetMargin() {
-	return this->margin;
-}
-
-int Layout::GetMarginTop() {
-	return this->margin.marginTop;
-}
-
-int Layout::GetMarginRight() {
-	return this->margin.marginRight;
-}
-
-int Layout::GetMarginBottom() {
-	return this->margin.marginBottom;
-}
-
-int Layout::GetMarginLeft() {
-	return this->margin.marginLeft;
-}
-
-void Layout::SetPadding(Padding value) {
+void ElementPadding::SetPadding(Padding value) {
 	this->padding = value;
 }
 
-void Layout::SetPaddingTop(int value) {
+void ElementPadding::SetPaddingTop(int value) {
 	this->padding.paddingTop = value;
 }
 
-void Layout::SetPaddingRight(int value) {
+void ElementPadding::SetPaddingRight(int value) {
 	this->padding.paddingRight = value;
 }
 
-void Layout::SetPaddingBottom(int value) {
+void ElementPadding::SetPaddingBottom(int value) {
 	this->padding.paddingBottom = value;
 }
 
-void Layout::SetPaddingLeft(int value) {
+void ElementPadding::SetPaddingLeft(int value) {
 	this->padding.paddingLeft = value; 
 }
 
-void Layout::SetMargin(Margin value) {
-	this->margin = value;
-}
-
-void Layout::SetMarginTop(int value) {
-	this->margin.marginTop = value; 
-}
-
-void Layout::SetMarginRight(int value) {
-	this->margin.marginRight = value;
-}
-
-void Layout::SetMarginBottom(int value) {
-	this->margin.marginBottom = value;
-}
-
-void Layout::SetMarginLeft(int value) {
-	this->margin.marginLeft = value;
-}
-
-bool Layout::GetAutomaticLayout() {
-	return this->automaticLayout; 
-}
-
-void Layout::SetAutomaticLayout(bool value) {
-	this->automaticLayout = value; 
-}
 // BUTTON
 
 Button::Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath) {
@@ -782,6 +728,34 @@ Division::Division(int x, int y, int width, int height) {
 	this->divisions = new std::vector<Division*>();
 }
 
+std::vector<Button*>* Division::GetButtons() {
+	return this->buttons;
+}
+
+std::vector<Label*>* Division::GetLabels() {
+	return this->labels;
+}
+
+std::vector<Checkbox*>* Division::GetCheckboxes() {
+	return this->checkboxes;
+}
+
+std::vector<Textbox*>* Division::GetTextboxes() {
+	return this->textboxes;
+}
+
+std::vector<Image*>* Division::GetImages() {
+	return this->images;
+}
+
+std::vector<Slider*>* Division::GetSliders() {
+	return this->sliders;
+}
+
+std::vector<Division*>* Division::GetDivisions() {
+	return this->divisions;
+}
+
 Division* Division::AddChild(Label* label) {
 	label->SetParent(this);
 	this->labels->push_back(label); 
@@ -829,32 +803,4 @@ Division* Division::AddChild(Division* division) {
 	this->divisions->push_back(division);
 	Vanity::Rerender();
 	return this;
-}
-
-std::vector<Button*>* Division::GetButtons() {
-	return this->buttons;
-}
-
-std::vector<Label*>* Division::GetLabels() {
-	return this->labels;
-}
-
-std::vector<Checkbox*>* Division::GetCheckboxes() {
-	return this->checkboxes;
-}
-
-std::vector<Textbox*>* Division::GetTextboxes() {
-	return this->textboxes;
-}
-
-std::vector<Image*>* Division::GetImages() {
-	return this->images;
-}
-
-std::vector<Slider*>* Division::GetSliders() {
-	return this->sliders;
-}
-
-std::vector<Division*>* Division::GetDivisions() {
-	return this->divisions;
 }
