@@ -172,35 +172,35 @@ BorderColors Border::GetBorderColors() {
 }
 
 int Border::GetBorderThicknessLeft() {
-	return this->borderThickness.leftBorderThickness; 
+	return this->borderThickness.left; 
 }
 
 int Border::GetBorderThicknessTop() {
-	return this->borderThickness.topBorderThickness;
+	return this->borderThickness.top;
 }
 
 int Border::GetBorderThicknessRight() {
-	return this->borderThickness.rightBorderThickness;
+	return this->borderThickness.right;
 }
 
 int Border::GetBorderThicknessBottom() {
-	return this->borderThickness.bottomBorderThickness;
+	return this->borderThickness.bottom;
 }
 
 SDL_Color Border::GetBorderColorLeft() {
-	return this->borderColors.leftBorderColor; 
+	return this->borderColors.left;
 }
 
 SDL_Color Border::GetBorderColorTop() {
-	return this->borderColors.topBorderColor;
+	return this->borderColors.top;
 }
 
 SDL_Color Border::GetBorderColorRight() {
-	return this->borderColors.rightBorderColor;
+	return this->borderColors.right;
 }
 
 SDL_Color Border::GetBorderColorBottom() {
-	return this->borderColors.bottomBorderColor;
+	return this->borderColors.bottom;
 }
 
 void Border::SetBorderThickness(BorderThickness borderThickness) {
@@ -208,19 +208,19 @@ void Border::SetBorderThickness(BorderThickness borderThickness) {
 }
 
 void Border::SetBorderThicknessLeft(int thickness) {
-	this->borderThickness.leftBorderThickness = thickness; 
+	this->borderThickness.left = thickness;
 }
 
 void Border::SetBorderThicknessTop(int thickness) {
-	this->borderThickness.topBorderThickness = thickness;
+	this->borderThickness.top = thickness;
 }
 
 void Border::SetBorderThicknessRight(int thickness) {
-	this->borderThickness.rightBorderThickness = thickness;
+	this->borderThickness.right = thickness;
 }
 
 void Border::SetBorderThicknessBottom(int thickness) {
-	this->borderThickness.bottomBorderThickness = thickness;
+	this->borderThickness.bottom = thickness;
 }
 
 void Border::SetBorderColors(BorderColors borderColors) {
@@ -228,19 +228,19 @@ void Border::SetBorderColors(BorderColors borderColors) {
 }
 
 void Border::SetBorderColorLeft(SDL_Color color) {
-	this->borderColors.leftBorderColor = color;
+	this->borderColors.left = color;
 }
 
 void Border::SetBorderColorTop(SDL_Color color) {
-	this->borderColors.topBorderColor = color;
+	this->borderColors.top = color;
 }
 
 void Border::SetBorderColorRight(SDL_Color color) {
-	this->borderColors.rightBorderColor = color;
+	this->borderColors.right = color;
 }
 
 void Border::SetBorderColorBottom(SDL_Color color) {
-	this->borderColors.bottomBorderColor = color;
+	this->borderColors.bottom = color;
 }
 
 // FONT 
@@ -381,7 +381,7 @@ void Animation::Animate() {
 	this->animationStartTimestamp = SDL_GetTicks(); 
 }
 
-// LAYOUT
+// PADDING
 
 ElementPadding::ElementPadding() {
 	Padding p = { 10, 15, 10, 15 };	// Thickness for top, right, bottom and left border
@@ -393,19 +393,19 @@ Padding ElementPadding::GetPadding() {
 }
 
 int ElementPadding::GetPaddingTop() {
-	return this->padding.paddingTop; 
+	return this->padding.top;
 }
 
 int ElementPadding::GetPaddingRight() {
-	return this->padding.paddingRight;
+	return this->padding.right;
 }
 
 int ElementPadding::GetPaddingBottom() {
-	return this->padding.paddingBottom;
+	return this->padding.bottom;
 }
 
 int ElementPadding::GetPaddingLeft() {
-	return this->padding.paddingLeft;
+	return this->padding.left;
 }
 
 void ElementPadding::SetPadding(Padding value) {
@@ -413,19 +413,19 @@ void ElementPadding::SetPadding(Padding value) {
 }
 
 void ElementPadding::SetPaddingTop(int value) {
-	this->padding.paddingTop = value;
+	this->padding.top = value;
 }
 
 void ElementPadding::SetPaddingRight(int value) {
-	this->padding.paddingRight = value;
+	this->padding.right = value;
 }
 
 void ElementPadding::SetPaddingBottom(int value) {
-	this->padding.paddingBottom = value;
+	this->padding.bottom = value;
 }
 
 void ElementPadding::SetPaddingLeft(int value) {
-	this->padding.paddingLeft = value; 
+	this->padding.left = value;
 }
 
 // BUTTON

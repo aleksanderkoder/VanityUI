@@ -134,8 +134,9 @@ void Vanity::RenderButtons() {
 		if (!display) continue;
 
 		// Get necessary data from current object
-		int height = curr->GetHeight();
-		int width = curr->GetWidth();
+		Padding padding = curr->GetPadding(); 
+		int height = curr->GetHeight() + padding.top + padding.bottom;
+		int width = curr->GetWidth() + padding.left + padding.right;
 		SDL_Color color = curr->GetColor();
 		SDL_Color hoverColor = curr->GetHoverColor();
 		TTF_Font* font = curr->GetFont();
@@ -186,8 +187,11 @@ void Vanity::RenderButtons() {
 		int textWidth = 0, textHeight = 0;
 		TTF_SizeText(font, label.c_str(), &textWidth, &textHeight);
 
+		width = width - padding.left - padding.right; 
+		height = height - padding.top - padding.bottom; 
+
 		// Display button label
-		RenderLabel(label, x + width / 2 - textWidth / 2, y + height / 2 - textHeight / 2, curr->GetFontColor(), font, curr->GetFontSize());
+		RenderLabel(label, x + padding.left + width / 2 - textWidth / 2, y + padding.top + height / 2 - textHeight / 2, curr->GetFontColor(), font, curr->GetFontSize());
 	}
 }
 
@@ -558,43 +562,43 @@ void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness b
 	border.w = width; 
 
 	// Draw top border if set
-	if (borderThickness.topBorderThickness) {
+	if (borderThickness.top) {
 		border.x = x; 
-		border.y = y - borderThickness.topBorderThickness; 
-		border.h = borderThickness.topBorderThickness;
-		SDL_Color color = borderColors.topBorderColor; 
+		border.y = y - borderThickness.top;
+		border.h = borderThickness.top;
+		SDL_Color color = borderColors.top;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
 		SDL_RenderFillRect(targetRenderer, &border);
 	}
 
 	// Draw bottom border if set
-	if (borderThickness.bottomBorderThickness) {
+	if (borderThickness.bottom) {
 		border.x = x;
 		border.y = y + height;
-		border.h = borderThickness.bottomBorderThickness;
-		SDL_Color color = borderColors.bottomBorderColor;
+		border.h = borderThickness.bottom;
+		SDL_Color color = borderColors.bottom;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		SDL_RenderFillRect(targetRenderer, &border);
 	}
 
 	// Draw right border if set
-	if (borderThickness.rightBorderThickness) {
+	if (borderThickness.right) {
 		border.x = x + width;
-		border.y = y - borderThickness.topBorderThickness;
-		border.w = borderThickness.rightBorderThickness;
-		border.h = height + borderThickness.topBorderThickness + borderThickness.bottomBorderThickness;
-		SDL_Color color = borderColors.rightBorderColor;
+		border.y = y - borderThickness.top;
+		border.w = borderThickness.right;
+		border.h = height + borderThickness.top + borderThickness.bottom;
+		SDL_Color color = borderColors.right;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		SDL_RenderFillRect(targetRenderer, &border);
 	}
 
 	// Draw left border if set
-	if (borderThickness.leftBorderThickness) {
-		border.x = x - borderThickness.leftBorderThickness;
-		border.y = y - borderThickness.topBorderThickness;
-		border.w = borderThickness.leftBorderThickness;
-		border.h = height + borderThickness.topBorderThickness + borderThickness.bottomBorderThickness;
-		SDL_Color color = borderColors.leftBorderColor;
+	if (borderThickness.left) {
+		border.x = x - borderThickness.left;
+		border.y = y - borderThickness.top;
+		border.w = borderThickness.left;
+		border.h = height + borderThickness.top + borderThickness.bottom;
+		SDL_Color color = borderColors.left;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		SDL_RenderFillRect(targetRenderer, &border);
 	}

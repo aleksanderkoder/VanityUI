@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
     auto autoLayoutBtn4 = Vanity::CreateButton("auto layout 2");
     auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 100, 100);
 
+
     //autoLayoutBtn3->SetWidth(2300);
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);

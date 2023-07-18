@@ -91,17 +91,17 @@ class Color {
 
 // Structures used in the Border class 
 struct BorderThickness {
-	int topBorderThickness;
-	int rightBorderThickness;
-	int bottomBorderThickness;
-	int leftBorderThickness;
+	int top;
+	int right;
+	int bottom;
+	int left;
 }; 
 
 struct BorderColors {
-	SDL_Color topBorderColor;
-	SDL_Color rightBorderColor;
-	SDL_Color bottomBorderColor;
-	SDL_Color leftBorderColor;
+	SDL_Color top;
+	SDL_Color right;
+	SDL_Color bottom;
+	SDL_Color left;
 };
 
 // Allows elements which inherit this class to have a border
@@ -206,10 +206,10 @@ class Animation {
 };
 
 struct Padding {
-	int paddingTop;
-	int paddingRight;
-	int paddingBottom;
-	int paddingLeft;
+	int top;
+	int right;
+	int bottom;
+	int left;
 };
 
 class ElementPadding {
