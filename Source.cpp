@@ -33,17 +33,31 @@ int main(int argc, char* argv[])
 
     div3->AddChild(btnGiveFocus)->AddChild(b)->AddChild(div4)->AddChild(tb)->AddChild(img)->AddChild(l)->AddChild(cb);
 
-    auto autoLayoutBtn1 = Vanity::CreateButton("absolute layout", 100, 300);
+    auto autoLayoutBtn1 = Vanity::CreateButton("absolute layout", 100, 50);
     auto autoLayoutBtn3 = Vanity::CreateButton("auto layout");
     auto autoLayoutBtn4 = Vanity::CreateButton("auto layout 2");
-    auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 100, 100);
+    auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 50, 50);
 
 
     //autoLayoutBtn3->SetWidth(2300);
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
+    auto div6 = Vanity::CreateDivision(100, 100, 300, 300);
 
-    div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)->AddChild(autoLayoutBtn4);
+    auto btn1 = Vanity::CreateButton(); 
+    auto txt1 = Vanity::CreateTextbox("Textbox", 0, 50); 
+    auto sli1 = Vanity::CreateSlider(0, 100); 
+    auto div1 = Vanity::CreateDivision(0, 150, 30, 30); 
+    auto chk1 = Vanity::CreateCheckbox(0, 200); 
+
+    txt1->SetPadding({ 10, 20, 30, 40 });
+
+    div6->AddChild(btn1)->AddChild(div1)->AddChild(sli1)->AddChild(txt1)->AddChild(chk1);
+
+
+
+    div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)
+        ->AddChild(autoLayoutBtn4)->AddChild(div6);
 
     auto btn = Vanity::CreateButton("Back to page 1");
 

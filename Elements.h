@@ -256,7 +256,7 @@ class Button : public Elements, public Border, public Dimensions, public Color, 
 		bool pressed;
 };
 
-class Textbox : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage {
+class Textbox : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public ElementPadding {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 

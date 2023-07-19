@@ -209,8 +209,9 @@ void Vanity::RenderTextboxes() {
 		if (!display) continue;
 
 		// Get necessary data from current object
-		int height = curr->GetHeight();
-		int width = curr->GetWidth();
+		Padding padding = curr->GetPadding();
+		int height = curr->GetHeight() + padding.top + padding.bottom;
+		int width = curr->GetWidth() + padding.left + padding.right;
 		SDL_Color color = curr->GetColor();
 		SDL_Color fontColor = curr->GetFontColor(); 
 		SDL_Color hoverColor = curr->GetHoverColor();
@@ -254,12 +255,14 @@ void Vanity::RenderTextboxes() {
 		int textWidth = 0, textHeight = 0; 
 		int lblX, lblY;
 
+		width = width - padding.left - padding.right;
+		height = height - padding.top - padding.bottom;
+
 		// If no value, show placeholder
 		if (value.empty()) {
 			TTF_SizeText(font, placeholder.c_str(), &textWidth, &textHeight);
-
-			lblX = x + width / 2 - textWidth / 2;
-			lblY = y + height / 2 - textHeight / 2;
+			lblX = x + padding.left + width / 2 - textWidth / 2;
+			lblY = y + padding.top + height / 2 - textHeight / 2;
 
 			// Display textbox placeholder text
 			SDL_Color placeholderColor = fontColor; 
@@ -284,8 +287,8 @@ void Vanity::RenderTextboxes() {
 			}
 
 			TTF_SizeText(font, reducedText.c_str(), &textWidth, &textHeight);
-			lblX = x + width / 2 - textWidth / 2;
-			lblY = y + height / 2 - textHeight / 2;
+			lblX = x + padding.left + width / 2 - textWidth / 2;
+			lblY = y + padding.top + height / 2 - textHeight / 2;
 
 			// Display textbox label
 			RenderLabel(reducedText, lblX, lblY, fontColor, font, fontSize);
@@ -301,7 +304,6 @@ void Vanity::RenderTextboxes() {
 			}
 		}
 
-		//std::cout << activeTextbox << std::endl; 
 		// If active textbox is the current textbox and timing is right, draw cursor on textbox
 		if (activeTextbox == curr && drawTextBoxCursor)
 		{
@@ -309,7 +311,7 @@ void Vanity::RenderTextboxes() {
 			rect.w = 2;
 			rect.h = fontSize;
 			rect.x = lblX + textWidth;
-			rect.y = y + height / 2 - fontSize / 2;
+			rect.y = y + padding.top + height / 2 - fontSize / 2;
 			SDL_SetRenderDrawColor(targetRenderer, 255, 255, 255, 255);
 			SDL_RenderFillRect(targetRenderer, &rect);
 		}
