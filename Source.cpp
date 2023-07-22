@@ -50,8 +50,6 @@ int main(int argc, char* argv[])
     auto div1 = Vanity::CreateDivision(0, 150, 30, 30); 
     auto chk1 = Vanity::CreateCheckbox(0, 200); 
 
-    txt1->SetPadding({ 10, 20, 30, 40 });
-
     div6->AddChild(btn1)->AddChild(div1)->AddChild(sli1)->AddChild(txt1)->AddChild(chk1);
 
 

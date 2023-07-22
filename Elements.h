@@ -360,7 +360,7 @@ class Image : public Elements, public Border, public Dimensions {
 		SDL_Texture* image; 
 };
 
-class Division : public Elements, public Border, public Dimensions, public Color, public BackgroundImage {
+class Division : public Elements, public Border, public Dimensions, public Color, public BackgroundImage, public ElementPadding {
 	public:
 		Division(int x, int y, int width, int height);
 

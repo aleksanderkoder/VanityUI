@@ -536,8 +536,9 @@ void Vanity::RenderDivisions() {
 
 		if (!display) continue;
 
-		int width = curr->GetWidth(); 
-		int height = curr->GetHeight(); 
+		Padding padding = curr->GetPadding(); 
+		int width = curr->GetWidth() + padding.left + padding.right; 
+		int height = curr->GetHeight() + padding.top + padding.bottom; 
 
 		// Render background image
 		if (curr->GetBackgroundImageDisplayState())
@@ -780,8 +781,8 @@ TTF_Font* Vanity::OpenFont(std::string fontUrl, int size) {
 // Handles inherited positioning and display state of element 
 bool Vanity::InheritStateFromParent(Division* parent, int& elementX, int& elementY, bool elementDisplayState) {
 	while (parent) {
-		elementX += parent->GetX();
-		elementY += parent->GetY();
+		elementX += parent->GetX() + parent->GetPaddingLeft();
+		elementY += parent->GetY() + parent->GetPaddingTop();
 		if (!parent->GetDisplayState()) elementDisplayState = false;
 		parent = parent->GetParent();
 	}

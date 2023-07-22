@@ -719,6 +719,9 @@ Division::Division(int x, int y, int width, int height) {
 	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
 	borderThickness = bt;
 
+	// Specify padding values since divisions should have different default padding values than other elements
+	this->padding = { 10, 10, 10, 10 }; 
+
 	this->buttons = new std::vector<Button*>();
 	this->labels = new std::vector<Label*>();
 	this->checkboxes = new std::vector<Checkbox*>();
