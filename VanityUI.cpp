@@ -488,13 +488,19 @@ void Vanity::RenderSliders() {
 		color = curr->GetThumbColor();
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		
-		thumbRect.x = curr->GetThumbPosision();
+		if (!curr->GetTouched())
+			thumbRect.x = curr->GetThumbPosision() + x;
+		else
+			thumbRect.x = curr->GetThumbPosision();
+
 		thumbRect.w = curr->GetThumbWidth();
 		thumbRect.h = thumbHeight;
 		thumbRect.y = thumbRect.y + height / 2 - thumbHeight / 2;
 
 		// If mouse hovers over slider and activates
 		if (baseHover && leftMouseButtonPressedLastState) {
+			curr->SetTouched(true); 
+			
 			int mx; 
 			Uint32 mb = SDL_GetMouseState(&mx, nullptr);
 

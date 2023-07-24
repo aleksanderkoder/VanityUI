@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
     auto btn1 = Vanity::CreateButton(); 
     auto txt1 = Vanity::CreateTextbox("Textbox", 0, 50); 
     auto sli1 = Vanity::CreateSlider(0, 100); 
+    auto sli2 = Vanity::CreateSlider(0, 100);
     auto div1 = Vanity::CreateDivision(0, 150, 30, 30); 
     auto chk1 = Vanity::CreateCheckbox(0, 200); 
 
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
 
 
     div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)
-        ->AddChild(autoLayoutBtn4)->AddChild(div6);
+        ->AddChild(autoLayoutBtn4)->AddChild(div6)->AddChild(sli2);
 
     auto btn = Vanity::CreateButton("Back to page 1");
 

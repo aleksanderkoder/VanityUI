@@ -233,6 +233,20 @@ class ElementPadding {
 		void SetPaddingLeft(int value); 
 };
 
+// Class for controlling state for determining if an element has been "touched" (clicked or changed in some way)
+class Touched {
+	protected: 
+		Touched(); 
+		bool touched; 
+
+	public: 
+		// GET methods
+		bool GetTouched(); 
+
+		// SET methods
+		void SetTouched(bool value); 
+};
+
 class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation, public ElementPadding
 {
 	public:
@@ -324,7 +338,7 @@ class Checkbox : public Elements, public Dimensions, public Border, public Color
 		SDL_Color checkmarkColor; 
 };
 
-class Slider : public Elements, public Border, public Dimensions, public Color, public BackgroundImage {
+class Slider : public Elements, public Border, public Dimensions, public Color, public BackgroundImage, public Touched {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 

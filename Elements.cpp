@@ -428,6 +428,20 @@ void ElementPadding::SetPaddingLeft(int value) {
 	this->padding.left = value;
 }
 
+// TOUCHED
+
+Touched::Touched() {
+	this->touched = false; 
+}
+
+bool Touched::GetTouched() {
+	return this->touched; 
+}
+
+void Touched::SetTouched(bool value) {
+	this->touched = value; 
+}
+
 // BUTTON
 
 Button::Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath) {
