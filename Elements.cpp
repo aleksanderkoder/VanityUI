@@ -15,36 +15,36 @@ class Button;
 
 // ELEMENTS - Common methods for every element type
 
-Elements::Elements() {
+Element::Element() {
 	display = true; 
 	x = 0; 
 	y = 0; 
 }; 
 
-int Elements::GetX() {
+int Element::GetX() {
 	return this->x;
 }
 
-int Elements::GetY() {
+int Element::GetY() {
 	return this->y;
 }
 
-void Elements::SetPosition(int x, int y) {
+void Element::SetPosition(int x, int y) {
 	this->x = x;
 	this->y = y;
 	Vanity::Rerender();
 }
 
-bool Elements::GetDisplayState() {
+bool Element::GetDisplayState() {
 	return this->display;
 }
 
-void Elements::Show() {
+void Element::Show() {
 	this->display = true;
 	Vanity::Rerender();
 }
 
-void Elements::Hide() {
+void Element::Hide() {
 	this->display = false;
 	Vanity::Rerender();
 }
@@ -442,6 +442,23 @@ void Touched::SetTouched(bool value) {
 	this->touched = value; 
 }
 
+Clickable::Clickable() {
+	this->clicked = false; 
+}
+
+bool Clickable::Clicked() {
+	if (this->clicked) {
+		this->clicked = false;
+		return true;
+	}
+	return false;
+}
+
+void Clickable::SetClickedState(bool value) {
+	this->clicked = value;
+	Vanity::Rerender();
+}
+
 // BUTTON
 
 Button::Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath) {
@@ -476,19 +493,6 @@ void Button::SetLabel(int label) {
 
 void Button::SetLabel(double label) {
 	this->label = std::to_string(label);
-	Vanity::Rerender();
-}
-
-bool Button::IsPressed() {
-	if (this->pressed) {
-		this->pressed = false;
-		return true;
-	}
-	return false;
-}
-
-void Button::SetPressedState(bool state) {
-	this->pressed = state;
 	Vanity::Rerender();
 }
 

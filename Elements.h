@@ -14,10 +14,21 @@ class Button;
 
 // ELEMENT CLASS DEFINITIONS 
 
-// The base class which all basic elements inherit 
-class Elements {
+// Class containing everything needed for registering if an element has been clicked
+class Clickable {
 	protected:
-		Elements();
+		Clickable();
+		bool clicked;
+
+	public:
+		void SetClickedState(bool state);
+		bool Clicked();
+};
+
+// The base class which all basic elements inherit 
+class Element : public Clickable {
+	protected:
+		Element();
 		int x; 
 		int y; 
 		bool display;
@@ -247,8 +258,8 @@ class Touched {
 		void SetTouched(bool value); 
 };
 
-class Button : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public Animation, public ElementPadding
-{
+class Button : public Element, public Border, public Dimensions, public Color, public Font,
+	public BackgroundImage, public Animation, public ElementPadding {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
@@ -260,17 +271,13 @@ class Button : public Elements, public Border, public Dimensions, public Color, 
 		void SetLabel(int label); 
 		void SetLabel(double label); 
 
-		// Utility methods
-		void SetPressedState(bool state);
-		bool IsPressed();
-
 	private:
 		std::string label;
 		// TODO: Add these: labelColor, labelHoverColor
-		bool pressed;
 };
 
-class Textbox : public Elements, public Border, public Dimensions, public Color, public Font, public BackgroundImage, public ElementPadding {
+class Textbox : public Element, public Border, public Dimensions, public Color, public Font,
+	public BackgroundImage, public ElementPadding {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
@@ -296,7 +303,7 @@ class Textbox : public Elements, public Border, public Dimensions, public Color,
 
 };
 
-class Label : public Elements, public Dimensions, public Border, public Color, public Font {
+class Label : public Element, public Dimensions, public Border, public Color, public Font {
 	public:
 		Label(std::string text, int x, int y, SDL_Color color, int fontSize, std::string fontPath);
 
@@ -316,7 +323,7 @@ class Label : public Elements, public Dimensions, public Border, public Color, p
 		// TODO: Implement use of hoverColor when mouse hovers over label
 };
 
-class Checkbox : public Elements, public Dimensions, public Border, public Color, public BackgroundImage {
+class Checkbox : public Element, public Dimensions, public Border, public Color, public BackgroundImage {
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
@@ -338,7 +345,7 @@ class Checkbox : public Elements, public Dimensions, public Border, public Color
 		SDL_Color checkmarkColor; 
 };
 
-class Slider : public Elements, public Border, public Dimensions, public Color, public BackgroundImage, public Touched {
+class Slider : public Element, public Border, public Dimensions, public Color, public BackgroundImage, public Touched {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
@@ -361,7 +368,7 @@ class Slider : public Elements, public Border, public Dimensions, public Color, 
 		SDL_Color thumbColor;
 };
 
-class Image : public Elements, public Border, public Dimensions {
+class Image : public Element, public Border, public Dimensions {
 	public: 
 		Image(std::string imagePath, int x, int y, int width, int height);
 
@@ -374,7 +381,7 @@ class Image : public Elements, public Border, public Dimensions {
 		SDL_Texture* image; 
 };
 
-class Division : public Elements, public Border, public Dimensions, public Color, public BackgroundImage, public ElementPadding {
+class Division : public Element, public Border, public Dimensions, public Color, public BackgroundImage, public ElementPadding {
 	public:
 		Division(int x, int y, int width, int height);
 

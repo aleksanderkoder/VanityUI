@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     Button* b = Vanity::CreateButton("Page 2");
 
     auto tb = Vanity::CreateTextbox("Text char limit", 350);
-    auto img = Vanity::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
+    //auto img = Vanity::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 600, 0, 50, 50);
     auto cb = Vanity::CreateCheckbox(550); 
     auto sl = Vanity::CreateSlider(650, 500); 
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     auto btnGiveFocus = Vanity::CreateButton("Give focus to textbox");
     btnGiveFocus->SetWidth(200); 
 
-    div3->AddChild(btnGiveFocus)->AddChild(b)->AddChild(div4)->AddChild(tb)->AddChild(img)->AddChild(l)->AddChild(cb);
+    div3->AddChild(btnGiveFocus)->AddChild(b)->AddChild(div4)->AddChild(tb)->AddChild(l)->AddChild(cb);
 
     auto autoLayoutBtn1 = Vanity::CreateButton("absolute layout", 100, 50);
     auto autoLayoutBtn3 = Vanity::CreateButton("auto layout");
@@ -50,8 +50,10 @@ int main(int argc, char* argv[])
     auto sli2 = Vanity::CreateSlider(0, 100);
     auto div1 = Vanity::CreateDivision(0, 150, 30, 30); 
     auto chk1 = Vanity::CreateCheckbox(0, 200); 
+    auto img = Vanity::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 0, 300); 
+    auto lbl = Vanity::CreateLabel("Label", 0, 420);
 
-    div6->AddChild(btn1)->AddChild(div1)->AddChild(sli1)->AddChild(txt1)->AddChild(chk1);
+    div6->AddChild(btn1)->AddChild(div1)->AddChild(sli1)->AddChild(txt1)->AddChild(chk1)->AddChild(img)->AddChild(lbl);
 
 
 
@@ -85,17 +87,36 @@ int main(int argc, char* argv[])
 
         //tb->SetValue(std::to_string(sl->GetValue())); 
 
-        if (b->IsPressed()) {
+        if (b->Clicked()) {
             std::cout << "Button pressed!" << std::endl;
             Vanity::DisplayPage(p2); 
         }
 
-        if (btn->IsPressed())
-            Vanity::DisplayPage(p);
+        if (btn1->Clicked())
+            //Vanity::DisplayPage(p);
+            std::cout << "Button clicked" << std::endl; 
 
-        if (btnGiveFocus->IsPressed()) {
+        if (btnGiveFocus->Clicked()) {
             tb->Focus(); 
         }
+
+        if (txt1->Clicked())
+            std::cout << "Textbox clicked" << std::endl;
+
+        if (img->Clicked())
+            std::cout << "Image clicked" << std::endl;
+
+        if (sli1->Clicked())
+            std::cout << "Slider clicked" << std::endl;
+
+        if (div6->Clicked())
+            std::cout << "Division clicked" << std::endl;
+
+        if (chk1->Clicked())
+            std::cout << "Checkbox clicked" << std::endl;
+
+        if (lbl->Clicked())
+            std::cout << "Label clicked" << std::endl;
 
         Vanity::Render();
         //SDL_RenderPresent(renderer);
