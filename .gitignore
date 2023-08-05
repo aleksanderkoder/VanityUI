@@ -6,3 +6,8 @@
 *.opendb
 *.ipch
 /x64
+x64/Debug/Elements.obj
+x64/Debug/Page.obj
+x64/Debug/Source.obj
+x64/Debug/vc143.idb
+x64/Debug/vc143.pdb

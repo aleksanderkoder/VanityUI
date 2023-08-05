@@ -35,6 +35,13 @@ void Element::SetPosition(int x, int y) {
 	Vanity::Rerender();
 }
 
+void Element::SetPositionX(int value) {
+	this->x = value; 
+}
+void Element::SetPositionY(int value) {
+	this->y = value; 
+}
+
 bool Element::GetDisplayState() {
 	return this->display;
 }
@@ -598,6 +605,8 @@ Checkbox::Checkbox(int x, int y, int size, bool defaultState) {
 	this->x = x;
 	this->y = y;
 	this->size = size;
+	this->width = size; 
+	this->height = size; 
 	this->display = true;
 	this->checked = defaultState;
 	SDL_Color c = { 0, 0, 0, 175 };
@@ -623,6 +632,8 @@ void Checkbox::SetCheckmarkColor(SDL_Color* color) {
 
 void Checkbox::SetSize(int size) {
 	this->size = size;
+	this->x = size; 
+	this->y = size; 
 	Vanity::Rerender();
 }
 
@@ -824,4 +835,40 @@ Division* Division::AddChild(Division* division) {
 	this->divisions->push_back(division);
 	Vanity::Rerender();
 	return this;
+}
+
+void Division::HorizontallyAlignElementsCenter() {
+	int divWidth = this->width; 
+	for (int i = 0; i < buttons->size(); i++) {
+		auto element = (*buttons)[i]; 
+		int elemComputedWidth = element->GetWidth() + element->GetPaddingLeft() + element->GetPaddingRight();
+		element->SetPositionX(divWidth / 2 - elemComputedWidth / 2); 
+	}
+	for (int i = 0; i < labels->size(); i++) {
+		auto element = (*labels)[i];
+		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
+	}
+	for (int i = 0; i < checkboxes->size(); i++) {
+		auto element = (*checkboxes)[i];
+		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
+	}
+	for (int i = 0; i < textboxes->size(); i++) {
+		auto element = (*textboxes)[i];
+		int elemComputedWidth = element->GetWidth() + element->GetPaddingLeft() + element->GetPaddingRight();
+		element->SetPositionX(divWidth / 2 - elemComputedWidth / 2);
+	}
+	for (int i = 0; i < images->size(); i++) {
+		auto element = (*images)[i];
+		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
+	}
+	for (int i = 0; i < sliders->size(); i++) {
+		auto element = (*sliders)[i];
+		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
+	}
+	for (int i = 0; i < divisions->size(); i++) {
+		auto element = (*divisions)[i];
+		int elemComputedWidth = element->GetWidth() + element->GetPaddingLeft() + element->GetPaddingRight();
+		element->SetPositionX(divWidth / 2 - elemComputedWidth / 2);
+	}
+	
 }

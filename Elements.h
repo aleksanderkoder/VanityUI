@@ -41,6 +41,8 @@ class Element : public Clickable {
 
 		// SET methods 
 		void SetPosition(int x, int y);
+		void SetPositionX(int value); 
+		void SetPositionY(int value); 
 
 		// Utility methods
 		void Show();
@@ -318,8 +320,6 @@ class Label : public Element, public Dimensions, public Border, public Color, pu
 	private:
 		std::string text;
 
-		// Utility methods
-		void ComputeDimensions(); 
 		// TODO: Implement use of hoverColor when mouse hovers over label
 };
 
@@ -385,8 +385,7 @@ class Division : public Element, public Border, public Dimensions, public Color,
 	public:
 		Division(int x, int y, int width, int height);
 
-		// Get methods
-		
+		// GET methods
 		std::vector<Button*>* GetButtons();
 		std::vector<Label*>* GetLabels();
 		std::vector<Checkbox*>* GetCheckboxes();
@@ -403,6 +402,13 @@ class Division : public Element, public Border, public Dimensions, public Color,
 		Division* AddChild(Slider* slider);
 		Division* AddChild(Image* image);
 		Division* AddChild(Division* division);
+
+		void HorizontallyAlignElementsCenter(); 
+		void HorizontallyAlignElementsLeft();
+		void HorizontallyAlignElementsRight();
+		void VerticallyAlignElementsCenter();
+		void VerticallyAlignElementsLeft();
+		void VerticallyAlignElementsRight();
 
 	private:
 		std::vector<Button*>* buttons;
