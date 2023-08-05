@@ -404,11 +404,11 @@ class Division : public Element, public Border, public Dimensions, public Color,
 		Division* AddChild(Division* division);
 
 		void HorizontallyAlignElementsCenter(); 
-		void HorizontallyAlignElementsLeft();
-		void HorizontallyAlignElementsRight();
 		void VerticallyAlignElementsCenter();
-		void VerticallyAlignElementsLeft();
-		void VerticallyAlignElementsRight();
+		void AlignElementsTop();
+		void AlignElementsRight();
+		void AlignElementsBottom();
+		void AlignElementsLeft();
 
 	private:
 		std::vector<Button*>* buttons;

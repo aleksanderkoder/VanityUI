@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     //autoLayoutBtn3->SetWidth(2300);
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
-    auto div6 = Vanity::CreateDivision(150, 100, 300, 300);
+    auto div6 = Vanity::CreateDivision(150, 150, 300, 300);
 
     auto btn1 = Vanity::CreateButton(); 
     auto txt1 = Vanity::CreateTextbox("Textbox", 0, 50); 
@@ -54,8 +54,6 @@ int main(int argc, char* argv[])
     auto lbl = Vanity::CreateLabel("Label", 0, 420);
 
     div6->AddChild(btn1)->AddChild(div1)->AddChild(sli1)->AddChild(txt1)->AddChild(chk1)->AddChild(img)->AddChild(lbl);
-
-
 
     div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)
         ->AddChild(autoLayoutBtn4)->AddChild(div6)->AddChild(sli2);
@@ -80,7 +78,9 @@ int main(int argc, char* argv[])
 
     Vanity::DisplayPage(p);
 
-    div6->HorizontallyAlignElementsCenter(); 
+    //div6->HorizontallyAlignElementsCenter(); 
+    div6->VerticallyAlignElementsCenter(); 
+    div6->AlignElementsLeft(); 
  
     while (Vanity::IsRunning()) {
 

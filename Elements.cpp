@@ -872,3 +872,164 @@ void Division::HorizontallyAlignElementsCenter() {
 	}
 	
 }
+
+void Division::VerticallyAlignElementsCenter() {
+	int divHeight = this->height;
+	for (int i = 0; i < buttons->size(); i++) {
+		auto element = (*buttons)[i];
+		int elemComputedHeight = element->GetHeight() + element->GetPaddingTop() + element->GetPaddingBottom();
+		element->SetPositionY(divHeight / 2 - elemComputedHeight / 2);
+	}
+	for (int i = 0; i < labels->size(); i++) {
+		auto element = (*labels)[i];
+		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
+	}
+	for (int i = 0; i < checkboxes->size(); i++) {
+		auto element = (*checkboxes)[i];
+		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
+	}
+	for (int i = 0; i < textboxes->size(); i++) {
+		auto element = (*textboxes)[i];
+		int elemComputedWidth = element->GetHeight() + element->GetPaddingTop() + element->GetPaddingBottom();
+		element->SetPositionY(divHeight / 2 - elemComputedWidth / 2);
+	}
+	for (int i = 0; i < images->size(); i++) {
+		auto element = (*images)[i];
+		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
+	}
+	for (int i = 0; i < sliders->size(); i++) {
+		auto element = (*sliders)[i];
+		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
+	}
+	for (int i = 0; i < divisions->size(); i++) {
+		auto element = (*divisions)[i];
+		int elemComputedWidth = element->GetHeight() + element->GetPaddingTop() + element->GetPaddingBottom();
+		element->SetPositionY(divHeight / 2 - elemComputedWidth / 2);
+	}
+}
+
+void Division::AlignElementsTop() {
+	for (int i = 0; i < buttons->size(); i++) {
+		(*buttons)[i]->SetPositionY(0);
+	}
+	for (int i = 0; i < labels->size(); i++) {
+		(*labels)[i]->SetPositionY(0);
+	}
+	for (int i = 0; i < checkboxes->size(); i++) {
+		(*checkboxes)[i]->SetPositionY(0);
+	}
+	for (int i = 0; i < textboxes->size(); i++) {
+		(*textboxes)[i]->SetPositionY(0);
+	}
+	for (int i = 0; i < images->size(); i++) {
+		(*images)[i]->SetPositionY(0);
+	}
+	for (int i = 0; i < sliders->size(); i++) {
+		(*sliders)[i]->SetPositionY(0);
+	}
+	for (int i = 0; i < divisions->size(); i++) {
+		(*divisions)[i]->SetPositionY(0);
+	}
+}
+
+void Division::AlignElementsRight() {
+	int divWidth = this->GetWidth(); 
+	for (int i = 0; i < buttons->size(); i++) {
+		auto element = (*buttons)[i]; 
+		int alignedPosition = divWidth - element->GetWidth() - element->GetPaddingLeft() - element->GetPaddingRight();
+		element->SetPositionX(alignedPosition);
+	}
+	for (int i = 0; i < labels->size(); i++) {
+		auto element = (*labels)[i];
+		int alignedPosition = divWidth - element->GetWidth();
+		element->SetPositionX(alignedPosition);
+	}
+	for (int i = 0; i < checkboxes->size(); i++) {
+		auto element = (*checkboxes)[i];
+		int alignedPosition = divWidth - element->GetWidth();
+		element->SetPositionX(alignedPosition);
+	}
+	for (int i = 0; i < textboxes->size(); i++) {
+		auto element = (*textboxes)[i];
+		int alignedPosition = divWidth - element->GetWidth() - element->GetPaddingLeft() - element->GetPaddingRight();
+		element->SetPositionX(alignedPosition);
+	}
+	for (int i = 0; i < images->size(); i++) {
+		auto element = (*images)[i];
+		int alignedPosition = divWidth - element->GetWidth();
+		element->SetPositionX(alignedPosition);
+	}
+	for (int i = 0; i < sliders->size(); i++) {
+		auto element = (*sliders)[i];
+		int alignedPosition = divWidth - element->GetWidth();
+		element->SetPositionX(alignedPosition);
+	}
+	for (int i = 0; i < divisions->size(); i++) {
+		auto element = (*divisions)[i];
+		int alignedPosition = divWidth - element->GetWidth() - element->GetPaddingLeft() - element->GetPaddingRight();
+		element->SetPositionX(alignedPosition);
+	}
+}
+
+void Division::AlignElementsBottom() {
+	int divHeight = this->GetHeight();
+	for (int i = 0; i < buttons->size(); i++) {
+		auto element = (*buttons)[i];
+		int alignedPosition = divHeight - element->GetHeight() - element->GetPaddingTop() - element->GetPaddingBottom();
+		element->SetPositionY(alignedPosition);
+	}
+	for (int i = 0; i < labels->size(); i++) {
+		auto element = (*labels)[i];
+		int alignedPosition = divHeight - element->GetHeight();
+		element->SetPositionY(alignedPosition);
+	}
+	for (int i = 0; i < checkboxes->size(); i++) {
+		auto element = (*checkboxes)[i];
+		int alignedPosition = divHeight - element->GetHeight();
+		element->SetPositionY(alignedPosition);
+	}
+	for (int i = 0; i < textboxes->size(); i++) {
+		auto element = (*textboxes)[i];
+		int alignedPosition = divHeight - element->GetHeight() - element->GetPaddingTop() - element->GetPaddingBottom();
+		element->SetPositionY(alignedPosition);
+	}
+	for (int i = 0; i < images->size(); i++) {
+		auto element = (*images)[i];
+		int alignedPosition = divHeight - element->GetHeight();
+		element->SetPositionY(alignedPosition);
+	}
+	for (int i = 0; i < sliders->size(); i++) {
+		auto element = (*sliders)[i];
+		int alignedPosition = divHeight - element->GetHeight();
+		element->SetPositionY(alignedPosition);
+	}
+	for (int i = 0; i < divisions->size(); i++) {
+		auto element = (*divisions)[i];
+		int alignedPosition = divHeight - element->GetHeight() - element->GetPaddingTop() - element->GetPaddingBottom();
+		element->SetPositionY(alignedPosition);
+	}
+}
+
+void Division::AlignElementsLeft() {
+	for (int i = 0; i < buttons->size(); i++) {
+		(*buttons)[i]->SetPositionX(0);
+	}
+	for (int i = 0; i < labels->size(); i++) {
+		(*labels)[i]->SetPositionX(0);
+	}
+	for (int i = 0; i < checkboxes->size(); i++) {
+		(*checkboxes)[i]->SetPositionX(0);
+	}
+	for (int i = 0; i < textboxes->size(); i++) {
+		(*textboxes)[i]->SetPositionX(0);
+	}
+	for (int i = 0; i < images->size(); i++) {
+		(*images)[i]->SetPositionX(0);
+	}
+	for (int i = 0; i < sliders->size(); i++) {
+		(*sliders)[i]->SetPositionX(0);
+	}
+	for (int i = 0; i < divisions->size(); i++) {
+		(*divisions)[i]->SetPositionX(0);
+	}
+}
