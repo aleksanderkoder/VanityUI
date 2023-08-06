@@ -273,6 +273,14 @@ class Button : public Element, public Border, public Dimensions, public Color, p
 		void SetLabel(int label); 
 		void SetLabel(double label); 
 
+		// Utility 
+		void HorizontallyAlignCenter(); 
+		void VerticallyAlignCenter(); 
+		void AlignTop();
+		void AlignRight(); 
+		void AlignBottom(); 
+		void AlignLeft(); 
+
 	private:
 		std::string label;
 		// TODO: Add these: labelColor, labelHoverColor

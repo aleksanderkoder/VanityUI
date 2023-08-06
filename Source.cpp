@@ -79,8 +79,11 @@ int main(int argc, char* argv[])
     Vanity::DisplayPage(p);
 
     //div6->HorizontallyAlignElementsCenter(); 
-    div6->VerticallyAlignElementsCenter(); 
-    div6->AlignElementsLeft(); 
+    //div6->VerticallyAlignElementsCenter(); 
+    //div6->AlignElementsLeft(); 
+
+    btn1->AlignRight(); 
+    btn1->AlignLeft();
  
     while (Vanity::IsRunning()) {
 

@@ -480,7 +480,6 @@ Button::Button(std::string label, int width, int height, int x, int y, int fontS
 	SDL_Color hc = { 25, 25, 25, 175 };
 	this->color = c;
 	this->hoverColor = hc;
-
 	this->SetFont(fontPath); 
 }
 
@@ -501,6 +500,30 @@ void Button::SetLabel(int label) {
 void Button::SetLabel(double label) {
 	this->label = std::to_string(label);
 	Vanity::Rerender();
+}
+
+void Button::HorizontallyAlignCenter() {
+	int parentWidth = this->GetParent()->GetWidth();
+	this->SetPositionX(parentWidth / 2 - (this->GetWidth() + this->GetPaddingLeft() + this->GetPaddingRight()) / 2);
+}
+
+void Button::VerticallyAlignCenter() {
+	int parentHeight = this->GetParent()->GetHeight();
+	this->SetPositionY(parentHeight / 2 - (this->GetHeight() + this->GetPaddingTop() + this->GetPaddingBottom()) / 2);
+}
+
+void Button::AlignRight() {
+	int alignedPosition = this->GetParent()->GetWidth() - this->GetWidth() - this->GetPaddingLeft() - this->GetPaddingRight();
+	this->SetPositionX(alignedPosition);
+}
+
+void Button::AlignBottom() {
+	int alignedPosition = this->GetParent()->GetHeight() - this->GetHeight() - this->GetPaddingTop() - this->GetPaddingBottom();
+	this->SetPositionY(alignedPosition);
+}
+
+void Button::AlignLeft() {
+	this->SetPositionX(0);
 }
 
 // TEXTBOX
@@ -571,9 +594,7 @@ Label::Label(std::string text, int x, int y, SDL_Color color, int fontSize, std:
 	this->color = color;
 	this->display = true;
 	this->fontSize = fontSize;
-
 	this->SetFont(fontPath);
-
 	ComputeDimensionsOfText(this->font, this->text.length(), this->width, this->height);
 }
 
