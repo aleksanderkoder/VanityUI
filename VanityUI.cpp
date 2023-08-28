@@ -125,6 +125,7 @@ void Vanity::RenderLabels() {
 
 		RenderLabel(text, x, y, curr->GetColor(), font, curr->GetFontSize());
 	}
+	delete labels; 
 }
 
 void Vanity::RenderButtons() {
@@ -205,6 +206,7 @@ void Vanity::RenderButtons() {
 		// Display button label
 		RenderLabel(label, x + padding.left + width / 2 - textWidth / 2, y + padding.top + height / 2 - textHeight / 2, curr->GetFontColor(), font, curr->GetFontSize());
 	}
+	delete buttons; 
 }
 
 void Vanity::RenderTextboxes() {
@@ -330,6 +332,7 @@ void Vanity::RenderTextboxes() {
 		}
 		CaptureInputText();
 	}
+	delete textboxes; 
 }
 
 void Vanity::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if selected) to show its state
@@ -401,6 +404,7 @@ void Vanity::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if selec
 			SDL_RenderFillRect(targetRenderer, &rect);
 		}
 	}
+	delete checkboxes; 
 }
 
 void Vanity::RenderLabel(std::string text, int x, int y, SDL_Color color, TTF_Font* font, int fontSize) {
@@ -459,6 +463,7 @@ void Vanity::RenderImages() {
 		// Draw image border 
 		RenderBorder(x, y, curr->GetWidth(), curr->GetHeight(), curr->GetBorderThickness(), curr->GetBorderColors());
 	}
+	delete imgs; 
 }
 
 void Vanity::RenderSliders() {
@@ -552,6 +557,7 @@ void Vanity::RenderSliders() {
 		SDL_RenderFillRect(targetRenderer, &sliderRect);
 		SDL_RenderFillRect(targetRenderer, &thumbRect);
 	}
+	delete sliders; 
 }
 
 void Vanity::RenderDivisions() {
@@ -595,6 +601,7 @@ void Vanity::RenderDivisions() {
 		// Draw division border 
 		RenderBorder(x, y, curr->GetWidth(), curr->GetHeight(), curr->GetBorderThickness(), curr->GetBorderColors());
 	}
+	delete divs; 
 }
 
 void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness borderThickness, BorderColors borderColors) {

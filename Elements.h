@@ -25,31 +25,6 @@ class Clickable {
 		bool Clicked();
 };
 
-// The base class which all basic elements inherit 
-class Element : public Clickable {
-	protected:
-		Element();
-		int x; 
-		int y; 
-		bool display;
-
-	public:
-		// GET methods 
-		int GetX();
-		int GetY();
-		bool GetDisplayState();
-
-		// SET methods 
-		void SetPosition(int x, int y);
-		void SetPositionX(int value); 
-		void SetPositionY(int value); 
-
-		// Utility methods
-		void Show();
-		void Hide();
-
-};
-
 // A class that enables other classes (that inherit this class) to have a parent division
 class Parentable {
 	protected:
@@ -65,26 +40,41 @@ class Parentable {
 
 };
 
-// A class container everything related to generic dimension data, such as width and height 
-class Dimensions : public Parentable {
+// The base class which all basic elements inherit 
+class Element : public Clickable, public Parentable {
 	protected:
-		Dimensions();
-		int width, height; 
+		Element();
+		int x; 
+		int y; 
+		int width;
+		int height; 
+		bool display;
 
-	public: 
+	public:
 		// GET methods 
-		int GetWidth(); 
+		virtual int GetX();
+		virtual int GetY();
+		int GetWidth();
 		int GetHeight();
+		virtual bool GetDisplayState();
 
 		// SET methods 
-		void SetWidth(int width); 
-		void SetHeight(int height); 
+		virtual void SetPosition(int x, int y);
+		virtual void SetPositionX(int value);
+		virtual void SetPositionY(int value);
+		void SetWidth(int width);
+		void SetHeight(int height);
 		void SetDimensions(int width, int height);
-			
+
 		// Percentage  
 		void SetWidth(std::string percentage);
 		void SetHeight(std::string percentage);
 		void SetDimensions(std::string percentageWidth, std::string percentageHeight);
+
+		// Utility methods
+		virtual void Show();
+		virtual void Hide();
+
 };
 
 class Color {
@@ -260,7 +250,7 @@ class Touched {
 		void SetTouched(bool value); 
 };
 
-class Button : public Element, public Border, public Dimensions, public Color, public Font,
+class Button : public Element, public Border, public Color, public Font,
 	public BackgroundImage, public Animation, public ElementPadding {
 	public:
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
@@ -286,7 +276,7 @@ class Button : public Element, public Border, public Dimensions, public Color, p
 		// TODO: Add these: labelColor, labelHoverColor
 };
 
-class Textbox : public Element, public Border, public Dimensions, public Color, public Font,
+class Textbox : public Element, public Border, public Color, public Font,
 	public BackgroundImage, public ElementPadding {
 	public:
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
@@ -313,7 +303,7 @@ class Textbox : public Element, public Border, public Dimensions, public Color, 
 
 };
 
-class Label : public Element, public Dimensions, public Border, public Color, public Font {
+class Label : public Element, public Border, public Color, public Font {
 	public:
 		Label(std::string text, int x, int y, SDL_Color color, int fontSize, std::string fontPath);
 
@@ -331,7 +321,7 @@ class Label : public Element, public Dimensions, public Border, public Color, pu
 		// TODO: Implement use of hoverColor when mouse hovers over label
 };
 
-class Checkbox : public Element, public Dimensions, public Border, public Color, public BackgroundImage {
+class Checkbox : public Element, public Border, public Color, public BackgroundImage {
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
@@ -353,7 +343,7 @@ class Checkbox : public Element, public Dimensions, public Border, public Color,
 		SDL_Color checkmarkColor; 
 };
 
-class Slider : public Element, public Border, public Dimensions, public Color, public BackgroundImage, public Touched {
+class Slider : public Element, public Border, public Color, public BackgroundImage, public Touched {
 	public:
 		Slider(int x, int y, int width, int height, int thumbWidth, int thumbHeight);
 
@@ -376,7 +366,7 @@ class Slider : public Element, public Border, public Dimensions, public Color, p
 		SDL_Color thumbColor;
 };
 
-class Image : public Element, public Border, public Dimensions {
+class Image : public Element, public Border {
 	public: 
 		Image(std::string imagePath, int x, int y, int width, int height);
 
@@ -389,7 +379,7 @@ class Image : public Element, public Border, public Dimensions {
 		SDL_Texture* image; 
 };
 
-class Division : public Element, public Border, public Dimensions, public Color, public BackgroundImage, public ElementPadding {
+class Division : public Element, public Border, public Color, public BackgroundImage, public ElementPadding {
 	public:
 		Division(int x, int y, int width, int height);
 
@@ -403,14 +393,9 @@ class Division : public Element, public Border, public Dimensions, public Color,
 		std::vector<Division*>* GetDivisions();
 	
 		// Utility
-		Division* AddChild(Label* label);
-		Division* AddChild(Button* button);
-		Division* AddChild(Textbox* textbox);
-		Division* AddChild(Checkbox* checkbox);
-		Division* AddChild(Slider* slider);
-		Division* AddChild(Image* image);
-		Division* AddChild(Division* division);
+		Division* AddChild(Element* element);
 
+		// Positioning
 		void HorizontallyAlignElementsCenter(); 
 		void VerticallyAlignElementsCenter();
 		void AlignElementsTop();
@@ -419,13 +404,7 @@ class Division : public Element, public Border, public Dimensions, public Color,
 		void AlignElementsLeft();
 
 	private:
-		std::vector<Button*>* buttons;
-		std::vector<Label*>* labels;
-		std::vector<Checkbox*>* checkboxes;
-		std::vector<Textbox*>* textboxes;
-		std::vector<Image*>* images;
-		std::vector<Slider*>* sliders;
-		std::vector<Division*>* divisions;
+		std::vector<Element*>* elements;
 
 		// TODO: Add use of hoverColor when mouse hovers over div!
 };
