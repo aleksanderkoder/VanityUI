@@ -68,7 +68,7 @@ class Vanity
 		static void UpdateMouseButtonState();
 		static bool ValidKey(int key);
 		static void CaptureInputText();
-		static void RenderButtons();
+		static void RenderButton(Button* button);
 		static void RenderTextboxes();
 		static void RenderLabels();
 		static void RenderCheckboxes();

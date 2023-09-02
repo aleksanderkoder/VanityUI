@@ -953,7 +953,6 @@ void Division::AlignElementsBottom() {
 			int alignedPosition = divHeight - castedElement->GetHeight() - castedElement->GetPaddingTop() - castedElement->GetPaddingBottom();
 			castedElement->SetPositionY(alignedPosition);
 			continue;
-
 		}
 		if (Division* castedElement = dynamic_cast<Division*>(element)) {
 			int alignedPosition = divHeight - castedElement->GetHeight() - castedElement->GetPaddingTop() - castedElement->GetPaddingBottom();
@@ -970,5 +969,4 @@ void Division::AlignElementsLeft() {
 	for (int i = 0; i < elements->size(); i++) {
 		(*elements)[i]->SetPositionX(0);
 	}
-	
 }

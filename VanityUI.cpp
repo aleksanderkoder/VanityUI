@@ -128,41 +128,35 @@ void Vanity::RenderLabels() {
 	delete labels; 
 }
 
-void Vanity::RenderButtons() {
-	auto buttons = currentPage->GetButtons();
+void Vanity::RenderButton(Button* button) {
+		int x = button->GetX();
+		int y = button->GetY();
 
-	// Loop through all buttons
-	for (int i = 0; i < buttons->size(); i++) {
-		Button* curr = (*buttons)[i];
-
-		int x = curr->GetX();
-		int y = curr->GetY();
-
-		Division* parentDiv = curr->GetParent(); 
+		Division* parentDiv = button->GetParent();
 
 		//std::cout << "X: " << x << ", Y: " << y << std::endl; 
 
-		bool display = InheritStateFromParent(parentDiv, x, y, curr->GetDisplayState());
+		bool display = InheritStateFromParent(parentDiv, x, y, button->GetDisplayState());
 
-		if (!display) continue;
+		if (!display) return;
 
 		// Get necessary data from current object
-		Padding padding = curr->GetPadding(); 
-		int height = curr->GetHeight() + padding.top + padding.bottom;
-		int width = curr->GetWidth() + padding.left + padding.right;
-		SDL_Color color = curr->GetColor();
-		SDL_Color hoverColor = curr->GetHoverColor();
-		TTF_Font* font = curr->GetFont();
-		std::string label = curr->GetLabel();
+		Padding padding = button->GetPadding();
+		int height = button->GetHeight() + padding.top + padding.bottom;
+		int width = button->GetWidth() + padding.left + padding.right;
+		SDL_Color color = button->GetColor();
+		SDL_Color hoverColor = button->GetHoverColor();
+		TTF_Font* font = button->GetFont();
+		std::string label = button->GetLabel();
 
-		if (curr->GetAnimationState()) {
+		if (button->GetAnimationState()) {
 			// If element is currently being animated 
-			curr->CalculateNextAnimationStep(x, y, *curr); 
+			button->CalculateNextAnimationStep(x, y, *button);
 		}
 
 		// Render background image
-		if (curr->GetBackgroundImageDisplayState())
-			Vanity::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y); 
+		if (button->GetBackgroundImageDisplayState())
+			Vanity::RenderBackgroundImage(button->GetBackgroundImage(), width, height, x, y);
 
 		// Create button rectangle data
 		SDL_Rect rect;
@@ -175,11 +169,11 @@ void Vanity::RenderButtons() {
 
 		// If mouse doesn't hover over button, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
-		curr->SetClickedState(false);
+		button->SetClickedState(false);
 
 		// If mouse hovers over button and activates
 		if (mHover && leftMouseButtonPressedState) {
-			curr->SetClickedState(true);
+			button->SetClickedState(true);
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
 			activeTextbox = nullptr;
 		}
@@ -195,7 +189,7 @@ void Vanity::RenderButtons() {
 		SDL_RenderFillRect(targetRenderer, &rect);
 
 		// Draw button border 
-		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
+		RenderBorder(x, y, width, height, button->GetBorderThickness(), button->GetBorderColors());
 
 		int textWidth = 0, textHeight = 0;
 		TTF_SizeText(font, label.c_str(), &textWidth, &textHeight);
@@ -204,9 +198,7 @@ void Vanity::RenderButtons() {
 		height = height - padding.top - padding.bottom; 
 
 		// Display button label
-		RenderLabel(label, x + padding.left + width / 2 - textWidth / 2, y + padding.top + height / 2 - textHeight / 2, curr->GetFontColor(), font, curr->GetFontSize());
-	}
-	delete buttons; 
+		RenderLabel(label, x + padding.left + width / 2 - textWidth / 2, y + padding.top + height / 2 - textHeight / 2, button->GetFontColor(), font, button->GetFontSize());
 }
 
 void Vanity::RenderTextboxes() {
@@ -654,13 +646,25 @@ void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness b
 void Vanity::Render() {
 	UpdateMouseButtonState();
 	UpdateMousePosision(); 
-	RenderDivisions(); 
+
+	// Render elements
+	auto elements = currentPage->GetElements(); 
+	for (int i = 0; i < elements->size(); i++) {
+		if (Button* current = dynamic_cast<Button*>((*elements)[i])) {
+			RenderButton(current); 
+		}
+		/*else if (Button* current = dynamic_cast<Button*>((*elements)[i])) {
+
+		}*/
+	}
+
+	/*RenderDivisions(); 
 	RenderLabels();
 	RenderButtons();
 	RenderTextboxes();
 	RenderCheckboxes();
 	RenderSliders(); 
-	RenderImages(); 
+	RenderImages(); */
 	SDL_RenderPresent(targetRenderer); 
 }
 
