@@ -69,11 +69,11 @@ class Vanity
 		static bool ValidKey(int key);
 		static void CaptureInputText();
 		static void RenderButton(Button* button);
-		static void RenderTextboxes();
-		static void RenderLabels();
-		static void RenderCheckboxes();
-		static void RenderImages(); 
-		static void RenderSliders(); 
-		static void RenderDivisions();
+		static void RenderTextbox(Textbox* textbox);
+		static void RenderLabel(Label* label);
+		static void RenderCheckbox(Checkbox* checkbox);
+		static void RenderImage(Image* image); 
+		static void RenderSlider(Slider* slider); 
+		static void RenderDivision(Division* division);
 		static void RenderBorder(int x, int y, int width, int height, BorderThickness borderThickness, BorderColors borderColors); 
 };
