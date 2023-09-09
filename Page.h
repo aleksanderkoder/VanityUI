@@ -5,33 +5,18 @@
 class Page
 {
 	private:
-		std::vector<Button*>* buttons;
-		std::vector<Label*>* labels;
-		std::vector<Checkbox*>* checkboxes;
-		std::vector<Textbox*>* textboxes;
-		std::vector<Image*>* images; 
-		std::vector<Slider*>* sliders;
-		std::vector<Division*>* divisions; 
+		std::vector<Element*>* elements; 
 
 	public:
 		Page();
 
-		Page* AddElement(Button* button);
-		Page* AddElement(Label* label);
-		Page* AddElement(Checkbox* checkbox);
-		Page* AddElement(Textbox* textbox);
-		Page* AddElement(Image* image);
-		Page* AddElement(Slider* slider);
-		Page* AddElement(Division* division);
+		Page* AddElement(Element* element);
+		Page* AddElement(Division* division); 
 
-		Page* RemoveElement(Button* button);
-		Page* RemoveElement(Label* label);
-		Page* RemoveElement(Checkbox* checkbox);
-		Page* RemoveElement(Textbox* textbox);
-		Page* RemoveElement(Image* image);
-		Page* RemoveElement(Slider* slider);
+		Page* RemoveElement(Element* element);
 		Page* RemoveElement(Division* division);
 
+		std::vector<Element*>* GetElements(); 
 		std::vector<Button*>* GetButtons();
 		std::vector<Label*>* GetLabels();
 		std::vector<Checkbox*>* GetCheckboxes();

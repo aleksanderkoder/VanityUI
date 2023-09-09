@@ -19,6 +19,8 @@ Element::Element() {
 	display = true; 
 	x = 0; 
 	y = 0; 
+	width = 0; 
+	height = 0; 
 }; 
 
 int Element::GetX() {
@@ -71,34 +73,28 @@ void Parentable::SetParent(Division* parent) {
 	Vanity::Rerender();
 }
 
-// DIMENSIONS 
-Dimensions::Dimensions() {
-	width = 0; 
-	height = 0; 
-}
-
-int Dimensions::GetWidth() {
+int Element::GetWidth() {
 	return this->width; 
 }
 
-int Dimensions::GetHeight() {
+int Element::GetHeight() {
 	return this->height;
 }
 
-void Dimensions::SetWidth(int width) {
+void Element::SetWidth(int width) {
 	this->width = width;
 }
 
-void Dimensions::SetHeight(int height) {
+void Element::SetHeight(int height) {
 	this->height = height;
 }
 
-void Dimensions::SetDimensions(int width, int height) {
+void Element::SetDimensions(int width, int height) {
 	this->width = width;
 	this->height = height; 
 }
 
-void Dimensions::SetWidth(std::string percentage) {
+void Element::SetWidth(std::string percentage) {
 	for (int i = 0; i < percentage.length(); i++) {
 		std::string value(1, percentage[i]); 
 		if (value == "%") {
@@ -113,7 +109,7 @@ void Dimensions::SetWidth(std::string percentage) {
 	}
 }
 
-void Dimensions::SetHeight(std::string percentage) {
+void Element::SetHeight(std::string percentage) {
 	for (int i = 0; i < percentage.length(); i++) {
 		std::string value(1, percentage[i]);
 		if (value == "%") {
@@ -129,7 +125,7 @@ void Dimensions::SetHeight(std::string percentage) {
 	}
 }
 
-void Dimensions::SetDimensions(std::string percentageWidth, std::string percentageHeight) {
+void Element::SetDimensions(std::string percentageWidth, std::string percentageHeight) {
 	this->SetWidth(percentageWidth); 
 	this->SetHeight(percentageHeight); 
 }
@@ -772,285 +768,205 @@ Division::Division(int x, int y, int width, int height) {
 	// Specify padding values since divisions should have different default padding values than other elements
 	this->padding = { 10, 10, 10, 10 }; 
 
-	this->buttons = new std::vector<Button*>();
-	this->labels = new std::vector<Label*>();
-	this->checkboxes = new std::vector<Checkbox*>();
-	this->textboxes = new std::vector<Textbox*>();
-	this->images = new std::vector<Image*>();
-	this->sliders = new std::vector<Slider*>();
-	this->divisions = new std::vector<Division*>();
+	this->elements = new std::vector<Element*>();
 }
 
 std::vector<Button*>* Division::GetButtons() {
-	return this->buttons;
+	auto* buttons = new std::vector<Button*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Button*>((*elements)[i]) != nullptr) {
+			buttons->push_back(static_cast<Button*>((*elements)[i]));
+		}
+	}
+	return buttons;
 }
 
 std::vector<Label*>* Division::GetLabels() {
-	return this->labels;
+	auto* labels = new std::vector<Label*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Label*>((*elements)[i]) != nullptr) {
+			labels->push_back(static_cast<Label*>((*elements)[i]));
+		}
+	}
+	return labels;
 }
 
 std::vector<Checkbox*>* Division::GetCheckboxes() {
-	return this->checkboxes;
+	auto* checkboxes = new std::vector<Checkbox*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Checkbox*>((*elements)[i]) != nullptr) {
+			checkboxes->push_back(static_cast<Checkbox*>((*elements)[i]));
+		}
+	}
+	return checkboxes;
 }
 
 std::vector<Textbox*>* Division::GetTextboxes() {
-	return this->textboxes;
+	auto* textboxes = new std::vector<Textbox*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Textbox*>((*elements)[i]) != nullptr) {
+			textboxes->push_back(static_cast<Textbox*>((*elements)[i]));
+		}
+	}
+	return textboxes;
 }
 
 std::vector<Image*>* Division::GetImages() {
-	return this->images;
+	auto* images = new std::vector<Image*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Image*>((*elements)[i]) != nullptr) {
+			images->push_back(static_cast<Image*>((*elements)[i]));
+		}
+	}
+	return images;
 }
 
 std::vector<Slider*>* Division::GetSliders() {
-	return this->sliders;
+	auto* sliders = new std::vector<Slider*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Slider*>((*elements)[i]) != nullptr) {
+			sliders->push_back(static_cast<Slider*>((*elements)[i]));
+		}
+	}
+	return sliders;
 }
 
 std::vector<Division*>* Division::GetDivisions() {
-	return this->divisions;
+	auto* divisions = new std::vector<Division*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Division*>((*elements)[i]) != nullptr) {
+			divisions->push_back(static_cast<Division*>((*elements)[i]));
+		}
+	}
+	return divisions;
 }
 
-Division* Division::AddChild(Label* label) {
-	label->SetParent(this);
-	this->labels->push_back(label); 
-	Vanity::Rerender();
-	return this;
-}
-
-Division* Division::AddChild(Button* button) {
-	button->SetParent(this);
-	this->buttons->push_back(button); 
-	Vanity::Rerender();
-	return this;
-}
-
-Division* Division::AddChild(Textbox* textbox) {
-	textbox->SetParent(this);
-	this->textboxes->push_back(textbox);
-	Vanity::Rerender();
-	return this;
-}
-
-Division* Division::AddChild(Checkbox* checkbox) {
-	checkbox->SetParent(this);
-	this->checkboxes->push_back(checkbox);
-	Vanity::Rerender();
-	return this;
-}
-
-Division* Division::AddChild(Slider* slider) {
-	slider->SetParent(this);
-	this->sliders->push_back(slider);
-	Vanity::Rerender();
-	return this;
-}
-
-Division* Division::AddChild(Image* image) {
-	image->SetParent(this);
-	this->images->push_back(image);
-	Vanity::Rerender();
-	return this; 
-}
-
-Division* Division::AddChild(Division* division) {
-	division->SetParent(this);
-	this->divisions->push_back(division);
+Division* Division::AddChild(Element* element) {
+	element->SetParent(this);
+	this->elements->push_back(element);
 	Vanity::Rerender();
 	return this;
 }
 
 void Division::HorizontallyAlignElementsCenter() {
 	int divWidth = this->width; 
-	for (int i = 0; i < buttons->size(); i++) {
-		auto element = (*buttons)[i]; 
-		int elemComputedWidth = element->GetWidth() + element->GetPaddingLeft() + element->GetPaddingRight();
-		element->SetPositionX(divWidth / 2 - elemComputedWidth / 2); 
-	}
-	for (int i = 0; i < labels->size(); i++) {
-		auto element = (*labels)[i];
+	for (int i = 0; i < this->elements->size(); i++) {
+		auto* element = (*elements)[i];
+
+		// If current element is of type Button*, Textbox* or Division*
+		if (Button* castedElement = dynamic_cast<Button*>(element)) {
+			int elemComputedWidth = castedElement->GetWidth() + castedElement->GetPaddingLeft() + castedElement->GetPaddingRight();
+			castedElement->SetPositionX(divWidth / 2 - elemComputedWidth / 2);
+			continue; 
+		}
+		if (Textbox* castedElement = dynamic_cast<Textbox*>(element)) {
+			int elemComputedWidth = castedElement->GetWidth() + castedElement->GetPaddingLeft() + castedElement->GetPaddingRight();
+			castedElement->SetPositionX(divWidth / 2 - elemComputedWidth / 2);
+			continue;
+
+		}
+		if (Division* castedElement = dynamic_cast<Division*>(element)) {
+			int elemComputedWidth = castedElement->GetWidth() + castedElement->GetPaddingLeft() + castedElement->GetPaddingRight();
+			castedElement->SetPositionX(divWidth / 2 - elemComputedWidth / 2);
+			continue;
+		}
+
+		// If current element is of type Label*, Checkbox*, Image* or Slider*
 		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
 	}
-	for (int i = 0; i < checkboxes->size(); i++) {
-		auto element = (*checkboxes)[i];
-		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
-	}
-	for (int i = 0; i < textboxes->size(); i++) {
-		auto element = (*textboxes)[i];
-		int elemComputedWidth = element->GetWidth() + element->GetPaddingLeft() + element->GetPaddingRight();
-		element->SetPositionX(divWidth / 2 - elemComputedWidth / 2);
-	}
-	for (int i = 0; i < images->size(); i++) {
-		auto element = (*images)[i];
-		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
-	}
-	for (int i = 0; i < sliders->size(); i++) {
-		auto element = (*sliders)[i];
-		element->SetPositionX(divWidth / 2 - element->GetWidth() / 2);
-	}
-	for (int i = 0; i < divisions->size(); i++) {
-		auto element = (*divisions)[i];
-		int elemComputedWidth = element->GetWidth() + element->GetPaddingLeft() + element->GetPaddingRight();
-		element->SetPositionX(divWidth / 2 - elemComputedWidth / 2);
-	}
-	
 }
 
 void Division::VerticallyAlignElementsCenter() {
 	int divHeight = this->height;
-	for (int i = 0; i < buttons->size(); i++) {
-		auto element = (*buttons)[i];
-		int elemComputedHeight = element->GetHeight() + element->GetPaddingTop() + element->GetPaddingBottom();
-		element->SetPositionY(divHeight / 2 - elemComputedHeight / 2);
-	}
-	for (int i = 0; i < labels->size(); i++) {
-		auto element = (*labels)[i];
+	for (int i = 0; i < this->elements->size(); i++) {
+		auto* element = (*elements)[i];
+
+		// If current element is of type Button*, Textbox* or Division*
+		if (Button* castedElement = dynamic_cast<Button*>(element)) {
+			int elemComputedHeight = castedElement->GetHeight() + castedElement->GetPaddingTop() + castedElement->GetPaddingBottom();
+			castedElement->SetPositionY(divHeight / 2 - elemComputedHeight / 2);
+			continue;
+		}
+		if (Textbox* castedElement = dynamic_cast<Textbox*>(element)) {
+			int elemComputedWidth = castedElement->GetHeight() + castedElement->GetPaddingTop() + castedElement->GetPaddingBottom();
+			castedElement->SetPositionY(divHeight / 2 - elemComputedWidth / 2);
+			continue;
+
+		}
+		if (Division* castedElement = dynamic_cast<Division*>(element)) {
+			int elemComputedWidth = castedElement->GetHeight() + castedElement->GetPaddingTop() + castedElement->GetPaddingBottom();
+			castedElement->SetPositionY(divHeight / 2 - elemComputedWidth / 2);
+			continue;
+		}
+
+		// If current element is of type Label*, Checkbox*, Image* or Slider*
 		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
-	}
-	for (int i = 0; i < checkboxes->size(); i++) {
-		auto element = (*checkboxes)[i];
-		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
-	}
-	for (int i = 0; i < textboxes->size(); i++) {
-		auto element = (*textboxes)[i];
-		int elemComputedWidth = element->GetHeight() + element->GetPaddingTop() + element->GetPaddingBottom();
-		element->SetPositionY(divHeight / 2 - elemComputedWidth / 2);
-	}
-	for (int i = 0; i < images->size(); i++) {
-		auto element = (*images)[i];
-		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
-	}
-	for (int i = 0; i < sliders->size(); i++) {
-		auto element = (*sliders)[i];
-		element->SetPositionY(divHeight / 2 - element->GetHeight() / 2);
-	}
-	for (int i = 0; i < divisions->size(); i++) {
-		auto element = (*divisions)[i];
-		int elemComputedWidth = element->GetHeight() + element->GetPaddingTop() + element->GetPaddingBottom();
-		element->SetPositionY(divHeight / 2 - elemComputedWidth / 2);
 	}
 }
 
 void Division::AlignElementsTop() {
-	for (int i = 0; i < buttons->size(); i++) {
-		(*buttons)[i]->SetPositionY(0);
-	}
-	for (int i = 0; i < labels->size(); i++) {
-		(*labels)[i]->SetPositionY(0);
-	}
-	for (int i = 0; i < checkboxes->size(); i++) {
-		(*checkboxes)[i]->SetPositionY(0);
-	}
-	for (int i = 0; i < textboxes->size(); i++) {
-		(*textboxes)[i]->SetPositionY(0);
-	}
-	for (int i = 0; i < images->size(); i++) {
-		(*images)[i]->SetPositionY(0);
-	}
-	for (int i = 0; i < sliders->size(); i++) {
-		(*sliders)[i]->SetPositionY(0);
-	}
-	for (int i = 0; i < divisions->size(); i++) {
-		(*divisions)[i]->SetPositionY(0);
+	for (int i = 0; i < this->elements->size(); i++) {
+		(*elements)[i]->SetPositionY(0);
 	}
 }
 
 void Division::AlignElementsRight() {
 	int divWidth = this->GetWidth(); 
-	for (int i = 0; i < buttons->size(); i++) {
-		auto element = (*buttons)[i]; 
-		int alignedPosition = divWidth - element->GetWidth() - element->GetPaddingLeft() - element->GetPaddingRight();
-		element->SetPositionX(alignedPosition);
-	}
-	for (int i = 0; i < labels->size(); i++) {
-		auto element = (*labels)[i];
-		int alignedPosition = divWidth - element->GetWidth();
-		element->SetPositionX(alignedPosition);
-	}
-	for (int i = 0; i < checkboxes->size(); i++) {
-		auto element = (*checkboxes)[i];
-		int alignedPosition = divWidth - element->GetWidth();
-		element->SetPositionX(alignedPosition);
-	}
-	for (int i = 0; i < textboxes->size(); i++) {
-		auto element = (*textboxes)[i];
-		int alignedPosition = divWidth - element->GetWidth() - element->GetPaddingLeft() - element->GetPaddingRight();
-		element->SetPositionX(alignedPosition);
-	}
-	for (int i = 0; i < images->size(); i++) {
-		auto element = (*images)[i];
-		int alignedPosition = divWidth - element->GetWidth();
-		element->SetPositionX(alignedPosition);
-	}
-	for (int i = 0; i < sliders->size(); i++) {
-		auto element = (*sliders)[i];
-		int alignedPosition = divWidth - element->GetWidth();
-		element->SetPositionX(alignedPosition);
-	}
-	for (int i = 0; i < divisions->size(); i++) {
-		auto element = (*divisions)[i];
-		int alignedPosition = divWidth - element->GetWidth() - element->GetPaddingLeft() - element->GetPaddingRight();
-		element->SetPositionX(alignedPosition);
+	for (int i = 0; i < this->elements->size(); i++) {
+		auto* element = (*elements)[i];
+
+		// If current element is of type Button*, Textbox* or Division*
+		if (Button* castedElement = dynamic_cast<Button*>(element)) {
+			int alignedPosition = divWidth - castedElement->GetWidth() - castedElement->GetPaddingLeft() - castedElement->GetPaddingRight();
+			castedElement->SetPositionX(alignedPosition);
+			continue;
+		}
+		if (Textbox* castedElement = dynamic_cast<Textbox*>(element)) {
+			int alignedPosition = divWidth - castedElement->GetWidth() - castedElement->GetPaddingLeft() - castedElement->GetPaddingRight();
+			castedElement->SetPositionX(alignedPosition);
+			continue;
+
+		}
+		if (Division* castedElement = dynamic_cast<Division*>(element)) {
+			int alignedPosition = divWidth - castedElement->GetWidth() - castedElement->GetPaddingLeft() - castedElement->GetPaddingRight();
+			castedElement->SetPositionX(alignedPosition);
+			continue;
+		}
+
+		// If current element is of type Label*, Checkbox*, Image* or Slider*
+		element->SetPositionX(divWidth - element->GetWidth());
 	}
 }
 
 void Division::AlignElementsBottom() {
 	int divHeight = this->GetHeight();
-	for (int i = 0; i < buttons->size(); i++) {
-		auto element = (*buttons)[i];
-		int alignedPosition = divHeight - element->GetHeight() - element->GetPaddingTop() - element->GetPaddingBottom();
-		element->SetPositionY(alignedPosition);
-	}
-	for (int i = 0; i < labels->size(); i++) {
-		auto element = (*labels)[i];
-		int alignedPosition = divHeight - element->GetHeight();
-		element->SetPositionY(alignedPosition);
-	}
-	for (int i = 0; i < checkboxes->size(); i++) {
-		auto element = (*checkboxes)[i];
-		int alignedPosition = divHeight - element->GetHeight();
-		element->SetPositionY(alignedPosition);
-	}
-	for (int i = 0; i < textboxes->size(); i++) {
-		auto element = (*textboxes)[i];
-		int alignedPosition = divHeight - element->GetHeight() - element->GetPaddingTop() - element->GetPaddingBottom();
-		element->SetPositionY(alignedPosition);
-	}
-	for (int i = 0; i < images->size(); i++) {
-		auto element = (*images)[i];
-		int alignedPosition = divHeight - element->GetHeight();
-		element->SetPositionY(alignedPosition);
-	}
-	for (int i = 0; i < sliders->size(); i++) {
-		auto element = (*sliders)[i];
-		int alignedPosition = divHeight - element->GetHeight();
-		element->SetPositionY(alignedPosition);
-	}
-	for (int i = 0; i < divisions->size(); i++) {
-		auto element = (*divisions)[i];
-		int alignedPosition = divHeight - element->GetHeight() - element->GetPaddingTop() - element->GetPaddingBottom();
-		element->SetPositionY(alignedPosition);
+	for (int i = 0; i < this->elements->size(); i++) {
+		auto* element = (*elements)[i];
+
+		// If current element is of type Button*, Textbox* or Division*
+		if (Button* castedElement = dynamic_cast<Button*>(element)) {
+			int alignedPosition = divHeight - castedElement->GetHeight() - castedElement->GetPaddingTop() - castedElement->GetPaddingBottom();
+			castedElement->SetPositionY(alignedPosition);
+			continue;
+		}
+		if (Textbox* castedElement = dynamic_cast<Textbox*>(element)) {
+			int alignedPosition = divHeight - castedElement->GetHeight() - castedElement->GetPaddingTop() - castedElement->GetPaddingBottom();
+			castedElement->SetPositionY(alignedPosition);
+			continue;
+		}
+		if (Division* castedElement = dynamic_cast<Division*>(element)) {
+			int alignedPosition = divHeight - castedElement->GetHeight() - castedElement->GetPaddingTop() - castedElement->GetPaddingBottom();
+			castedElement->SetPositionY(alignedPosition);
+			continue;
+		}
+
+		// If current element is of type Label*, Checkbox*, Image* or Slider*
+		element->SetPositionY(divHeight - element->GetHeight());
 	}
 }
 
 void Division::AlignElementsLeft() {
-	for (int i = 0; i < buttons->size(); i++) {
-		(*buttons)[i]->SetPositionX(0);
-	}
-	for (int i = 0; i < labels->size(); i++) {
-		(*labels)[i]->SetPositionX(0);
-	}
-	for (int i = 0; i < checkboxes->size(); i++) {
-		(*checkboxes)[i]->SetPositionX(0);
-	}
-	for (int i = 0; i < textboxes->size(); i++) {
-		(*textboxes)[i]->SetPositionX(0);
-	}
-	for (int i = 0; i < images->size(); i++) {
-		(*images)[i]->SetPositionX(0);
-	}
-	for (int i = 0; i < sliders->size(); i++) {
-		(*sliders)[i]->SetPositionX(0);
-	}
-	for (int i = 0; i < divisions->size(); i++) {
-		(*divisions)[i]->SetPositionX(0);
+	for (int i = 0; i < elements->size(); i++) {
+		(*elements)[i]->SetPositionX(0);
 	}
 }

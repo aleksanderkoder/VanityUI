@@ -1,47 +1,16 @@
 #include "Page.h"
 
 Page::Page() {
-	this->buttons = new std::vector<Button*>();
-	this->labels = new std::vector<Label*>();
-	this->checkboxes = new std::vector<Checkbox*>();
-	this->textboxes = new std::vector<Textbox*>();
-	this->images = new std::vector<Image*>(); 
-	this->sliders = new std::vector<Slider*>(); 
-	this->divisions = new std::vector<Division*>();
+	this->elements = new std::vector<Element*>();
 }
 
-Page* Page::AddElement(Button* button) {
-	this->buttons->push_back(button);
-	return this;
-}
-
-Page* Page::AddElement(Label* label) {
-	this->labels->push_back(label);
-	return this;
-}
-
-Page* Page::AddElement(Checkbox* checkbox) {
-	this->checkboxes->push_back(checkbox);
-	return this;
-}
-
-Page* Page::AddElement(Textbox* textbox) {
-	this->textboxes->push_back(textbox);
-	return this;
-}
-
-Page* Page::AddElement(Image* image) {
-	this->images->push_back(image);
-	return this;
-}
-
-Page* Page::AddElement(Slider* slider) {
-	this->sliders->push_back(slider);
+Page* Page::AddElement(Element* element) {
+	this->elements->push_back(element);
 	return this;
 }
 
 Page* Page::AddElement(Division* division) {
-	this->divisions->push_back(division);
+	this->elements->push_back(division);
 
 	// Add all elements to page contained within the divison
 	auto buttons = division->GetButtons(); 
@@ -81,98 +50,97 @@ Page* Page::AddElement(Division* division) {
 	return this;
 }
 
-Page* Page::RemoveElement(Button* button) {
-	auto btns = this->buttons;
-	for (int i = 0; i < btns->size(); i++) {
-		Button* curr = (*btns)[i];
-		if (curr == button)
-			btns->erase(btns->begin() + i);
-	}
-	return this;
-}
-Page* Page::RemoveElement(Label* label) {
-	auto lbls = this->labels;
-	for (int i = 0; i < lbls->size(); i++) {
-		Label* curr = (*lbls)[i];
-		if (curr == label)
-			lbls->erase(lbls->begin() + i);
-	}
-	return this;
-}
-Page* Page::RemoveElement(Checkbox* checkbox) {
-	auto chkb = this->checkboxes;
-	for (int i = 0; i < chkb->size(); i++) {
-		Checkbox* curr = (*chkb)[i];
-		if (curr == checkbox)
-			chkb->erase(chkb->begin() + i);
+Page* Page::RemoveElement(Element* element) {
+	auto elmts = this->elements;
+	for (int i = 0; i < elmts->size(); i++) {
+		auto* curr = (*elmts)[i];
+		if (curr == element)
+			elmts->erase(elmts->begin() + i);
 	}
 	return this;
 }
 
-Page* Page::RemoveElement(Textbox* textbox) {
-	auto txtb = this->textboxes;
-	for (int i = 0; i < txtb->size(); i++) {
-		Textbox* curr = (*txtb)[i];
-		if (curr == textbox)
-			txtb->erase(txtb->begin() + i);
-	}
-	return this;
-}
-
-Page* Page::RemoveElement(Image* image) {
-	auto img = this->images;
-	for (int i = 0; i < img->size(); i++) {
-		Image* curr = (*img)[i];
-		if (curr == image)
-			img->erase(img->begin() + i);
-	}
-	return this;
-}
-
-Page* Page::RemoveElement(Slider* slider) {
-	auto sliders = this->sliders;
-	for (int i = 0; i < sliders->size(); i++) {
-		Slider* curr = (*sliders)[i];
-		if (curr == slider)
-			sliders->erase(sliders->begin() + i);
-	}
-	return this;
-}
 
 Page* Page::RemoveElement(Division* division) {
-	auto divs = this->divisions;
+	auto divs = this->elements;
 	for (int i = 0; i < divs->size(); i++) {
-		Division* curr = (*divs)[i];
+		auto* curr = (*divs)[i];
 		if (curr == division)
 			divs->erase(divs->begin() + i);
 	}
 	return this; 
 }
 
+std::vector<Element*>* Page::GetElements() {
+	return this->elements; 
+}
+
 std::vector<Button*>* Page::GetButtons() {
-	return this->buttons;
+	auto* buttons = new std::vector<Button*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Button*>((*elements)[i]) != nullptr) {
+			buttons->push_back(static_cast<Button*>((*elements)[i]));
+		}
+	}
+	return buttons;
 }
 
 std::vector<Label*>* Page::GetLabels() {
-	return this->labels;
+	auto* labels = new std::vector<Label*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Label*>((*elements)[i]) != nullptr) {
+			labels->push_back(static_cast<Label*>((*elements)[i]));
+		}
+	}
+	return labels;
 }
 
 std::vector<Checkbox*>* Page::GetCheckboxes() {
-	return this->checkboxes;
+	auto* checkboxes = new std::vector<Checkbox*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Checkbox*>((*elements)[i]) != nullptr) {
+			checkboxes->push_back(static_cast<Checkbox*>((*elements)[i]));
+		}
+	}
+	return checkboxes;
 }
 
 std::vector<Textbox*>* Page::GetTextboxes() {
-	return this->textboxes;
+	auto* textboxes = new std::vector<Textbox*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Textbox*>((*elements)[i]) != nullptr) {
+			textboxes->push_back(static_cast<Textbox*>((*elements)[i]));
+		}
+	}
+	return textboxes;
 }
 
 std::vector<Image*>* Page::GetImages() {
-	return this->images;
+	auto* images = new std::vector<Image*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Image*>((*elements)[i]) != nullptr) {
+			images->push_back(static_cast<Image*>((*elements)[i]));
+		}
+	}
+	return images;
 }
 
 std::vector<Slider*>* Page::GetSliders() {
-	return this->sliders;
+	auto* sliders = new std::vector<Slider*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Slider*>((*elements)[i]) != nullptr) {
+			sliders->push_back(static_cast<Slider*>((*elements)[i]));
+		}
+	}
+	return sliders;
 }
 
 std::vector<Division*>* Page::GetDivisions() {
-	return this->divisions;
+	auto* divisions = new std::vector<Division*>();
+	for (int i = 0; i < elements->size(); i++) {
+		if (dynamic_cast<Division*>((*elements)[i]) != nullptr) {
+			divisions->push_back(static_cast<Division*>((*elements)[i]));
+		}
+	}
+	return divisions;
 }

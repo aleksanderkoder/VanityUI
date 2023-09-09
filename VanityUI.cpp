@@ -98,21 +98,16 @@ Division* Vanity::CreateDivision(int x, int y, int width, int height) {
 
 // ELEMENT RENDERING METHODS 
 
-void Vanity::RenderLabels() {
-	auto labels = currentPage->GetLabels();
-	// Loop through all labels
-	for (int i = 0; i < labels->size(); i++) {
-		Label* curr = (*labels)[i];
+void Vanity::RenderLabel(Label* label) {
+		int x = label->GetX();
+		int y = label->GetY();
 
-		int x = curr->GetX(); 
-		int y = curr->GetY();
+		bool display = InheritStateFromParent(label->GetParent(), x, y, label->GetDisplayState());
 
-		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
+		if (!display) return;
 
-		if (!display) continue;
-
-		TTF_Font* font = curr->GetFont();
-		std::string text = curr->GetText(); 
+		TTF_Font* font = label->GetFont();
+		std::string text = label->GetText();
 		int textWidth = 0; 
 		int textHeight = 0; 
 
@@ -121,47 +116,40 @@ void Vanity::RenderLabels() {
 		bool mHover = OnMouseHover(x, y, textWidth, textHeight);
 
 		if (mHover && leftMouseButtonPressedState)
-			curr->SetClickedState(true); 
+			label->SetClickedState(true);
 
-		RenderLabel(text, x, y, curr->GetColor(), font, curr->GetFontSize());
-	}
+		RenderLabel(text, x, y, label->GetColor(), font, label->GetFontSize());
 }
 
-void Vanity::RenderButtons() {
-	auto buttons = currentPage->GetButtons();
+void Vanity::RenderButton(Button* button) {
+		int x = button->GetX();
+		int y = button->GetY();
 
-	// Loop through all buttons
-	for (int i = 0; i < buttons->size(); i++) {
-		Button* curr = (*buttons)[i];
-
-		int x = curr->GetX();
-		int y = curr->GetY();
-
-		Division* parentDiv = curr->GetParent(); 
+		Division* parentDiv = button->GetParent();
 
 		//std::cout << "X: " << x << ", Y: " << y << std::endl; 
 
-		bool display = InheritStateFromParent(parentDiv, x, y, curr->GetDisplayState());
+		bool display = InheritStateFromParent(parentDiv, x, y, button->GetDisplayState());
 
-		if (!display) continue;
+		if (!display) return;
 
 		// Get necessary data from current object
-		Padding padding = curr->GetPadding(); 
-		int height = curr->GetHeight() + padding.top + padding.bottom;
-		int width = curr->GetWidth() + padding.left + padding.right;
-		SDL_Color color = curr->GetColor();
-		SDL_Color hoverColor = curr->GetHoverColor();
-		TTF_Font* font = curr->GetFont();
-		std::string label = curr->GetLabel();
+		Padding padding = button->GetPadding();
+		int height = button->GetHeight() + padding.top + padding.bottom;
+		int width = button->GetWidth() + padding.left + padding.right;
+		SDL_Color color = button->GetColor();
+		SDL_Color hoverColor = button->GetHoverColor();
+		TTF_Font* font = button->GetFont();
+		std::string label = button->GetLabel();
 
-		if (curr->GetAnimationState()) {
+		if (button->GetAnimationState()) {
 			// If element is currently being animated 
-			curr->CalculateNextAnimationStep(x, y, *curr); 
+			button->CalculateNextAnimationStep(x, y, *button);
 		}
 
 		// Render background image
-		if (curr->GetBackgroundImageDisplayState())
-			Vanity::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y); 
+		if (button->GetBackgroundImageDisplayState())
+			Vanity::RenderBackgroundImage(button->GetBackgroundImage(), width, height, x, y);
 
 		// Create button rectangle data
 		SDL_Rect rect;
@@ -174,11 +162,11 @@ void Vanity::RenderButtons() {
 
 		// If mouse doesn't hover over button, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
-		curr->SetClickedState(false);
+		button->SetClickedState(false);
 
 		// If mouse hovers over button and activates
 		if (mHover && leftMouseButtonPressedState) {
-			curr->SetClickedState(true);
+			button->SetClickedState(true);
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
 			activeTextbox = nullptr;
 		}
@@ -194,7 +182,7 @@ void Vanity::RenderButtons() {
 		SDL_RenderFillRect(targetRenderer, &rect);
 
 		// Draw button border 
-		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
+		RenderBorder(x, y, width, height, button->GetBorderThickness(), button->GetBorderColors());
 
 		int textWidth = 0, textHeight = 0;
 		TTF_SizeText(font, label.c_str(), &textWidth, &textHeight);
@@ -203,38 +191,32 @@ void Vanity::RenderButtons() {
 		height = height - padding.top - padding.bottom; 
 
 		// Display button label
-		RenderLabel(label, x + padding.left + width / 2 - textWidth / 2, y + padding.top + height / 2 - textHeight / 2, curr->GetFontColor(), font, curr->GetFontSize());
-	}
+		RenderLabel(label, x + padding.left + width / 2 - textWidth / 2, y + padding.top + height / 2 - textHeight / 2, button->GetFontColor(), font, button->GetFontSize());
 }
 
-void Vanity::RenderTextboxes() {
-	auto textboxes = currentPage->GetTextboxes();
-	// Loop through all textboxes
-	for (int i = 0; i < textboxes->size(); i++) {
-		Textbox* curr = (*textboxes)[i];
+void Vanity::RenderTextbox(Textbox* textbox) {
+		int x = textbox->GetX();
+		int y = textbox->GetY();
 
-		int x = curr->GetX();
-		int y = curr->GetY();
+		bool display = InheritStateFromParent(textbox->GetParent(), x, y, textbox->GetDisplayState());
 
-		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
-
-		if (!display) continue;
+		if (!display) return;
 
 		// Get necessary data from current object
-		Padding padding = curr->GetPadding();
-		int height = curr->GetHeight() + padding.top + padding.bottom;
-		int width = curr->GetWidth() + padding.left + padding.right;
-		SDL_Color color = curr->GetColor();
-		SDL_Color fontColor = curr->GetFontColor(); 
-		SDL_Color hoverColor = curr->GetHoverColor();
-		TTF_Font* font = curr->GetFont();
-		int fontSize = curr->GetFontSize();
-		std::string value = curr->GetValue();
-		std::string placeholder = curr->GetPlaceholder();
+		Padding padding = textbox->GetPadding();
+		int height = textbox->GetHeight() + padding.top + padding.bottom;
+		int width = textbox->GetWidth() + padding.left + padding.right;
+		SDL_Color color = textbox->GetColor();
+		SDL_Color fontColor = textbox->GetFontColor();
+		SDL_Color hoverColor = textbox->GetHoverColor();
+		TTF_Font* font = textbox->GetFont();
+		int fontSize = textbox->GetFontSize();
+		std::string value = textbox->GetValue();
+		std::string placeholder = textbox->GetPlaceholder();
 
 		// Render background image
-		if (curr->GetBackgroundImageDisplayState())
-			Vanity::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y);
+		if (textbox->GetBackgroundImageDisplayState())
+			Vanity::RenderBackgroundImage(textbox->GetBackgroundImage(), width, height, x, y);
 
 		// Create textbox rectangle data
 		SDL_Rect rect;
@@ -251,8 +233,8 @@ void Vanity::RenderTextboxes() {
 		// If mouse hovers over textbox and activates
 		if (mHover && leftMouseButtonPressedState) {
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
-			activeTextbox = curr;
-			curr->SetClickedState(true); 
+			activeTextbox = textbox;
+			textbox->SetClickedState(true);
 		}
 		// If mouse hovers over
 		else if (mHover) {
@@ -263,7 +245,7 @@ void Vanity::RenderTextboxes() {
 		SDL_RenderFillRect(targetRenderer, &rect);
 
 		// Draw textbox border 
-		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
+		RenderBorder(x, y, width, height, textbox->GetBorderThickness(), textbox->GetBorderColors());
 
 		int textWidth = 0, textHeight = 0; 
 		int lblX, lblY;
@@ -318,7 +300,7 @@ void Vanity::RenderTextboxes() {
 		}
 
 		// If active textbox is the current textbox and timing is right, draw cursor on textbox
-		if (activeTextbox == curr && drawTextBoxCursor)
+		if (activeTextbox == textbox && drawTextBoxCursor)
 		{
 			rect;
 			rect.w = 2;
@@ -329,30 +311,24 @@ void Vanity::RenderTextboxes() {
 			SDL_RenderFillRect(targetRenderer, &rect);
 		}
 		CaptureInputText();
-	}
 }
 
-void Vanity::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if selected) to show its state
-	auto checkboxes = currentPage->GetCheckboxes();
-	// Loop through all checkboxes
-	for (int i = 0; i < checkboxes->size(); i++) {
-		Checkbox* curr = (*checkboxes)[i];
+void Vanity::RenderCheckbox(Checkbox* checkbox) {	// TODO: Draw v-mark inside checkbox (if selected) to show its state
+		int x = checkbox->GetX();
+		int y = checkbox->GetY();
 
-		int x = curr->GetX();
-		int y = curr->GetY();
+		bool display = InheritStateFromParent(checkbox->GetParent(), x, y, checkbox->GetDisplayState());
 
-		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
-
-		if (!display) continue;
+		if (!display) return;
 
 		// Get necessary data from current object
-		int size = curr->GetSize();
-		bool checked = curr->IsChecked();
-		SDL_Color color = curr->GetColor();
+		int size = checkbox->GetSize();
+		bool checked = checkbox->IsChecked();
+		SDL_Color color = checkbox->GetColor();
 
 		// Render background image
-		if (curr->GetBackgroundImageDisplayState())
-			Vanity::RenderBackgroundImage(curr->GetBackgroundImage(), size, size, x, y);
+		if (checkbox->GetBackgroundImageDisplayState())
+			Vanity::RenderBackgroundImage(checkbox->GetBackgroundImage(), size, size, x, y);
 
 		// Create checkbox rectangle data
 		SDL_Rect rect;
@@ -368,15 +344,15 @@ void Vanity::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if selec
 
 		// If mouse hovers over button and activates
 		if (mHover && leftMouseButtonPressedState) {
-			SDL_Color hoverColor = curr->GetHoverColor();
+			SDL_Color hoverColor = checkbox->GetHoverColor();
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
-			curr->SetState(!checked);
-			curr->SetClickedState(true); 
+			checkbox->SetState(!checked);
+			checkbox->SetClickedState(true);
 			activeTextbox = nullptr;
 		}
 		// If mouse hovers over
 		else if (mHover) {
-			SDL_Color hoverColor = curr->GetHoverColor();
+			SDL_Color hoverColor = checkbox->GetHoverColor();
 			if (!leftMouseButtonPressedLastState)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			else
@@ -387,7 +363,7 @@ void Vanity::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if selec
 		SDL_RenderFillRect(targetRenderer, &rect);
 
 		// Draw checkbox border 
-		RenderBorder(x, y, size, size, curr->GetBorderThickness(), curr->GetBorderColors());
+		RenderBorder(x, y, size, size, checkbox->GetBorderThickness(), checkbox->GetBorderColors());
 
 		// Draw checkmark if checked 
 		if (checked) {
@@ -396,11 +372,10 @@ void Vanity::RenderCheckboxes() {	// TODO: Draw v-mark inside checkbox (if selec
 			rect.x = x + size * 0.6f / 2;
 			rect.y = y + size * 0.6f / 2;
 
-			SDL_Color checkmarkColor = curr->GetCheckmarkColor();
+			SDL_Color checkmarkColor = checkbox->GetCheckmarkColor();
 			SDL_SetRenderDrawColor(targetRenderer, checkmarkColor.r, checkmarkColor.g, checkmarkColor.b, checkmarkColor.a);
 			SDL_RenderFillRect(targetRenderer, &rect);
 		}
-	}
 }
 
 void Vanity::RenderLabel(std::string text, int x, int y, SDL_Color color, TTF_Font* font, int fontSize) {
@@ -426,21 +401,16 @@ void Vanity::RenderLabel(std::string text, int x, int y, SDL_Color color, TTF_Fo
 	SDL_DestroyTexture(message);
 }
 
-void Vanity::RenderImages() {
-	auto imgs = currentPage->GetImages();
-	// Loop through all images 
-	for (int i = 0; i < imgs->size(); i++) {
-		Image* curr = (*imgs)[i];
+void Vanity::RenderImage(Image* image) {
+		int x = image->GetX();
+		int y = image->GetY();
 
-		int x = curr->GetX();
-		int y = curr->GetY();
+		bool display = InheritStateFromParent(image->GetParent(), x, y, image->GetDisplayState());
 
-		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
+		if (!display) return;
 
-		if (!display) continue;
-
-		int width = curr->GetWidth(); 
-		int height = curr->GetHeight();
+		int width = image->GetWidth();
+		int height = image->GetHeight();
 
 		// Create image rectangle data
 		SDL_Rect rect;
@@ -452,35 +422,29 @@ void Vanity::RenderImages() {
 		bool mHover = OnMouseHover(x, y, width, height);
 
 		if (mHover && leftMouseButtonPressedState)
-			curr->SetClickedState(true); 
+			image->SetClickedState(true);
 
-		SDL_RenderCopy(targetRenderer, curr->GetImage(), nullptr, &rect); 
+		SDL_RenderCopy(targetRenderer, image->GetImage(), nullptr, &rect);
 
 		// Draw image border 
-		RenderBorder(x, y, curr->GetWidth(), curr->GetHeight(), curr->GetBorderThickness(), curr->GetBorderColors());
-	}
+		RenderBorder(x, y, image->GetWidth(), image->GetHeight(), image->GetBorderThickness(), image->GetBorderColors());
 }
 
-void Vanity::RenderSliders() {
-	auto sliders = currentPage->GetSliders(); 
+void Vanity::RenderSlider(Slider* slider) {
+		int x = slider->GetX();
+		int y = slider->GetY();
 
-	for (int i = 0; i < sliders->size(); i++) {
-		Slider* curr = (*sliders)[i];
+		bool display = InheritStateFromParent(slider->GetParent(), x, y, slider->GetDisplayState());
 
-		int x = curr->GetX();
-		int y = curr->GetY();
+		if (!display) return;
 
-		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
-
-		if (!display) continue;
-
-		int width = curr->GetWidth(); 
-		int height = curr->GetHeight(); 
-		int thumbHeight = curr->GetThumbHeight(); 
+		int width = slider->GetWidth();
+		int height = slider->GetHeight();
+		int thumbHeight = slider->GetThumbHeight();
 
 		// Render background image
-		if (curr->GetBackgroundImageDisplayState())
-			Vanity::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y);
+		if (slider->GetBackgroundImageDisplayState())
+			Vanity::RenderBackgroundImage(slider->GetBackgroundImage(), width, height, x, y);
 
 		// Create slider rectangle data
 		SDL_Rect sliderRect;
@@ -499,33 +463,33 @@ void Vanity::RenderSliders() {
 		bool baseHover = OnMouseHover(x, y, width, height);
 		//bool thumbHover = onMouseHover()	// TODO: See if mouse also hovers over thumb
 
-		SDL_Color color = curr->GetColor(); 
+		SDL_Color color = slider->GetColor();
 
 		// Draw slider border
-		RenderBorder(x, y, width, height, curr->GetBorderThickness(), curr->GetBorderColors());
+		RenderBorder(x, y, width, height, slider->GetBorderThickness(), slider->GetBorderColors());
 
 		// If mouse doesn't hover over slider, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 
-		color = curr->GetThumbColor();
+		color = slider->GetThumbColor();
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		
-		if (!curr->GetTouched())
-			thumbRect.x = curr->GetThumbPosision() + x;
+		if (!slider->GetTouched())
+			thumbRect.x = slider->GetThumbPosision() + x;
 		else
-			thumbRect.x = curr->GetThumbPosision();
+			thumbRect.x = slider->GetThumbPosision();
 
-		thumbRect.w = curr->GetThumbWidth();
+		thumbRect.w = slider->GetThumbWidth();
 		thumbRect.h = thumbHeight;
 		thumbRect.y = thumbRect.y + height / 2 - thumbHeight / 2;
 
 		// Check if slider has been clicked and set state accordingly
 		if (baseHover && leftMouseButtonPressedState) 
-			curr->SetClickedState(true);
+			slider->SetClickedState(true);
 
 		// If mouse hovers over slider and activates
 		if (baseHover && leftMouseButtonPressedLastState) {
-			curr->SetTouched(true); 
+			slider->SetTouched(true);
 			
 			int mx; 
 			Uint32 mb = SDL_GetMouseState(&mx, nullptr);
@@ -533,16 +497,16 @@ void Vanity::RenderSliders() {
 			// Recalculate posision of thumb if mouse is within slider bounds
 			if (mx > x && mx < x + width) {
 				thumbRect.x = mx - thumbRect.w / 2;
-				curr->SetThumbPosision(thumbRect.x);
+				slider->SetThumbPosision(thumbRect.x);
 
 				// Calculate value and set it 
 				float baseline = (float)thumbRect.x + (float)thumbRect.w / 2 - x;
-				curr->SetValue((int)(baseline / width * 100));
+				slider->SetValue((int)(baseline / width * 100));
 			}
 			activeTextbox = nullptr;
 			SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a - 25); 
 		} else if (baseHover) {	// If mouse hovers over
-			SDL_Color hoverColor = curr->GetHoverColor(); 
+			SDL_Color hoverColor = slider->GetHoverColor();
 			if (!leftMouseButtonPressedLastState)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			else
@@ -551,35 +515,29 @@ void Vanity::RenderSliders() {
 
 		SDL_RenderFillRect(targetRenderer, &sliderRect);
 		SDL_RenderFillRect(targetRenderer, &thumbRect);
-	}
 }
 
-void Vanity::RenderDivisions() {
-	auto divs = currentPage->GetDivisions(); 
-	// Loop through all divisions 
-	for (int i = 0; i < divs->size(); i++) {
-		Division* curr = (*divs)[i];
+void Vanity::RenderDivision(Division* division) {
+		int x = division->GetX();
+		int y = division->GetY();
 
-		int x = curr->GetX();
-		int y = curr->GetY();
+		bool display = InheritStateFromParent(division->GetParent(), x, y, division->GetDisplayState());
 
-		bool display = InheritStateFromParent(curr->GetParent(), x, y, curr->GetDisplayState());
+		if (!display) return;
 
-		if (!display) continue;
-
-		Padding padding = curr->GetPadding(); 
-		int width = curr->GetWidth() + padding.left + padding.right; 
-		int height = curr->GetHeight() + padding.top + padding.bottom; 
+		Padding padding = division->GetPadding();
+		int width = division->GetWidth() + padding.left + padding.right;
+		int height = division->GetHeight() + padding.top + padding.bottom;
 
 		bool mHover = OnMouseHover(x, y, width, height);
 
 		// Check if division has been clicked and set state accordingly
 		if (mHover && leftMouseButtonPressedState)
-			curr->SetClickedState(true);
+			division->SetClickedState(true);
 
 		// Render background image
-		if (curr->GetBackgroundImageDisplayState())
-			Vanity::RenderBackgroundImage(curr->GetBackgroundImage(), width, height, x, y);
+		if (division->GetBackgroundImageDisplayState())
+			Vanity::RenderBackgroundImage(division->GetBackgroundImage(), width, height, x, y);
 
 		// Create image rectangle data
 		SDL_Rect rect;
@@ -588,13 +546,12 @@ void Vanity::RenderDivisions() {
 		rect.x = x;
 		rect.y = y;
 
-		auto color = curr->GetColor(); 
+		auto color = division->GetColor();
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
 		SDL_RenderFillRect(targetRenderer, &rect); 
 
 		// Draw division border 
-		RenderBorder(x, y, curr->GetWidth(), curr->GetHeight(), curr->GetBorderThickness(), curr->GetBorderColors());
-	}
+		RenderBorder(x, y, division->GetWidth(), division->GetHeight(), division->GetBorderThickness(), division->GetBorderColors());
 }
 
 void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness borderThickness, BorderColors borderColors) {
@@ -647,13 +604,32 @@ void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness b
 void Vanity::Render() {
 	UpdateMouseButtonState();
 	UpdateMousePosision(); 
-	RenderDivisions(); 
-	RenderLabels();
-	RenderButtons();
-	RenderTextboxes();
-	RenderCheckboxes();
-	RenderSliders(); 
-	RenderImages(); 
+
+	// Render elements
+	auto elements = currentPage->GetElements(); 
+	for (int i = 0; i < elements->size(); i++) {
+		if (Division* current = dynamic_cast<Division*>((*elements)[i])) {
+			RenderDivision(current); 
+		}
+		else if (Button* current = dynamic_cast<Button*>((*elements)[i])) {
+			RenderButton(current); 
+		}
+		else if (Textbox* current = dynamic_cast<Textbox*>((*elements)[i])) {
+			RenderTextbox(current);
+		}
+		else if (Checkbox* current = dynamic_cast<Checkbox*>((*elements)[i])) {
+			RenderCheckbox(current);
+		}
+		else if (Slider* current = dynamic_cast<Slider*>((*elements)[i])) {
+			RenderSlider(current);
+		}
+		else if (Image* current = dynamic_cast<Image*>((*elements)[i])) {
+			RenderImage(current);
+		}
+		else if (Label* current = dynamic_cast<Label*>((*elements)[i])) {
+			RenderLabel(current);
+		}
+	}
 	SDL_RenderPresent(targetRenderer); 
 }
 

@@ -4,7 +4,7 @@
 int main(int argc, char* argv[])
 {
     Vanity::Setup(1920, 1080);
-    //Ivory::DisableVsync(); 
+    Vanity::DisableVsync(); 
 
     // Create a rendering context via Ivory. Can also pass an existing renderer to the Ivory Setup() method instead. 
     SDL_Renderer* renderer = Vanity::CreateRenderingContext("Vanity UI"); 
@@ -80,10 +80,13 @@ int main(int argc, char* argv[])
 
     //div6->HorizontallyAlignElementsCenter(); 
     //div6->VerticallyAlignElementsCenter(); 
+    //div6->AlignElementsTop(); 
+    //div6->AlignElementsRight();
     //div6->AlignElementsLeft(); 
+    //div6->AlignElementsBottom();
 
-    btn1->AlignRight(); 
-    btn1->AlignLeft();
+    //btn1->AlignRight(); 
+    //btn1->AlignLeft();
  
     while (Vanity::IsRunning()) {
 
