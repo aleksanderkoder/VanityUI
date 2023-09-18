@@ -517,12 +517,12 @@ void Button::SetLabel(double label) {
 
 void Button::HorizontallyAlignCenter() {
 	int parentWidth = this->GetParent()->GetWidth();
-	this->SetPositionX(parentWidth / 2 - (this->GetWidth() + this->GetPaddingLeft() + this->GetPaddingRight()) / 2);
+	this->SetPositionX(parentWidth / 2 - this->GetComputedWidth() / 2);
 }
 
 void Button::VerticallyAlignCenter() {
 	int parentHeight = this->GetParent()->GetHeight();
-	this->SetPositionY(parentHeight / 2 - (this->GetHeight() + this->GetPaddingTop() + this->GetPaddingBottom()) / 2);
+	this->SetPositionY(parentHeight / 2 - this->GetComputedHeight() / 2);
 }
 
 void Button::AlignTop() {
@@ -530,12 +530,12 @@ void Button::AlignTop() {
 }
 
 void Button::AlignRight() {
-	int alignedPosition = this->GetParent()->GetWidth() - this->GetWidth() - this->GetPaddingLeft() - this->GetPaddingRight();
+	int alignedPosition = this->GetParent()->GetWidth() - this->GetComputedWidth();
 	this->SetPositionX(alignedPosition);
 }
 
 void Button::AlignBottom() {
-	int alignedPosition = this->GetParent()->GetHeight() - this->GetHeight() - this->GetPaddingTop() - this->GetPaddingBottom();
+	int alignedPosition = this->GetParent()->GetHeight() - this->GetComputedHeight();
 	this->SetPositionY(alignedPosition);
 }
 
@@ -894,6 +894,7 @@ Division* Division::SetAutoResize(bool value) {
 
 Division* Division::AddChild(Element* element) {
 	element->SetParent(this);
+	// TODO: Use element's GetComputedWidth() to make div auto adjust size
 	this->elements->push_back(element);
 	Vanity::Rerender();
 	return this;

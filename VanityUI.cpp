@@ -135,8 +135,8 @@ void Vanity::RenderButton(Button* button) {
 
 		// Get necessary data from current object
 		Padding padding = button->GetPadding();
-		int height = button->GetHeight() + padding.top + padding.bottom;
-		int width = button->GetWidth() + padding.left + padding.right;
+		int height = button->GetComputedHeight();
+		int width = button->GetComputedWidth();
 		SDL_Color color = button->GetColor();
 		SDL_Color hoverColor = button->GetHoverColor();
 		TTF_Font* font = button->GetFont();
@@ -204,8 +204,8 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 
 		// Get necessary data from current object
 		Padding padding = textbox->GetPadding();
-		int height = textbox->GetHeight() + padding.top + padding.bottom;
-		int width = textbox->GetWidth() + padding.left + padding.right;
+		int height = textbox->GetComputedHeight();
+		int width = textbox->GetComputedWidth();
 		SDL_Color color = textbox->GetColor();
 		SDL_Color fontColor = textbox->GetFontColor();
 		SDL_Color hoverColor = textbox->GetHoverColor();
@@ -526,8 +526,8 @@ void Vanity::RenderDivision(Division* division) {
 		if (!display) return;
 
 		Padding padding = division->GetPadding();
-		int width = division->GetWidth() + padding.left + padding.right;
-		int height = division->GetHeight() + padding.top + padding.bottom;
+		int width = division->GetComputedWidth();
+		int height = division->GetComputedHeight();
 
 		bool mHover = OnMouseHover(x, y, width, height);
 

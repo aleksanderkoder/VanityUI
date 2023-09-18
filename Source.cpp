@@ -102,7 +102,8 @@ int main(int argc, char* argv[])
         if (btn1->Clicked()) {
             //Vanity::DisplayPage(p);
             std::cout << "Button clicked" << std::endl; 
-            btn1->GetParent()->AlignElementsRight();
+            //btn1->GetParent()->AlignElementsRight();
+            btn1->HorizontallyAlignCenter(); 
         }
 
         if (btnGiveFocus->Clicked()) {
