@@ -24,5 +24,4 @@ class Page
 		std::vector<Image*>* GetImages();
 		std::vector<Slider*>* GetSliders(); 
 		std::vector<Division*>* GetDivisions();
-
 };

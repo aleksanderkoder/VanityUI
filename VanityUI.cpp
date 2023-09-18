@@ -1,4 +1,4 @@
-// IvoryUI.cpp : Defines the functions for the static library.
+// IvoryUI.cpp : Implements the methods for the library.
 
 #include "VanityUI.h"
 

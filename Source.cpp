@@ -99,9 +99,11 @@ int main(int argc, char* argv[])
             Vanity::DisplayPage(p2); 
         }
 
-        if (btn1->Clicked())
+        if (btn1->Clicked()) {
             //Vanity::DisplayPage(p);
             std::cout << "Button clicked" << std::endl; 
+            btn1->GetParent()->AlignElementsRight();
+        }
 
         if (btnGiveFocus->Clicked()) {
             tb->Focus(); 
@@ -118,11 +120,6 @@ int main(int argc, char* argv[])
 
         if (div6->Clicked()) {
             std::cout << "Division clicked" << std::endl;
-            auto btns = div6->GetButtons(); 
-            for (int i = 0; i < btns->size(); i++)
-                std::cout << (*btns)[i]->GetLabel() << std::endl; 
-
-            delete btns; 
         }
 
         if (chk1->Clicked())

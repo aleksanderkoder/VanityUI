@@ -54,22 +54,24 @@ class Element : public Clickable, public Parentable {
 		// GET methods 
 		virtual int GetX();
 		virtual int GetY();
-		int GetWidth();
-		int GetHeight();
+		virtual int GetWidth();
+		virtual int GetHeight();
+		virtual int GetComputedWidth(); 
+		virtual int GetComputedHeight(); 
 		virtual bool GetDisplayState();
 
 		// SET methods 
 		virtual void SetPosition(int x, int y);
 		virtual void SetPositionX(int value);
 		virtual void SetPositionY(int value);
-		void SetWidth(int width);
-		void SetHeight(int height);
-		void SetDimensions(int width, int height);
+		virtual void SetWidth(int width);
+		virtual void SetHeight(int height);
+		virtual void SetDimensions(int width, int height);
 
 		// Percentage  
-		void SetWidth(std::string percentage);
-		void SetHeight(std::string percentage);
-		void SetDimensions(std::string percentageWidth, std::string percentageHeight);
+		virtual void SetWidth(std::string percentage);
+		virtual void SetHeight(std::string percentage);
+		virtual void SetDimensions(std::string percentageWidth, std::string percentageHeight);
 
 		// Utility methods
 		virtual void Show();
@@ -256,6 +258,8 @@ class Button : public Element, public Border, public Color, public Font,
 		Button(std::string label, int width, int height, int x, int y, int fontSize, std::string fontPath);
 
 		// GET methods 
+		int GetComputedWidth() override; 
+		int GetComputedHeight() override; 
 		std::string GetLabel();
 
 		// SET methods 
@@ -282,6 +286,8 @@ class Textbox : public Element, public Border, public Color, public Font,
 		Textbox(std::string placeholder, int width, int height, int x, int y, int fontSize, int limit, std::string fontPath);
 
 		// GET methods 
+		int GetComputedWidth() override;
+		int GetComputedHeight() override;
 		std::string GetPlaceholder();
 		std::string GetValue();
 		int GetCharLimit();
@@ -384,6 +390,10 @@ class Division : public Element, public Border, public Color, public BackgroundI
 		Division(int x, int y, int width, int height);
 
 		// GET methods
+		int GetComputedWidth() override;
+		int GetComputedHeight() override;
+		bool GetAutoResize(); 
+
 		std::vector<Element*>* GetElements();
 		std::vector<Button*>* GetButtons();
 		std::vector<Label*>* GetLabels();
@@ -392,9 +402,13 @@ class Division : public Element, public Border, public Color, public BackgroundI
 		std::vector<Image*>* GetImages();
 		std::vector<Slider*>* GetSliders();
 		std::vector<Division*>* GetDivisions();
+
+		// SET methods 
+		Division* SetAutoResize(bool value); 
 	
 		// Utility
 		Division* AddChild(Element* element);
+
 
 		// Positioning
 		void HorizontallyAlignElementsCenter(); 
@@ -406,6 +420,7 @@ class Division : public Element, public Border, public Color, public BackgroundI
 
 	private:
 		std::vector<Element*>* elements;
+		bool autoResize; 
 
 		// TODO: Add use of hoverColor when mouse hovers over div!
 };
