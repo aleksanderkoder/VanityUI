@@ -13,49 +13,22 @@ Page* Page::AddElement(Division* division) {
 	this->elements->push_back(division);
 
 	// Add all elements to page contained within the divison
-	auto buttons = division->GetButtons(); 
-	for (int i = 0; i < buttons->size(); i++) {
-		this->AddElement((*buttons)[i]);
-	}
-
-	auto textboxes = division->GetTextboxes();
-	for (int i = 0; i < textboxes->size(); i++) {
-		this->AddElement((*textboxes)[i]);
-	}
-
-	auto labels = division->GetLabels();
-	for (int i = 0; i < labels->size(); i++) {
-		this->AddElement((*labels)[i]);
-	}
-
-	auto checkboxes = division->GetCheckboxes();
-	for (int i = 0; i < checkboxes->size(); i++) {
-		this->AddElement((*checkboxes)[i]);
-	}
-
-	auto sliders = division->GetSliders();
-	for (int i = 0; i < sliders->size(); i++) {
-		this->AddElement((*sliders)[i]);
-	}
-
-	auto images = division->GetImages();
-	for (int i = 0; i < images->size(); i++) {
-		this->AddElement((*images)[i]);
-	}
-
-	auto divisions = division->GetDivisions();
-	for (int i = 0; i < divisions->size(); i++) {
-		this->AddElement((*divisions)[i]);
+	auto elements = division->GetElements(); 
+	for (int i = 0; i < elements->size(); i++) {
+		if (Division* div = dynamic_cast<Division*>((*elements)[i]))
+			this->AddElement(div); 
+		else
+			this->AddElement((*elements)[i]);
 	}
 	return this;
 }
 
 Page* Page::RemoveElement(Element* element) {
-	auto elmts = this->elements;
-	for (int i = 0; i < elmts->size(); i++) {
-		auto* curr = (*elmts)[i];
+	auto elements = this->elements;
+	for (int i = 0; i < elements->size(); i++) {
+		auto curr = (*elements)[i];
 		if (curr == element)
-			elmts->erase(elmts->begin() + i);
+			elements->erase(elements->begin() + i);
 	}
 	return this;
 }
@@ -64,7 +37,7 @@ Page* Page::RemoveElement(Element* element) {
 Page* Page::RemoveElement(Division* division) {
 	auto divs = this->elements;
 	for (int i = 0; i < divs->size(); i++) {
-		auto* curr = (*divs)[i];
+		auto curr = (*divs)[i];
 		if (curr == division)
 			divs->erase(divs->begin() + i);
 	}
@@ -76,70 +49,70 @@ std::vector<Element*>* Page::GetElements() {
 }
 
 std::vector<Button*>* Page::GetButtons() {
-	auto* buttons = new std::vector<Button*>();
+	auto buttons = new std::vector<Button*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Button*>((*elements)[i]) != nullptr) {
-			buttons->push_back(static_cast<Button*>((*elements)[i]));
+		if (Button* button = dynamic_cast<Button*>((*elements)[i])) {
+			buttons->push_back(button);
 		}
 	}
 	return buttons;
 }
 
 std::vector<Label*>* Page::GetLabels() {
-	auto* labels = new std::vector<Label*>();
+	auto labels = new std::vector<Label*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Label*>((*elements)[i]) != nullptr) {
-			labels->push_back(static_cast<Label*>((*elements)[i]));
+		if (Label* label = dynamic_cast<Label*>((*elements)[i])) {
+			labels->push_back(label);
 		}
 	}
 	return labels;
 }
 
 std::vector<Checkbox*>* Page::GetCheckboxes() {
-	auto* checkboxes = new std::vector<Checkbox*>();
+	auto checkboxes = new std::vector<Checkbox*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Checkbox*>((*elements)[i]) != nullptr) {
-			checkboxes->push_back(static_cast<Checkbox*>((*elements)[i]));
+		if (Checkbox* checkbox = dynamic_cast<Checkbox*>((*elements)[i])) {
+			checkboxes->push_back(checkbox);
 		}
 	}
 	return checkboxes;
 }
 
 std::vector<Textbox*>* Page::GetTextboxes() {
-	auto* textboxes = new std::vector<Textbox*>();
+	auto textboxes = new std::vector<Textbox*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Textbox*>((*elements)[i]) != nullptr) {
-			textboxes->push_back(static_cast<Textbox*>((*elements)[i]));
+		if (Textbox* textbox = dynamic_cast<Textbox*>((*elements)[i])) {
+			textboxes->push_back(textbox);
 		}
 	}
 	return textboxes;
 }
 
 std::vector<Image*>* Page::GetImages() {
-	auto* images = new std::vector<Image*>();
+	auto images = new std::vector<Image*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Image*>((*elements)[i]) != nullptr) {
-			images->push_back(static_cast<Image*>((*elements)[i]));
+		if (Image* image = dynamic_cast<Image*>((*elements)[i])) {
+			images->push_back(image);
 		}
 	}
 	return images;
 }
 
 std::vector<Slider*>* Page::GetSliders() {
-	auto* sliders = new std::vector<Slider*>();
+	auto sliders = new std::vector<Slider*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Slider*>((*elements)[i]) != nullptr) {
-			sliders->push_back(static_cast<Slider*>((*elements)[i]));
+		if (Slider* slider = dynamic_cast<Slider*>((*elements)[i])) {
+			sliders->push_back(slider);
 		}
 	}
 	return sliders;
 }
 
 std::vector<Division*>* Page::GetDivisions() {
-	auto* divisions = new std::vector<Division*>();
+	auto divisions = new std::vector<Division*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Division*>((*elements)[i]) != nullptr) {
-			divisions->push_back(static_cast<Division*>((*elements)[i]));
+		if (Division* division = dynamic_cast<Division*>((*elements)[i])) {
+			divisions->push_back(division);
 		}
 	}
 	return divisions;

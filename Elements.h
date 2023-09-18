@@ -384,6 +384,7 @@ class Division : public Element, public Border, public Color, public BackgroundI
 		Division(int x, int y, int width, int height);
 
 		// GET methods
+		std::vector<Element*>* GetElements();
 		std::vector<Button*>* GetButtons();
 		std::vector<Label*>* GetLabels();
 		std::vector<Checkbox*>* GetCheckboxes();

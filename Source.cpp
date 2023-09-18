@@ -116,8 +116,14 @@ int main(int argc, char* argv[])
         if (sli1->Clicked())
             std::cout << "Slider clicked" << std::endl;
 
-        if (div6->Clicked())
+        if (div6->Clicked()) {
             std::cout << "Division clicked" << std::endl;
+            auto btns = div6->GetButtons(); 
+            for (int i = 0; i < btns->size(); i++)
+                std::cout << (*btns)[i]->GetLabel() << std::endl; 
+
+            delete btns; 
+        }
 
         if (chk1->Clicked())
             std::cout << "Checkbox clicked" << std::endl;

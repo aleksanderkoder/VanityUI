@@ -771,11 +771,15 @@ Division::Division(int x, int y, int width, int height) {
 	this->elements = new std::vector<Element*>();
 }
 
+std::vector<Element*>* Division::GetElements() {
+	return this->elements; 
+}
+
 std::vector<Button*>* Division::GetButtons() {
 	auto* buttons = new std::vector<Button*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Button*>((*elements)[i]) != nullptr) {
-			buttons->push_back(static_cast<Button*>((*elements)[i]));
+		if (Button* button = dynamic_cast<Button*>((*elements)[i])) {
+			buttons->push_back(button);
 		}
 	}
 	return buttons;
@@ -784,8 +788,8 @@ std::vector<Button*>* Division::GetButtons() {
 std::vector<Label*>* Division::GetLabels() {
 	auto* labels = new std::vector<Label*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Label*>((*elements)[i]) != nullptr) {
-			labels->push_back(static_cast<Label*>((*elements)[i]));
+		if (Label* label = dynamic_cast<Label*>((*elements)[i])) {
+			labels->push_back(label);
 		}
 	}
 	return labels;
@@ -794,8 +798,8 @@ std::vector<Label*>* Division::GetLabels() {
 std::vector<Checkbox*>* Division::GetCheckboxes() {
 	auto* checkboxes = new std::vector<Checkbox*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Checkbox*>((*elements)[i]) != nullptr) {
-			checkboxes->push_back(static_cast<Checkbox*>((*elements)[i]));
+		if (Checkbox* checkbox = dynamic_cast<Checkbox*>((*elements)[i])) {
+			checkboxes->push_back(checkbox);
 		}
 	}
 	return checkboxes;
@@ -804,8 +808,8 @@ std::vector<Checkbox*>* Division::GetCheckboxes() {
 std::vector<Textbox*>* Division::GetTextboxes() {
 	auto* textboxes = new std::vector<Textbox*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Textbox*>((*elements)[i]) != nullptr) {
-			textboxes->push_back(static_cast<Textbox*>((*elements)[i]));
+		if (Textbox* textbox = dynamic_cast<Textbox*>((*elements)[i])) {
+			textboxes->push_back(textbox);
 		}
 	}
 	return textboxes;
@@ -814,8 +818,8 @@ std::vector<Textbox*>* Division::GetTextboxes() {
 std::vector<Image*>* Division::GetImages() {
 	auto* images = new std::vector<Image*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Image*>((*elements)[i]) != nullptr) {
-			images->push_back(static_cast<Image*>((*elements)[i]));
+		if (Image* image = dynamic_cast<Image*>((*elements)[i])) {
+			images->push_back(image);
 		}
 	}
 	return images;
@@ -824,8 +828,8 @@ std::vector<Image*>* Division::GetImages() {
 std::vector<Slider*>* Division::GetSliders() {
 	auto* sliders = new std::vector<Slider*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Slider*>((*elements)[i]) != nullptr) {
-			sliders->push_back(static_cast<Slider*>((*elements)[i]));
+		if (Slider* slider = dynamic_cast<Slider*>((*elements)[i])) {
+			sliders->push_back(slider);
 		}
 	}
 	return sliders;
@@ -834,8 +838,8 @@ std::vector<Slider*>* Division::GetSliders() {
 std::vector<Division*>* Division::GetDivisions() {
 	auto* divisions = new std::vector<Division*>();
 	for (int i = 0; i < elements->size(); i++) {
-		if (dynamic_cast<Division*>((*elements)[i]) != nullptr) {
-			divisions->push_back(static_cast<Division*>((*elements)[i]));
+		if (Division* division = dynamic_cast<Division*>((*elements)[i])) {
+			divisions->push_back(division);
 		}
 	}
 	return divisions;
