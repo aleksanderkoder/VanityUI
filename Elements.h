@@ -67,6 +67,8 @@ class Element : public Clickable, public Parentable {
 		virtual void SetWidth(int width);
 		virtual void SetHeight(int height);
 		virtual void SetDimensions(int width, int height);
+		virtual void SetComputedWidth(int width); 
+		virtual void SetComputedHeight(int height); 
 
 		// Percentage  
 		virtual void SetWidth(std::string percentage);
@@ -266,6 +268,8 @@ class Button : public Element, public Border, public Color, public Font,
 		void SetLabel(std::string label);
 		void SetLabel(int label); 
 		void SetLabel(double label); 
+		void SetComputedWidth(int width) override;
+		void SetComputedHeight(int height) override; 
 
 		// Utility 
 		void HorizontallyAlignCenter(); 
@@ -298,6 +302,8 @@ class Textbox : public Element, public Border, public Color, public Font,
 		void SetPlaceholder(double placeholder);
 		void SetValue(std::string value);
 		void SetCharLimit(int limit);
+		void SetComputedWidth(int width) override;
+		void SetComputedHeight(int height) override;
 
 		// Utility methods 
 		void Focus(); 
@@ -405,6 +411,8 @@ class Division : public Element, public Border, public Color, public BackgroundI
 
 		// SET methods 
 		Division* SetAutoExpand(bool value);
+		void SetComputedWidth(int width) override;
+		void SetComputedHeight(int height) override;
 	
 		// Utility
 		Division* AddChild(Element* element);

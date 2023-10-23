@@ -4,7 +4,7 @@
 int main(int argc, char* argv[])
 {
     Vanity::Setup(1920, 1080);
-    Vanity::DisableVsync(); 
+    //Vanity::DisableVsync(); 
 
     // Create a rendering context via Ivory. Can also pass an existing renderer to the Ivory Setup() method instead. 
     SDL_Renderer* renderer = Vanity::CreateRenderingContext("Vanity UI"); 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 50, 50);
 
 
-    autoLayoutBtn3->SetWidth(2300);
+    autoLayoutBtn3->SetWidth("50%");
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
     auto div6 = Vanity::CreateDivision(150, 150, 300, 300);
@@ -92,8 +92,6 @@ int main(int argc, char* argv[])
     //btn1->AlignRight(); 
     //btn1->AlignLeft();
  
-    auto btnTEST = Vanity::CreateButton("test 2", 0, 60, 600); 
-    div6->AddChild(btnTEST);
 
     while (Vanity::IsRunning()) {
 
@@ -111,9 +109,6 @@ int main(int argc, char* argv[])
             std::cout << "Button clicked" << std::endl; 
             //btn1->GetParent()->AlignElementsRight();
             //btn1->HorizontallyAlignCenter(); 
-            std::cout << div6->GetElements()->size() << std::endl; 
-            div6->AddChild(btnTEST);
-            std::cout << div6->GetElements()->size() << std::endl;
         }
 
         if (btnGiveFocus->Clicked()) {

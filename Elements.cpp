@@ -71,10 +71,10 @@ void Element::SetWidth(std::string percentage) {
 			int perc = std::stoi(percentage);
 			auto parent = this->GetParent(); 
 			if (parent) {
-				this->width = parent->GetWidth() / 100 * perc;
+				this->SetComputedWidth(parent->GetWidth() / 100 * perc);
 			}
 			else {
-				this->width = Vanity::GetViewportWidth() / 100 * perc;
+				this->SetComputedWidth(Vanity::GetViewportWidth() / 100 * perc);
 			}
 		}
 	}
@@ -87,10 +87,10 @@ void Element::SetHeight(std::string percentage) {
 			int perc = std::stoi(percentage);
 			auto parent = this->GetParent();
 			if (parent) {
-				this->height = parent->GetHeight() / 100 * perc;
+				this->SetComputedHeight(parent->GetHeight() / 100 * perc);
 			}
 			else {
-				this->height = Vanity::GetViewportHeight() / 100 * perc;
+				this->SetComputedHeight(Vanity::GetViewportHeight() / 100 * perc);
 			}
 		}
 	}
@@ -99,6 +99,14 @@ void Element::SetHeight(std::string percentage) {
 void Element::SetDimensions(std::string percentageWidth, std::string percentageHeight) {
 	this->SetWidth(percentageWidth);
 	this->SetHeight(percentageHeight);
+}
+
+void Element::SetComputedWidth(int width) {
+	this->width = width;
+}
+
+void Element::SetComputedHeight(int height) {
+	this->height = height;
 }
 
 void Element::SetPosition(int x, int y) {
@@ -489,15 +497,23 @@ Button::Button(std::string label, int width, int height, int x, int y, int fontS
 }
 
 int Button::GetComputedWidth() {
-	return this->padding.left + this-> width + this->padding.right; 
+	return this->padding.left + this-> width + this->padding.right + this->borderThickness.left + this->borderThickness.right;
 }
 
 int Button::GetComputedHeight() {
-	return this->padding.top + this->height + this->padding.bottom; 
+	return this->padding.top + this->height + this->padding.bottom + this->borderThickness.top + this->borderThickness.bottom;
 }
 
 std::string Button::GetLabel() {
 	return this->label;
+}
+
+void Button::SetComputedWidth(int width) {
+	this->width = width - this->padding.left - this->padding.right - this->borderThickness.left - this->borderThickness.right;
+}
+
+void Button::SetComputedHeight(int height) {
+	this->height = height - this->padding.top - this->padding.bottom - this->borderThickness.top - this->borderThickness.left;
 }
 
 void Button::SetLabel(std::string label) {
@@ -563,11 +579,11 @@ Textbox::Textbox(std::string placeholder, int width, int height, int x, int y, i
 }
 
 int Textbox::GetComputedWidth() {
-	return this->padding.left + this->width + this->padding.right;
+	return this->padding.left + this->width + this->padding.right + this->borderThickness.left + this->borderThickness.right;
 }
 
 int Textbox::GetComputedHeight() {
-	return this->padding.top + this->height + this->padding.bottom;
+	return this->padding.top + this->height + this->padding.bottom + this->borderThickness.top + this->borderThickness.bottom;
 }
 
 std::string Textbox::GetPlaceholder() {
@@ -604,6 +620,14 @@ void Textbox::SetValue(std::string value) {
 
 void Textbox::SetCharLimit(int limit) {
 	this->charLimit = limit;
+}
+
+void Textbox::SetComputedWidth(int width) {
+	this->width = width - this->padding.left - this->padding.right - this->borderThickness.left - this->borderThickness.right; 
+}
+
+void Textbox::SetComputedHeight(int height) {
+	this->height = height - this->padding.top - this->padding.bottom - this->borderThickness.top - this->borderThickness.bottom;
 }
 
 void Textbox::Focus() {
@@ -802,11 +826,11 @@ Division::Division(int x, int y, int width, int height) {
 }
 
 int Division::GetComputedWidth() {
-	return this->padding.left + this->width + this->padding.right; 
+	return this->padding.left + this->width + this->padding.right + this->borderThickness.left + this->borderThickness.right;
 }
 
 int Division::GetComputedHeight() {
-	return this->padding.top + this->height + this->padding.bottom; 
+	return this->padding.top + this->height + this->padding.bottom + this->borderThickness.top + this->borderThickness.bottom;
 }
 
 bool Division::GetAutoExpand() {
@@ -890,6 +914,14 @@ std::vector<Division*>* Division::GetDivisions() {
 Division* Division::SetAutoExpand(bool value) {
 	this->autoExpand = value; 
 	return this; 
+}
+
+void Division::SetComputedWidth(int width) {
+	this->width = width - this->padding.left - this->padding.right - this->borderThickness.left - this->borderThickness.right;
+}
+
+void Division::SetComputedHeight(int height) {
+	this->height = height - this->padding.top - this->padding.bottom - this->borderThickness.top - this->borderThickness.bottom;
 }
 
 Division* Division::AddChild(Element* element) {
