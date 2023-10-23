@@ -69,9 +69,9 @@ void Element::SetWidth(std::string percentage) {
 		std::string value(1, percentage[i]);
 		if (value == "%") {
 			int perc = std::stoi(percentage);
-			int pWidth = this->GetParent()->GetWidth();
-			if (pWidth) {
-				this->width = pWidth / 100 * perc;
+			auto parent = this->GetParent(); 
+			if (parent) {
+				this->width = parent->GetWidth() / 100 * perc;
 			}
 			else {
 				this->width = Vanity::GetViewportWidth() / 100 * perc;
@@ -85,9 +85,9 @@ void Element::SetHeight(std::string percentage) {
 		std::string value(1, percentage[i]);
 		if (value == "%") {
 			int perc = std::stoi(percentage);
-			int pHeight = this->GetParent()->GetHeight();
-			if (pHeight) {
-				this->height = pHeight / 100 * perc;
+			auto parent = this->GetParent();
+			if (parent) {
+				this->height = parent->GetHeight() / 100 * perc;
 			}
 			else {
 				this->height = Vanity::GetViewportHeight() / 100 * perc;
@@ -789,7 +789,7 @@ Division::Division(int x, int y, int width, int height) {
 	this->height = height;
 	SDL_Color color = { 0, 0, 0, 50 }; 
 	this->color = color; 
-	this->autoResize = true; 
+	this->autoExpand = true;
 
 	// Set border thickness to 0 to disable 
 	BorderThickness bt = { 0, 0, 0, 0 };	// Thickness for top, right, bottom and left border
@@ -809,8 +809,8 @@ int Division::GetComputedHeight() {
 	return this->padding.top + this->height + this->padding.bottom; 
 }
 
-bool Division::GetAutoResize() {
-	return this->autoResize;
+bool Division::GetAutoExpand() {
+	return this->autoExpand;
 }
 
 std::vector<Element*>* Division::GetElements() {
@@ -887,15 +887,24 @@ std::vector<Division*>* Division::GetDivisions() {
 	return divisions;
 }
 
-Division* Division::SetAutoResize(bool value) {
-	this->autoResize = value; 
+Division* Division::SetAutoExpand(bool value) {
+	this->autoExpand = value; 
 	return this; 
 }
 
 Division* Division::AddChild(Element* element) {
 	element->SetParent(this);
-	// TODO: Use element's GetComputedWidth() to make div auto adjust size
 	this->elements->push_back(element);
+
+	if (this->autoExpand) {
+		int elementSpan = element->GetX() + element->GetComputedWidth();
+		if (this->GetComputedWidth() < elementSpan) {
+			// Division needs to expand to fit child element
+			std::cout << "Element spans " << elementSpan << ", Div spans " << this->GetComputedWidth() << "px. Div needs to expand!" << std::endl;
+			this->SetWidth(elementSpan); 
+		}
+	}
+
 	Vanity::Rerender();
 	return this;
 }

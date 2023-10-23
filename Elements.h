@@ -392,7 +392,7 @@ class Division : public Element, public Border, public Color, public BackgroundI
 		// GET methods
 		int GetComputedWidth() override;
 		int GetComputedHeight() override;
-		bool GetAutoResize(); 
+		bool GetAutoExpand(); 
 
 		std::vector<Element*>* GetElements();
 		std::vector<Button*>* GetButtons();
@@ -404,7 +404,7 @@ class Division : public Element, public Border, public Color, public BackgroundI
 		std::vector<Division*>* GetDivisions();
 
 		// SET methods 
-		Division* SetAutoResize(bool value); 
+		Division* SetAutoExpand(bool value);
 	
 		// Utility
 		Division* AddChild(Element* element);
@@ -420,7 +420,7 @@ class Division : public Element, public Border, public Color, public BackgroundI
 
 	private:
 		std::vector<Element*>* elements;
-		bool autoResize; 
+		bool autoExpand; 
 
 		// TODO: Add use of hoverColor when mouse hovers over div!
 };
