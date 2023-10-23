@@ -4,7 +4,7 @@
 int main(int argc, char* argv[])
 {
     Vanity::Setup(1920, 1080);
-    Vanity::DisableVsync(); 
+    //Vanity::DisableVsync(); 
 
     // Create a rendering context via Ivory. Can also pass an existing renderer to the Ivory Setup() method instead. 
     SDL_Renderer* renderer = Vanity::CreateRenderingContext("Vanity UI"); 
@@ -39,12 +39,12 @@ int main(int argc, char* argv[])
     auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 50, 50);
 
 
-    //autoLayoutBtn3->SetWidth(2300);
+    autoLayoutBtn3->SetWidth("50%");
 
     auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
     auto div6 = Vanity::CreateDivision(150, 150, 300, 300);
 
-    auto btn1 = Vanity::CreateButton(); 
+    auto btn1 = Vanity::CreateButton("test", 0, 0, 291);
     auto txt1 = Vanity::CreateTextbox("Textbox", 0, 50); 
     auto sli1 = Vanity::CreateSlider(0, 100); 
     auto sli2 = Vanity::CreateSlider(0, 100);
@@ -58,9 +58,11 @@ int main(int argc, char* argv[])
     div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)
         ->AddChild(autoLayoutBtn4)->AddChild(div6)->AddChild(sli2);
 
+    //btn1->SetDimensions("20%", "50%"); 
+
     auto btn = Vanity::CreateButton("Back to page 1");
 
-    b->SetDimensions("50%", "100%");
+    //b->SetDimensions("50%", "100%");
 
     b->SetAnimation(-100, 300, "linear", 3000); 
     b->Animate(); 
@@ -71,6 +73,8 @@ int main(int argc, char* argv[])
     //p->AddElement(div)->AddElement(sl);
 
     p->AddElement(div5ForAutoLayout);
+
+    p->AddElement(div6); 
 
     p->AddElement(autoLayoutBtn3); 
 
@@ -88,6 +92,7 @@ int main(int argc, char* argv[])
     //btn1->AlignRight(); 
     //btn1->AlignLeft();
  
+
     while (Vanity::IsRunning()) {
 
         Vanity::Prepare(); 
@@ -103,7 +108,7 @@ int main(int argc, char* argv[])
             //Vanity::DisplayPage(p);
             std::cout << "Button clicked" << std::endl; 
             //btn1->GetParent()->AlignElementsRight();
-            btn1->HorizontallyAlignCenter(); 
+            //btn1->HorizontallyAlignCenter(); 
         }
 
         if (btnGiveFocus->Clicked()) {
