@@ -135,8 +135,11 @@ void Vanity::RenderButton(Button* button) {
 
 		// Get necessary data from current object
 		Padding padding = button->GetPadding();
-		int height = button->GetComputedHeight();
-		int width = button->GetComputedWidth();
+		BorderThickness borderThickness = button->GetBorderThickness(); 
+		int width = button->GetWidth() + padding.left + padding.right;
+		int height = button->GetHeight() + padding.top + padding.bottom;
+		int computedWidth = button->GetComputedWidth(); 
+		int computedHeight = button->GetComputedHeight();
 		SDL_Color color = button->GetColor();
 		SDL_Color hoverColor = button->GetHoverColor();
 		TTF_Font* font = button->GetFont();
@@ -155,10 +158,10 @@ void Vanity::RenderButton(Button* button) {
 		SDL_Rect rect;
 		rect.w = width;
 		rect.h = height;
-		rect.x = x;
-		rect.y = y;
+		rect.x = x + borderThickness.left;
+		rect.y = y + borderThickness.top;
 
-		bool mHover = OnMouseHover(x, y, width, height);
+		bool mHover = OnMouseHover(x, y, computedWidth, computedHeight);
 
 		// If mouse doesn't hover over button, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
@@ -182,7 +185,7 @@ void Vanity::RenderButton(Button* button) {
 		SDL_RenderFillRect(targetRenderer, &rect);
 
 		// Draw button border 
-		RenderBorder(x, y, width, height, button->GetBorderThickness(), button->GetBorderColors());
+		RenderBorder(x, y, width, height, borderThickness, button->GetBorderColors());
 
 		int textWidth = 0, textHeight = 0;
 		TTF_SizeText(font, label.c_str(), &textWidth, &textHeight);
@@ -191,7 +194,7 @@ void Vanity::RenderButton(Button* button) {
 		height = height - padding.top - padding.bottom; 
 
 		// Display button label
-		RenderLabel(label, x + padding.left + width / 2 - textWidth / 2, y + padding.top + height / 2 - textHeight / 2, button->GetFontColor(), font, button->GetFontSize());
+		RenderLabel(label, x + borderThickness.left + padding.left + width / 2 - textWidth / 2, y + borderThickness.top + padding.top + height / 2 - textHeight / 2, button->GetFontColor(), font, button->GetFontSize());
 }
 
 void Vanity::RenderTextbox(Textbox* textbox) {
@@ -204,8 +207,11 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 
 		// Get necessary data from current object
 		Padding padding = textbox->GetPadding();
-		int height = textbox->GetComputedHeight();
-		int width = textbox->GetComputedWidth();
+		BorderThickness borderThickness = textbox->GetBorderThickness();
+		int width = textbox->GetWidth() + padding.left + padding.right;
+		int height = textbox->GetHeight() + padding.top + padding.bottom;
+		int computedWidth = textbox->GetComputedWidth();
+		int computedHeight = textbox->GetComputedHeight();
 		SDL_Color color = textbox->GetColor();
 		SDL_Color fontColor = textbox->GetFontColor();
 		SDL_Color hoverColor = textbox->GetHoverColor();
@@ -222,10 +228,10 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 		SDL_Rect rect;
 		rect.w = width;
 		rect.h = height;
-		rect.x = x;
-		rect.y = y;
+		rect.x = x + borderThickness.top;
+		rect.y = y + borderThickness.left;
 
-		bool mHover = OnMouseHover(x, y, width, height);
+		bool mHover = OnMouseHover(x, y, computedWidth, computedHeight);
 
 		// If mouse doesn't hover over textbox, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
@@ -245,7 +251,7 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 		SDL_RenderFillRect(targetRenderer, &rect);
 
 		// Draw textbox border 
-		RenderBorder(x, y, width, height, textbox->GetBorderThickness(), textbox->GetBorderColors());
+		RenderBorder(x, y, width, height, borderThickness, textbox->GetBorderColors());
 
 		int textWidth = 0, textHeight = 0; 
 		int lblX, lblY;
@@ -256,8 +262,8 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 		// If no value, show placeholder
 		if (value.empty()) {
 			TTF_SizeText(font, placeholder.c_str(), &textWidth, &textHeight);
-			lblX = x + padding.left + width / 2 - textWidth / 2;
-			lblY = y + padding.top + height / 2 - textHeight / 2;
+			lblX = x + borderThickness.left + padding.left + width / 2 - textWidth / 2;
+			lblY = y + borderThickness.top + padding.top + height / 2 - textHeight / 2;
 
 			// Display textbox placeholder text
 			SDL_Color placeholderColor = fontColor; 
@@ -282,8 +288,8 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 			}
 
 			TTF_SizeText(font, reducedText.c_str(), &textWidth, &textHeight);
-			lblX = x + padding.left + width / 2 - textWidth / 2;
-			lblY = y + padding.top + height / 2 - textHeight / 2;
+			lblX = x + borderThickness.left + padding.left + width / 2 - textWidth / 2;
+			lblY = y + borderThickness.top + padding.top + height / 2 - textHeight / 2;
 
 			// Display textbox label
 			RenderLabel(reducedText, lblX, lblY, fontColor, font, fontSize);
@@ -306,7 +312,7 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 			rect.w = 2;
 			rect.h = fontSize;
 			rect.x = lblX + textWidth;
-			rect.y = y + padding.top + height / 2 - fontSize / 2;
+			rect.y = y + borderThickness.top + padding.top + height / 2 - fontSize / 2;
 			SDL_SetRenderDrawColor(targetRenderer, 255, 255, 255, 255);
 			SDL_RenderFillRect(targetRenderer, &rect);
 		}
@@ -323,7 +329,9 @@ void Vanity::RenderCheckbox(Checkbox* checkbox) {	// TODO: Draw v-mark inside ch
 
 		// Get necessary data from current object
 		int size = checkbox->GetSize();
+		int computedSize = checkbox->GetComputedWidth(); // Use width here since width and height is the same
 		bool checked = checkbox->IsChecked();
+		BorderThickness borderThickness = checkbox->GetBorderThickness();
 		SDL_Color color = checkbox->GetColor();
 
 		// Render background image
@@ -334,10 +342,10 @@ void Vanity::RenderCheckbox(Checkbox* checkbox) {	// TODO: Draw v-mark inside ch
 		SDL_Rect rect;
 		rect.w = size;
 		rect.h = size;
-		rect.x = x;
-		rect.y = y;
+		rect.x = x + borderThickness.left;
+		rect.y = y + borderThickness.top;
 
-		bool mHover = OnMouseHover(x, y, size, size);
+		bool mHover = OnMouseHover(x, y, computedSize, computedSize);
 
 		// If mouse doesn't hover over checkbox, default idle state
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
@@ -369,8 +377,8 @@ void Vanity::RenderCheckbox(Checkbox* checkbox) {	// TODO: Draw v-mark inside ch
 		if (checked) {
 			rect.w = size - size * 0.6f;
 			rect.h = size - size * 0.6f;
-			rect.x = x + size * 0.6f / 2;
-			rect.y = y + size * 0.6f / 2;
+			rect.x = x + borderThickness.left + size * 0.6f / 2;
+			rect.y = y + borderThickness.top + size * 0.6f / 2;
 
 			SDL_Color checkmarkColor = checkbox->GetCheckmarkColor();
 			SDL_SetRenderDrawColor(targetRenderer, checkmarkColor.r, checkmarkColor.g, checkmarkColor.b, checkmarkColor.a);
@@ -560,8 +568,8 @@ void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness b
 
 	// Draw top border if set
 	if (borderThickness.top) {
-		border.x = x; 
-		border.y = y - borderThickness.top;
+		border.x = x + borderThickness.left; 
+		border.y = y;
 		border.h = borderThickness.top;
 		SDL_Color color = borderColors.top;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a); 
@@ -570,8 +578,8 @@ void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness b
 
 	// Draw bottom border if set
 	if (borderThickness.bottom) {
-		border.x = x;
-		border.y = y + height;
+		border.x = x + borderThickness.left;
+		border.y = y + height + borderThickness.top;
 		border.h = borderThickness.bottom;
 		SDL_Color color = borderColors.bottom;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
@@ -580,10 +588,10 @@ void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness b
 
 	// Draw right border if set
 	if (borderThickness.right) {
-		border.x = x + width;
-		border.y = y - borderThickness.top;
+		border.x = x + width + borderThickness.left;
+		border.y = y;
 		border.w = borderThickness.right;
-		border.h = height + borderThickness.top + borderThickness.bottom;
+		border.h = height + borderThickness.bottom + borderThickness.top;
 		SDL_Color color = borderColors.right;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		SDL_RenderFillRect(targetRenderer, &border);
@@ -591,10 +599,10 @@ void Vanity::RenderBorder(int x, int y, int width, int height, BorderThickness b
 
 	// Draw left border if set
 	if (borderThickness.left) {
-		border.x = x - borderThickness.left;
-		border.y = y - borderThickness.top;
+		border.x = x;
+		border.y = y;
 		border.w = borderThickness.left;
-		border.h = height + borderThickness.top + borderThickness.bottom;
+		border.h = height + borderThickness.bottom + borderThickness.top;
 		SDL_Color color = borderColors.left;
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 		SDL_RenderFillRect(targetRenderer, &border);

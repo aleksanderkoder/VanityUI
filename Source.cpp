@@ -38,13 +38,12 @@ int main(int argc, char* argv[])
     auto autoLayoutBtn4 = Vanity::CreateButton("auto layout 2");
     auto autoLayoutBtn2 = Vanity::CreateTextbox("Textbox", 50, 50);
 
-
     autoLayoutBtn3->SetWidth("50%");
 
-    auto div5ForAutoLayout = Vanity::CreateDivision(100, 100, 300, 300);
+    auto div5ForAutoLayout = Vanity::CreateDivision(100, 100);
     auto div6 = Vanity::CreateDivision(150, 150, 300, 300);
 
-    auto btn1 = Vanity::CreateButton("test", 0, 0, 291);
+    auto btn1 = Vanity::CreateButton("test", 0, 0, 290);
     auto txt1 = Vanity::CreateTextbox("Textbox", 0, 50); 
     auto sli1 = Vanity::CreateSlider(0, 100); 
     auto sli2 = Vanity::CreateSlider(0, 100);
@@ -57,6 +56,9 @@ int main(int argc, char* argv[])
 
     div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)
         ->AddChild(autoLayoutBtn4)->AddChild(div6)->AddChild(sli2);
+
+    div6->SetPadding({ 0, 0, 0, 0 }); 
+    div5ForAutoLayout->SetPadding({ 0, 0, 0, 0 });
 
     //btn1->SetDimensions("20%", "50%"); 
 

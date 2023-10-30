@@ -337,7 +337,9 @@ class Checkbox : public Element, public Border, public Color, public BackgroundI
 	public:
 		Checkbox(int x, int y, int size, bool defaultState);
 
-		// GET methods  
+		// GET methods
+		int GetComputedWidth() override;
+		int GetComputedHeight() override;
 		SDL_Color GetCheckmarkColor();
 		int GetSize();
 

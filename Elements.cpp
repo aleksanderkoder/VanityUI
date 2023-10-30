@@ -687,6 +687,14 @@ Checkbox::Checkbox(int x, int y, int size, bool defaultState) {
 	this->checkmarkColor = cc;
 }
 
+int Checkbox::GetComputedWidth() {
+	return this->width + this->borderThickness.left + this->borderThickness.right;
+}
+
+int Checkbox::GetComputedHeight() {
+	return this->height + this->borderThickness.top + this->borderThickness.bottom;
+}
+
 SDL_Color Checkbox::GetCheckmarkColor() {
 	return this->checkmarkColor;
 }
@@ -932,7 +940,7 @@ Division* Division::AddChild(Element* element) {
 		int elementSpan = element->GetX() + element->GetComputedWidth();
 		if (this->GetComputedWidth() < elementSpan) {
 			// Division needs to expand to fit child element
-			std::cout << "Element spans " << elementSpan << ", Div spans " << this->GetComputedWidth() << "px. Div needs to expand!" << std::endl;
+			//std::cout << "Element spans " << elementSpan << ", Div spans " << this->GetComputedWidth() << "px. Div needs to expand!" << std::endl;
 			this->SetWidth(elementSpan); 
 		}
 	}
