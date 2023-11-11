@@ -471,16 +471,14 @@ void Vanity::RenderSlider(Slider* slider) {
 		bool baseHover = OnMouseHover(x, y, width, height);
 		//bool thumbHover = onMouseHover()	// TODO: See if mouse also hovers over thumb
 
-		SDL_Color color = slider->GetColor();
+		SDL_Color sliderColor = slider->GetColor();
+		SDL_Color thumbColor = slider->GetThumbColor();
 
 		// Draw slider border
 		RenderBorder(x, y, width, height, slider->GetBorderThickness(), slider->GetBorderColors());
 
 		// If mouse doesn't hover over slider, default idle state
-		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
-
-		color = slider->GetThumbColor();
-		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
+		SDL_SetRenderDrawColor(targetRenderer, sliderColor.r, sliderColor.g, sliderColor.b, sliderColor.a);
 		
 		if (!slider->GetTouched())
 			thumbRect.x = slider->GetThumbPosision() + x;
@@ -512,7 +510,7 @@ void Vanity::RenderSlider(Slider* slider) {
 				slider->SetValue((int)(baseline / width * 100));
 			}
 			activeTextbox = nullptr;
-			SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a - 25); 
+			SDL_SetRenderDrawColor(targetRenderer, sliderColor.r, sliderColor.g, sliderColor.b, sliderColor.a - 25);
 		} else if (baseHover) {	// If mouse hovers over
 			SDL_Color hoverColor = slider->GetHoverColor();
 			if (!leftMouseButtonPressedLastState)
@@ -522,6 +520,7 @@ void Vanity::RenderSlider(Slider* slider) {
 		}
 
 		SDL_RenderFillRect(targetRenderer, &sliderRect);
+		SDL_SetRenderDrawColor(targetRenderer, thumbColor.r, thumbColor.g, thumbColor.b, thumbColor.a);
 		SDL_RenderFillRect(targetRenderer, &thumbRect);
 }
 

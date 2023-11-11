@@ -57,8 +57,8 @@ int main(int argc, char* argv[])
     div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)
         ->AddChild(autoLayoutBtn4)->AddChild(div6)->AddChild(sli2);
 
-    div6->SetPadding({ 0, 0, 0, 0 }); 
-    div5ForAutoLayout->SetPadding({ 0, 0, 0, 0 });
+    //div6->SetPadding({ 0, 0, 0, 0 }); 
+    //div5ForAutoLayout->SetPadding({ 0, 0, 0, 0 });
 
     //btn1->SetDimensions("20%", "50%"); 
 

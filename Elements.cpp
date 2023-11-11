@@ -755,9 +755,9 @@ Slider::Slider(int x, int y, int width, int height, int thumbWidth, int thumbHei
 	this->display = true;
 	this->value = 50;
 	this->thumbPosision = x + width / 2 - thumbWidth / 2; 
-	SDL_Color c = { 0, 0, 0, 175 };
+	SDL_Color c = { 0, 0, 0, 120 };
 	SDL_Color hc = { 25, 25, 25, 100 };
-	SDL_Color tc = { 25, 25, 25, 175 };
+	SDL_Color tc = { 255, 255, 255, 255 };
 	this->color = c;
 	this->hoverColor = hc;
 	this->thumbColor = tc;
@@ -939,9 +939,13 @@ Division* Division::AddChild(Element* element) {
 	if (this->autoExpand) {
 		int elementSpan = element->GetX() + element->GetComputedWidth();
 		if (this->GetComputedWidth() < elementSpan) {
-			// Division needs to expand to fit child element
-			//std::cout << "Element spans " << elementSpan << ", Div spans " << this->GetComputedWidth() << "px. Div needs to expand!" << std::endl;
+			// Division needs to expand in width to fit child element
 			this->SetWidth(elementSpan); 
+		}
+		elementSpan = element->GetY() + element->GetComputedHeight(); 
+		if (this->GetComputedHeight() < elementSpan) {
+			// Division needs to expand in height to fit child element
+			this->SetHeight(elementSpan); 
 		}
 	}
 
