@@ -342,18 +342,20 @@ class Checkbox : public Element, public Border, public Color, public BackgroundI
 		int GetComputedHeight() override;
 		SDL_Color GetCheckmarkColor();
 		int GetSize();
+		bool GetClickedLastFrame(); 
 
 		// SET methods 
 		void SetCheckmarkColor(SDL_Color* color);
 		void SetState(bool state);
 		void SetSize(int size);
+		void SetClickedLastFrame(bool state);
 
 		// Utility methods 
 		bool IsChecked();
 
 	private:
 		int size;
-		bool checked;
+		bool checked, clickedLastFrame;
 		SDL_Color checkmarkColor; 
 };
 

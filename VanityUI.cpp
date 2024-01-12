@@ -8,7 +8,7 @@ Textbox* Vanity::activeTextbox = nullptr;
 char Vanity::lastPressedKey;
 bool Vanity::leftMouseButtonPressedState = false, Vanity::leftMouseButtonPressedLastState = false,
 Vanity::isRunning = false, Vanity::drawTextBoxCursor = true, Vanity::capsLockEnabled = false, Vanity::rerender = false,
-Vanity::vsync = true; 
+Vanity::vsync = true;
 int Vanity::viewportWidth = 0, Vanity::viewportHeight = 0, Vanity::mX = 0, Vanity::mY = 0;
 SDL_Texture* Vanity::snapshotFrame = nullptr;
 Page* Vanity::currentPage = nullptr;
@@ -351,15 +351,17 @@ void Vanity::RenderCheckbox(Checkbox* checkbox) {	// TODO: Draw v-mark inside ch
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 
 		// If mouse hovers over button and activates
-		if (mHover && leftMouseButtonPressedState) {
+		if (mHover && leftMouseButtonPressedState && !checkbox->GetClickedLastFrame()) {
 			SDL_Color hoverColor = checkbox->GetHoverColor();
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
-			checkbox->SetState(!checked);
 			checkbox->SetClickedState(true);
+			checkbox->SetState(!checked); 
+			checkbox->SetClickedLastFrame(true);
 			activeTextbox = nullptr;
 		}
 		// If mouse hovers over
 		else if (mHover) {
+			checkbox->SetClickedLastFrame(false);
 			SDL_Color hoverColor = checkbox->GetHoverColor();
 			if (!leftMouseButtonPressedLastState)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
@@ -774,18 +776,19 @@ bool Vanity::OnMouseHover(int x, int y, int width, int height) {
 
 void Vanity::UpdateMouseButtonState() {
 	Uint32 mb = SDL_GetMouseState(nullptr, nullptr);
-	if (mb == SDL_BUTTON(1) && !leftMouseButtonPressedLastState) {
-		leftMouseButtonPressedLastState = true;
-		leftMouseButtonPressedState = true;
+	if (mb & SDL_BUTTON(1)) {
+		if (!leftMouseButtonPressedLastState) {
+			leftMouseButtonPressedLastState = true;
+			leftMouseButtonPressedState = true;
+		}
+		else {
+			leftMouseButtonPressedState = false;
+		}
 	}
-	else if (mb == SDL_BUTTON(1) && leftMouseButtonPressedLastState) {
-		leftMouseButtonPressedState = false;
-	}
-	else if (mb != SDL_BUTTON(1)) {
+	else {
 		leftMouseButtonPressedLastState = false;
 		leftMouseButtonPressedState = false;
 	}
-
 }
 
 TTF_Font* Vanity::OpenFont(std::string fontUrl, int size) {

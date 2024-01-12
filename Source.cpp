@@ -4,7 +4,7 @@
 int main(int argc, char* argv[])
 {
     Vanity::Setup(1920, 1080);
-    //Vanity::DisableVsync(); 
+    Vanity::DisableVsync(); 
 
     // Create a rendering context via Ivory. Can also pass an existing renderer to the Ivory Setup() method instead. 
     SDL_Renderer* renderer = Vanity::CreateRenderingContext("Vanity UI"); 

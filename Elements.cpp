@@ -679,6 +679,7 @@ Checkbox::Checkbox(int x, int y, int size, bool defaultState) {
 	this->height = size; 
 	this->display = true;
 	this->checked = defaultState;
+	this->clickedLastFrame = false;
 	SDL_Color c = { 0, 0, 0, 175 };
 	SDL_Color hc = { 25, 25, 25, 175 };
 	SDL_Color cc = { 255, 255, 255, 255 };
@@ -703,6 +704,10 @@ int Checkbox::GetSize() {
 	return this->size;
 }
 
+bool Checkbox::GetClickedLastFrame() {
+	return this->clickedLastFrame; 
+}
+
 void Checkbox::SetCheckmarkColor(SDL_Color* color) {
 	this->checkmarkColor = *color;
 	Vanity::Rerender();
@@ -718,6 +723,10 @@ void Checkbox::SetSize(int size) {
 void Checkbox::SetState(bool state) {
 	this->checked = state;
 	Vanity::Rerender();
+}
+
+void Checkbox::SetClickedLastFrame(bool state) {
+	this->clickedLastFrame = state;
 }
 
 bool Checkbox::IsChecked() {
