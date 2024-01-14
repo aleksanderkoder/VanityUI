@@ -43,8 +43,8 @@ class Vanity
 	private:
 		// General library data 
 		static SDL_Renderer* targetRenderer;
-		static bool leftMouseButtonPressedState;
-		static bool leftMouseButtonPressedLastState;
+		static bool leftMousePressed;
+		static bool leftMouseHeld;
 		static bool rerender;
 		static bool isRunning; 
 		static bool vsync; 

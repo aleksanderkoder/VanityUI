@@ -3,13 +3,21 @@
 #include "VanityUI.h"
 
 SDL_Renderer* Vanity::targetRenderer = nullptr;
-Uint32 Vanity::delta, Vanity::textboxCursorDelta;
+Uint32 Vanity::delta; 
+Uint32 Vanity::textboxCursorDelta;
 Textbox* Vanity::activeTextbox = nullptr;
 char Vanity::lastPressedKey;
-bool Vanity::leftMouseButtonPressedState = false, Vanity::leftMouseButtonPressedLastState = false,
-Vanity::isRunning = false, Vanity::drawTextBoxCursor = true, Vanity::capsLockEnabled = false, Vanity::rerender = false,
-Vanity::vsync = true;
-int Vanity::viewportWidth = 0, Vanity::viewportHeight = 0, Vanity::mX = 0, Vanity::mY = 0;
+bool Vanity::leftMousePressed = false; 
+bool Vanity::leftMouseHeld = false;
+bool Vanity::isRunning = false;
+bool Vanity::drawTextBoxCursor = true;
+bool Vanity::capsLockEnabled = false; 
+bool Vanity::rerender = false;
+bool Vanity::vsync = true;
+int Vanity::viewportWidth = 0;
+int Vanity::viewportHeight = 0;
+int Vanity::mX = 0;
+int Vanity::mY = 0;
 SDL_Texture* Vanity::snapshotFrame = nullptr;
 Page* Vanity::currentPage = nullptr;
 
@@ -115,7 +123,7 @@ void Vanity::RenderLabel(Label* label) {
 
 		bool mHover = OnMouseHover(x, y, textWidth, textHeight);
 
-		if (mHover && leftMouseButtonPressedState)
+		if (mHover && leftMousePressed)
 			label->SetClickedState(true);
 
 		RenderLabel(text, x, y, label->GetColor(), font, label->GetFontSize());
@@ -168,14 +176,14 @@ void Vanity::RenderButton(Button* button) {
 		button->SetClickedState(false);
 
 		// If mouse hovers over button and activates
-		if (mHover && leftMouseButtonPressedState) {
+		if (mHover && leftMousePressed) {
 			button->SetClickedState(true);
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
 			activeTextbox = nullptr;
 		}
 		// If mouse hovers over
 		else if (mHover) {
-			if (!leftMouseButtonPressedLastState)
+			if (!leftMouseHeld)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			else
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
@@ -237,7 +245,7 @@ void Vanity::RenderTextbox(Textbox* textbox) {
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 
 		// If mouse hovers over textbox and activates
-		if (mHover && leftMouseButtonPressedState) {
+		if (mHover && leftMousePressed) {
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			activeTextbox = textbox;
 			textbox->SetClickedState(true);
@@ -351,7 +359,7 @@ void Vanity::RenderCheckbox(Checkbox* checkbox) {	// TODO: Draw v-mark inside ch
 		SDL_SetRenderDrawColor(targetRenderer, color.r, color.g, color.b, color.a);
 
 		// If mouse hovers over button and activates
-		if (mHover && leftMouseButtonPressedState && !checkbox->GetClickedLastFrame()) {
+		if (mHover && leftMousePressed && !checkbox->GetClickedLastFrame()) {
 			SDL_Color hoverColor = checkbox->GetHoverColor();
 			SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
 			checkbox->SetClickedState(true);
@@ -363,7 +371,7 @@ void Vanity::RenderCheckbox(Checkbox* checkbox) {	// TODO: Draw v-mark inside ch
 		else if (mHover) {
 			checkbox->SetClickedLastFrame(false);
 			SDL_Color hoverColor = checkbox->GetHoverColor();
-			if (!leftMouseButtonPressedLastState)
+			if (!leftMouseHeld)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			else
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
@@ -431,7 +439,7 @@ void Vanity::RenderImage(Image* image) {
 
 		bool mHover = OnMouseHover(x, y, width, height);
 
-		if (mHover && leftMouseButtonPressedState)
+		if (mHover && leftMousePressed)
 			image->SetClickedState(true);
 
 		SDL_RenderCopy(targetRenderer, image->GetImage(), nullptr, &rect);
@@ -492,11 +500,11 @@ void Vanity::RenderSlider(Slider* slider) {
 		thumbRect.y = thumbRect.y + height / 2 - thumbHeight / 2;
 
 		// Check if slider has been clicked and set state accordingly
-		if (baseHover && leftMouseButtonPressedState) 
+		if (baseHover && leftMousePressed)
 			slider->SetClickedState(true);
 
 		// If mouse hovers over slider and activates
-		if (baseHover && leftMouseButtonPressedLastState) {
+		if (baseHover && leftMouseHeld) {
 			slider->SetTouched(true);
 			
 			int mx; 
@@ -515,7 +523,7 @@ void Vanity::RenderSlider(Slider* slider) {
 			SDL_SetRenderDrawColor(targetRenderer, sliderColor.r, sliderColor.g, sliderColor.b, sliderColor.a - 25);
 		} else if (baseHover) {	// If mouse hovers over
 			SDL_Color hoverColor = slider->GetHoverColor();
-			if (!leftMouseButtonPressedLastState)
+			if (!leftMouseHeld)
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a);
 			else
 				SDL_SetRenderDrawColor(targetRenderer, hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a - 75);
@@ -541,7 +549,7 @@ void Vanity::RenderDivision(Division* division) {
 		bool mHover = OnMouseHover(x, y, width, height);
 
 		// Check if division has been clicked and set state accordingly
-		if (mHover && leftMouseButtonPressedState)
+		if (mHover && leftMousePressed)
 			division->SetClickedState(true);
 
 		// Render background image
@@ -777,17 +785,17 @@ bool Vanity::OnMouseHover(int x, int y, int width, int height) {
 void Vanity::UpdateMouseButtonState() {
 	Uint32 mb = SDL_GetMouseState(nullptr, nullptr);
 	if (mb & SDL_BUTTON(1)) {
-		if (!leftMouseButtonPressedLastState) {
-			leftMouseButtonPressedLastState = true;
-			leftMouseButtonPressedState = true;
+		if (!leftMouseHeld) {
+			leftMouseHeld = true;
+			leftMousePressed = true;
 		}
 		else {
-			leftMouseButtonPressedState = false;
+			leftMousePressed = false;
 		}
 	}
 	else {
-		leftMouseButtonPressedLastState = false;
-		leftMouseButtonPressedState = false;
+		leftMouseHeld = false;
+		leftMousePressed = false;
 	}
 }
 

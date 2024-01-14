@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
     auto sli2 = Vanity::CreateSlider(0, 100);
     auto div1 = Vanity::CreateDivision(0, 150, 30, 30); 
     auto chk1 = Vanity::CreateCheckbox(0, 200); 
+    auto chk2 = Vanity::CreateCheckbox(0, 50);
     auto img = Vanity::CreateImage("db3991d70eff2556d448c9d911e71a11_400x400.jpeg", 0, 300); 
     auto lbl = Vanity::CreateLabel("Label", 0, 420);
 
@@ -79,6 +80,7 @@ int main(int argc, char* argv[])
     p->AddElement(div6); 
 
     p->AddElement(autoLayoutBtn3); 
+    p->AddElement(chk2); 
 
     p2->AddElement(btn); 
 
