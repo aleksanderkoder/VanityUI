@@ -13,13 +13,13 @@ Page* Page::AddElement(Division* division) {
 	this->elements->push_back(division);
 
 	// Add all elements to page contained within the divison
-	auto elements = division->GetElements(); 
+	/*auto elements = division->GetElements(); 
 	for (int i = 0; i < elements->size(); i++) {
 		if (Division* div = dynamic_cast<Division*>((*elements)[i]))
 			this->AddElement(div); 
 		else
 			this->AddElement((*elements)[i]);
-	}
+	}*/
 	return this;
 }
 
@@ -45,7 +45,17 @@ Page* Page::RemoveElement(Division* division) {
 }
 
 std::vector<Element*>* Page::GetElements() {
-	return this->elements; 
+	auto elements = new std::vector<Element*>();
+	for (int i = 0; i < this->elements->size(); i++) {
+		if (Division* div = dynamic_cast<Division*>((*this->elements)[i])) {
+			elements->push_back(div); 
+			auto divElements = div->GetElements();
+			elements->insert(elements->end(), divElements->begin(), divElements->end());
+			continue; 
+		}
+		elements->push_back((*this->elements)[i]); 
+	}
+	return elements; 
 }
 
 std::vector<Button*>* Page::GetButtons() {

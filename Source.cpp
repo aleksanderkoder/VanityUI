@@ -58,6 +58,10 @@ int main(int argc, char* argv[])
     div5ForAutoLayout->AddChild(autoLayoutBtn1)->AddChild(autoLayoutBtn2)
         ->AddChild(autoLayoutBtn4)->AddChild(div6)->AddChild(sli2);
 
+    div5ForAutoLayout->SetColor({ 0, 255, 0, 255 });
+
+    div6->SetColor({ 255, 0, 0, 255 });
+
     //div6->SetPadding({ 0, 0, 0, 0 }); 
     //div5ForAutoLayout->SetPadding({ 0, 0, 0, 0 });
 
@@ -76,8 +80,10 @@ int main(int argc, char* argv[])
     //p->AddElement(div)->AddElement(sl);
 
     p->AddElement(div5ForAutoLayout);
+    auto knappForTest = Vanity::CreateButton("Knapp for testing");
 
     p->AddElement(div6); 
+    div6->AddChild(knappForTest);
 
     p->AddElement(autoLayoutBtn3); 
     p->AddElement(chk2); 

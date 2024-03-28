@@ -647,6 +647,7 @@ void Vanity::Render() {
 			RenderLabel(current);
 		}
 	}
+	delete elements; 
 	SDL_RenderPresent(targetRenderer); 
 }
 

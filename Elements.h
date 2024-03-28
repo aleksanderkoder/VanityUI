@@ -421,7 +421,6 @@ class Division : public Element, public Border, public Color, public BackgroundI
 		// Utility
 		Division* AddChild(Element* element);
 
-
 		// Positioning
 		void HorizontallyAlignElementsCenter(); 
 		void VerticallyAlignElementsCenter();
